@@ -260,7 +260,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        815
+                        839
                     </div>
                     
 
@@ -287,19 +287,19 @@
 <p>最近遇到一个线上问题，由于接手老项目不久，对代码不熟悉，导致这个坑排查了很久才发现。说他是坑吧，其实也不算坑，只能说是由于前人对这个东西不够了解导致的。</p>
 </blockquote>
 <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>问题是这样的，在A表中，每次业务操作都会根据条件在A表中查询id，如果查询到了，就不执行插入，反之会执行插入，并且返回id，代码如下：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">private</span> Integer <span class="token function">getOrAddxxxByName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">private</span> Integer <span class="token function">getOrAddxxxByName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     Integer id <span class="token operator">=</span> xxxDao<span class="token punctuation">.</span><span class="token function">queryRCChannelId</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         id <span class="token operator">=</span> xxxDao<span class="token punctuation">.</span><span class="token function">addRCChannel</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> id<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<a id="more"></a>
+<span id="more"></span>
 <p>这段代码里最后返回的结果就是所谓的id，这个id又会在B表中做关联，乍眼一看，这段代码好像没什么问题，但是线上却产生了奇怪的现象，那就是新用户首次操作了和这段代码有关的功能时，在B表中都会出现一条关联id为1的数据，这就奇怪了，用户每次重新加入的数据，为啥给我返回个1，然后第二次操作又恢复正常了？？？</p>
 <p>于是我点进了dao对应的addRCChannel方法，发现了问题，xml中对应方法实现是这样的</p>
 <pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>addRCChannel<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    INSERT channel_info (`channel_name`) VALUES (#{channelName});
+    INSERT channel_info (`channel_name`) VALUES (#<span class="token entity" title="&#123;">&amp;#123;</span>channelName<span class="token entity" title="&#125;">&amp;#125;</span>);
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span>
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
@@ -309,24 +309,24 @@
 
 首先，如果你的数据库支持自动生成主键的字段（比如 MySQL 和 SQL Server），那么你可以设置 useGeneratedKeys=”true”，然后再把 keyProperty 设置到目标属性上就 OK 了。例如，如果上面的 Author 表已经对 id 使用了自动生成的列类型，那么语句可以修改为：
 </code></pre><p>可以看到，文档上对这两个字段进行了解释</p>
-<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gbr31hq55lj31s806m77c.jpg" alt></p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gbr31hq55lj31s806m77c.jpg" alt=""></p>
 <p><strong>按照我的理解，useGeneratedKeys这个属性默认为false，设置为true，他就会把插入的这条数据的id设置到keyProperty指定的列中，所以，上面xml只要改成下面这样</strong></p>
 <pre class="line-numbers language-java"><code class="language-java">
 <span class="token operator">&lt;</span>insert id<span class="token operator">=</span><span class="token string">"addRCChannel"</span> useGeneratedKeys<span class="token operator">=</span><span class="token string">"true"</span> keyProperty<span class="token operator">=</span><span class="token string">"id"</span><span class="token operator">></span>
-    INSERT <span class="token function">channel_info</span> <span class="token punctuation">(</span>`channel_name`<span class="token punctuation">)</span> <span class="token function">VALUES</span> <span class="token punctuation">(</span>#<span class="token punctuation">{</span>channelName<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    INSERT <span class="token function">channel_info</span> <span class="token punctuation">(</span>`channel_name`<span class="token punctuation">)</span> <span class="token function">VALUES</span> <span class="token punctuation">(</span>#<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>channelName<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>insert<span class="token operator">></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这时候，代码修改如下：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">private</span> Integer <span class="token function">getOrAddxxxByName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">private</span> Integer <span class="token function">getOrAddxxxByName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     Integer id <span class="token operator">=</span> xxxDao<span class="token punctuation">.</span><span class="token function">queryRCChannelId</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         Channel channel <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         channel<span class="token punctuation">.</span><span class="token function">setChannelName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
         xxxDao<span class="token punctuation">.</span><span class="token function">addRCChannel</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">;</span>
         id <span class="token operator">=</span> channel<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> id<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这样，最后返回的结果就是数据的真实id了。</p>
@@ -544,7 +544,7 @@ https://www.oracle.com/technetwo
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

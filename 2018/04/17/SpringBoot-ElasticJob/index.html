@@ -350,14 +350,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.6k
+                        1.7k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        7 分
+                        8 分
                     </div>
                     
                 
@@ -376,7 +376,7 @@
                 <h3 id="SpringBoot整合Elastic-Job-lite，实现动态创建定时任务，任务持久化"><a href="#SpringBoot整合Elastic-Job-lite，实现动态创建定时任务，任务持久化" class="headerlink" title="SpringBoot整合Elastic-Job-lite，实现动态创建定时任务，任务持久化"></a>SpringBoot整合Elastic-Job-lite，实现动态创建定时任务，任务持久化</h3><p>Elastic-Job是当当开源的一个分布式调度解决方案，由两个相互独立的子项目Elastic-Job-Lite和Elastic-Job-Cloud组成。</p>
 <p>Elastic-Job-Lite定位为轻量级无中心化解决方案，使用jar包的形式提供分布式任务的协调服务；Elastic-Job-Cloud采用自研Mesos Framework的解决方案，额外提供资源治理、应用分发以及进程隔离等功能。</p>
 <p>这里以Elastic-Job-lite为例，跟SpringBoot进行整合，当当的官方文档中并没有对SpringBoot集成作说明，所有的配置都是基于文档中的xml的配置修改出来的。</p>
-<h3 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h3><p>准备好一个SpringBoot的项目，pom.xml中引入Elastic-job，mysql，jpa等依赖<br><a id="more"></a></p>
+<h3 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h3><p>准备好一个SpringBoot的项目，pom.xml中引入Elastic-job，mysql，jpa等依赖<br><span id="more"></span></p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token operator">&lt;</span>dependencies<span class="token operator">></span>
         <span class="token operator">&lt;</span>dependency<span class="token operator">></span>
             <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
@@ -439,21 +439,21 @@
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
 <span class="token annotation punctuation">@Data</span>
 <span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"elasticjob"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobConfig</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobConfig</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token keyword">private</span> String serverlists<span class="token punctuation">;</span>
     <span class="token keyword">private</span> String namespace<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
     <span class="token keyword">private</span> HikariDataSource dataSource<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Bean</span>
-    <span class="token keyword">public</span> ZookeeperConfiguration <span class="token function">zkConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> ZookeeperConfiguration <span class="token function">zkConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ZookeeperConfiguration</span><span class="token punctuation">(</span>serverlists<span class="token punctuation">,</span> namespace<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"init"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> ZookeeperRegistryCenter <span class="token function">regCenter</span><span class="token punctuation">(</span>ZookeeperConfiguration config<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> ZookeeperRegistryCenter <span class="token function">regCenter</span><span class="token punctuation">(</span>ZookeeperConfiguration config<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ZookeeperRegistryCenter</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token comment" spellcheck="true">/**
      * 将作业运行的痕迹进行持久化到DB
@@ -461,53 +461,53 @@
      * @return
      */</span>
     <span class="token annotation punctuation">@Bean</span>
-    <span class="token keyword">public</span> JobEventConfiguration <span class="token function">jobEventConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> JobEventConfiguration <span class="token function">jobEventConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">JobEventRdbConfiguration</span><span class="token punctuation">(</span>dataSource<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Bean</span>
-    <span class="token keyword">public</span> ElasticJobListener <span class="token function">elasticJobListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> ElasticJobListener <span class="token function">elasticJobListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ElasticJobListener</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>所有相关的配置到这里就已经OK了，接下来开始具体的编码实现</p>
 <h3 id="定时任务实现"><a href="#定时任务实现" class="headerlink" title="定时任务实现"></a>定时任务实现</h3><p>先实现一个自己的任务类，需要实现elastic-job提供的SimpleJob接口，实现它的execute(ShardingContext shardingContext)方法</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Slf4j</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyElasticJob</span> <span class="token keyword">implements</span> <span class="token class-name">SimpleJob</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyElasticJob</span> <span class="token keyword">implements</span> <span class="token class-name">SimpleJob</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">execute</span><span class="token punctuation">(</span>ShardingContext shardingContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">execute</span><span class="token punctuation">(</span>ShardingContext shardingContext<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token comment" spellcheck="true">//打印出任务相关信息，JobParameter用于传递任务的ID</span>
-        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"任务名：{}, 片数：{}, id={}"</span><span class="token punctuation">,</span> shardingContext<span class="token punctuation">.</span><span class="token function">getJobName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> shardingContext<span class="token punctuation">.</span><span class="token function">getShardingTotalCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"任务名：&amp;#123;&amp;#125;, 片数：&amp;#123;&amp;#125;, id=&amp;#123;&amp;#125;"</span><span class="token punctuation">,</span> shardingContext<span class="token punctuation">.</span><span class="token function">getJobName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> shardingContext<span class="token punctuation">.</span><span class="token function">getShardingTotalCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
                 shardingContext<span class="token punctuation">.</span><span class="token function">getJobParameter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>接下来实现一个分布式的任务监听器，如果任务有分片，分布式监听器会在总的任务开始前执行一次，结束时执行一次。监听器在之前的ElasticJobConfig已经注册到了Spring容器之中。</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobListener</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractDistributeOnceElasticJobListener</span> <span class="token punctuation">{</span>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobListener</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractDistributeOnceElasticJobListener</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
     <span class="token keyword">private</span> TaskRepository taskRepository<span class="token punctuation">;</span>
 
-    <span class="token keyword">public</span> <span class="token function">ElasticJobListener</span><span class="token punctuation">(</span><span class="token keyword">long</span> startedTimeoutMilliseconds<span class="token punctuation">,</span> <span class="token keyword">long</span> completedTimeoutMilliseconds<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">ElasticJobListener</span><span class="token punctuation">(</span><span class="token keyword">long</span> startedTimeoutMilliseconds<span class="token punctuation">,</span> <span class="token keyword">long</span> completedTimeoutMilliseconds<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">super</span><span class="token punctuation">(</span>startedTimeoutMilliseconds<span class="token punctuation">,</span> completedTimeoutMilliseconds<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doBeforeJobExecutedAtLastStarted</span><span class="token punctuation">(</span>ShardingContexts shardingContexts<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doBeforeJobExecutedAtLastStarted</span><span class="token punctuation">(</span>ShardingContexts shardingContexts<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doAfterJobExecutedAtLastCompleted</span><span class="token punctuation">(</span>ShardingContexts shardingContexts<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doAfterJobExecutedAtLastCompleted</span><span class="token punctuation">(</span>ShardingContexts shardingContexts<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token comment" spellcheck="true">//任务执行完成后更新状态为已执行</span>
         JobTask jobTask <span class="token operator">=</span> taskRepository<span class="token punctuation">.</span><span class="token function">findOne</span><span class="token punctuation">(</span>Long<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>shardingContexts<span class="token punctuation">.</span><span class="token function">getJobParameter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         jobTask<span class="token punctuation">.</span><span class="token function">setStatus</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         taskRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>jobTask<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>实现一个ElasticJobHandler，用于向Elastic-job中添加指定的作业配置，作业配置分为3级，分别是JobCoreConfiguration，JobTypeConfiguration和LiteJobConfiguration。LiteJobConfiguration使用JobTypeConfiguration，JobTypeConfiguration使用JobCoreConfiguration，层层嵌套。</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobHandler</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobHandler</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
     <span class="token keyword">private</span> ZookeeperRegistryCenter registryCenter<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
@@ -527,10 +527,10 @@
                                                                        Class<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">SimpleJob</span><span class="token operator">></span> jobClass<span class="token punctuation">,</span>
                                                                        <span class="token keyword">int</span> shardingTotalCount<span class="token punctuation">,</span>
                                                                        String cron<span class="token punctuation">,</span>
-                                                                       String id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                                                                       String id<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> LiteJobConfiguration<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SimpleJobConfiguration</span><span class="token punctuation">(</span>
                 JobCoreConfiguration<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span>jobName<span class="token punctuation">,</span> cron<span class="token punctuation">,</span> shardingTotalCount<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">jobParameter</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> jobClass<span class="token punctuation">.</span><span class="token function">getCanonicalName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token comment" spellcheck="true">/**
      * 添加一个定时任务
@@ -539,18 +539,18 @@
      * @param cron               表达式
      * @param shardingTotalCount 分片数
      */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addJob</span><span class="token punctuation">(</span>String jobName<span class="token punctuation">,</span> String cron<span class="token punctuation">,</span> Integer shardingTotalCount<span class="token punctuation">,</span> String id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addJob</span><span class="token punctuation">(</span>String jobName<span class="token punctuation">,</span> String cron<span class="token punctuation">,</span> Integer shardingTotalCount<span class="token punctuation">,</span> String id<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         LiteJobConfiguration jobConfig <span class="token operator">=</span> <span class="token function">simpleJobConfigBuilder</span><span class="token punctuation">(</span>jobName<span class="token punctuation">,</span> MyElasticJob<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> shardingTotalCount<span class="token punctuation">,</span> cron<span class="token punctuation">,</span> id<span class="token punctuation">)</span>
                 <span class="token punctuation">.</span><span class="token function">overwrite</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
         <span class="token keyword">new</span> <span class="token class-name">SpringJobScheduler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MyElasticJob</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> registryCenter<span class="token punctuation">,</span> jobConfig<span class="token punctuation">,</span> jobEventConfiguration<span class="token punctuation">,</span> elasticJobListener<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>到这里，elastic-job的注册中心，数据源相关配置，以及动态添加的逻辑已经做完了，接下来在service中调用上面写好的方法，验证功能是否正常。</p>
 <p>编写一个ElasticJobService类，扫描数据库中状态为0的任务，并且把这些任务添加到Elastic-job中，这里的相关数据库操作使用了spring-data-jpa，dao层相关代码就不贴了，可以在源码中查看。</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobService</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobService</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
     <span class="token keyword">private</span> ElasticJobHandler jobHandler<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
@@ -559,35 +559,35 @@
     <span class="token comment" spellcheck="true">/**
      * 扫描db，并添加任务
      */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">scanAddJob</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">scanAddJob</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         Specification query <span class="token operator">=</span> <span class="token punctuation">(</span>Specification<span class="token operator">&lt;</span>JobTask<span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">(</span>root<span class="token punctuation">,</span> criteriaQuery<span class="token punctuation">,</span> criteriaBuilder<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> criteriaBuilder
                 <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span>criteriaBuilder<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"status"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         List<span class="token operator">&lt;</span>JobTask<span class="token operator">></span> jobTasks <span class="token operator">=</span> taskRepository<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        jobTasks<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>jobTask <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        jobTasks<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>jobTask <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
             Long current <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             String jobName <span class="token operator">=</span> <span class="token string">"job"</span> <span class="token operator">+</span> jobTask<span class="token punctuation">.</span><span class="token function">getSendTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             String cron<span class="token punctuation">;</span>
             <span class="token comment" spellcheck="true">//说明消费未发送，但是已经过了消息的发送时间，调整时间继续执行任务</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>jobTask<span class="token punctuation">.</span><span class="token function">getSendTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> current<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>jobTask<span class="token punctuation">.</span><span class="token function">getSendTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> current<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
                 <span class="token comment" spellcheck="true">//设置为一分钟之后执行，把Date转换为cron表达式</span>
                 cron <span class="token operator">=</span> CronUtils<span class="token punctuation">.</span><span class="token function">getCron</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>current <span class="token operator">+</span> <span class="token number">60000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
                 cron <span class="token operator">=</span> CronUtils<span class="token punctuation">.</span><span class="token function">getCron</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>jobTask<span class="token punctuation">.</span><span class="token function">getSendTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
             jobHandler<span class="token punctuation">.</span><span class="token function">addJob</span><span class="token punctuation">(</span>jobName<span class="token punctuation">,</span> cron<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> String<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>jobTask<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在Junit中添加几条测试数据</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span>SpringJUnit4ClassRunner<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@SpringBootTest</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JobTaskTest</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JobTaskTest</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
     <span class="token keyword">private</span> TaskRepository taskRepository<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token comment" spellcheck="true">//生成几个任务，第一任务在三分钟之后</span>
         Long unixTime <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">60000</span><span class="token punctuation">;</span>
         JobTask task <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JobTask</span><span class="token punctuation">(</span><span class="token string">"test-msg-1"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> unixTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -601,31 +601,31 @@
         unixTime <span class="token operator">+=</span> <span class="token number">60000</span><span class="token punctuation">;</span>
         task <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JobTask</span><span class="token punctuation">(</span><span class="token string">"test-msg-4"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> unixTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
         taskRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>task<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>此时，数据库中多了四条状态为0的数据</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqelwgxnauj30bm02jglp.jpg" alt></p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqelwgxnauj30bm02jglp.jpg" alt=""></p>
 <p>最后，就可以开始验证整个流程了，代码如下</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobApplication</span> <span class="token keyword">implements</span> <span class="token class-name">CommandLineRunner</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticJobApplication</span> <span class="token keyword">implements</span> <span class="token class-name">CommandLineRunner</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
     <span class="token keyword">private</span> ElasticJobService elasticJobService<span class="token punctuation">;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>ElasticJobApplication<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> strings<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> strings<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         elasticJobService<span class="token punctuation">.</span><span class="token function">scanAddJob</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到，在启动过程中，多个任务被加入到了Elastic-job中，并且一小段时间之后，任务一次执行，执行成功之后，因为我们配置了监听器，会打印数据库的更新SQL，当任务执行完成，再查看数据库，发现状态也更改成功。数据库中同时也会多出两张表JOB_EXECUTION_LOG，JOB_STATUS_TRACE_LOG，这是我们之前配置的JobEventConfiguration，通过数据源持久化了作业配置的相关数据，这两张表的数据可以供Elastic-job提供的运维平台使用，具体请查看官方文档。</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fqelzzptz1j31kw0snqku.jpg" alt></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fqelzzptz1j31kw0snqku.jpg" alt=""></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>至此，整个流程就已经走完了，整个demo中主要用到了Elastic-job和spring-data-jpa相关的技术，作为demo，肯定会有一些缺陷，没考虑到的地方，可以根据自己的业务场景进行改进。</p>
-<p>最后，附上github源码，欢迎star，一起交流。上面涉及到的数据库，请自行创建，表会自动生成。<a href="https://github.com/LuoLiangDSGA/SpringBoot-Learning/tree/master/boot-elasticjob" target="_blank" rel="noopener">boot-elasticjob</a></p>
+<p>最后，附上github源码，欢迎star，一起交流。上面涉及到的数据库，请自行创建，表会自动生成。<a target="_blank" rel="noopener" href="https://github.com/LuoLiangDSGA/SpringBoot-Learning/tree/master/boot-elasticjob">boot-elasticjob</a></p>
 
             </div>
             <hr/>
@@ -933,7 +933,7 @@ Vue+SpringBoot实现前后端分离的文件上传这篇文章需要一定V
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

@@ -262,7 +262,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        575
+                        589
                     </div>
                     
 
@@ -311,7 +311,7 @@
 </ul>
 </li>
 </ol>
-<a id="more"></a>
+<span id="more"></span>
 <h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
 <li>新建一个SpringBoot工程</li>
 </ol>
@@ -327,7 +327,7 @@
 <li>编写配置</li>
 </ol>
 <pre><code>server:
-  port: ${EUREKA_PORT:8761}
+  port: $&#123;EUREKA_PORT:8761&#125;
 
 spring:
   application:
@@ -338,7 +338,7 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      default-zone: http://${EUREKA_ZONE_HOST:localhost}:${EUREKA_ZONE_PORT:8761}/eureka/
+      default-zone: http://$&#123;EUREKA_ZONE_HOST:localhost&#125;:$&#123;EUREKA_ZONE_PORT:8761&#125;/eureka/
   # 开发环境关闭自我保护模式
   server:
     enable-self-preservation: false
@@ -351,19 +351,19 @@ logging:
 <p>在启动类上添加<code>@EnableEurekaServer</code>注解，用于启动</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
 <span class="token annotation punctuation">@EnableEurekaServer</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RegistryApplication</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RegistryApplication</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>RegistryApplication<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol start="4">
 <li>启动应用  </li>
 </ol>
 <p>启动应用后，访问localhost:8761，就可以看到Eureka的界面了，可以看到此时还没有任何服务注册。</p>
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6nhb9ko7ej31qb0u0wm1.jpg" alt></p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6nhb9ko7ej31qb0u0wm1.jpg" alt=""></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Eureka的基本搭建比较简单，但是单注册中心在生产环境中不能做到高可用，一旦挂了就会影响整个系统，所以在线上需要多个Eureka互相注册以达到高可用。</p>
 
             </div>
@@ -580,7 +580,7 @@ logging:
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

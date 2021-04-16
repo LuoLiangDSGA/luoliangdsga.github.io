@@ -351,14 +351,14 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        776
+                        860
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        4 分
                     </div>
                     
                 
@@ -391,7 +391,7 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
 <li>自动检测现有数据源</li>
 <li>创建并注册SQLSessionFactory的实例，该实例使用SqlSessionFactoryBean将该数据源作为输入</li>
 <li>创建并注册在SqlSessionFactory中获取的SqlSessionTemplate实例</li>
-<li>自动扫描Mapper并链接到SqlSessionTemplate，并将它们注册到Spring上下文中，这样它们就能在Bean中被注入<a id="more"></a>
+<li>自动扫描Mapper并链接到SqlSessionTemplate，并将它们注册到Spring上下文中，这样它们就能在Bean中被注入<span id="more"></span>
 <blockquote>
 <p>引入依赖之后，还需要在配置文件中添加JDBC基本的配置</p>
 </blockquote>
@@ -416,14 +416,14 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
 <p>配置完成之后，编写数据访问层(DAO)，也就是<code>Mybatis</code>文档上写的<code>Mapper</code>，提供对<code>User</code>表的<code>CRUD</code>操作，这里使用的是注解的方式，需要在类名上添加<code>@Mapper</code>注解</p>
 </blockquote>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Mapper</span>
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserMapper</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserMapper</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">/**
      * 根据ID查询用户
      *
      * @param id
      * @return
      */</span>
-    <span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where id = #{id}"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where id = #&amp;#123;id&amp;#125;"</span><span class="token punctuation">)</span>
     User <span class="token function">findById</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token comment" spellcheck="true">/**
@@ -431,7 +431,7 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
      *
      * @param user
      */</span>
-    <span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"insert into user(name, password, state, address, email) values (#{name}, #{password}, #{state}, #{address}, #{email})"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"insert into user(name, password, state, address, email) values (#&amp;#123;name&amp;#125;, #&amp;#123;password&amp;#125;, #&amp;#123;state&amp;#125;, #&amp;#123;address&amp;#125;, #&amp;#123;email&amp;#125;)"</span><span class="token punctuation">)</span>
     <span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token comment" spellcheck="true">/**
@@ -439,10 +439,10 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
      *
      * @param user
      */</span>
-    <span class="token annotation punctuation">@Update</span><span class="token punctuation">(</span><span class="token string">"update user set name=#{name},password=#{password},state=#{state},address=#{address},email=#{email} where id=#{id}"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Update</span><span class="token punctuation">(</span><span class="token string">"update user set name=#&amp;#123;name&amp;#125;,password=#&amp;#123;password&amp;#125;,state=#&amp;#123;state&amp;#125;,address=#&amp;#123;address&amp;#125;,email=#&amp;#123;email&amp;#125; where id=#&amp;#123;id&amp;#125;"</span><span class="token punctuation">)</span>
     <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token annotation punctuation">@Delete</span><span class="token punctuation">(</span><span class="token string">"delete from user where id = #{id}"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Delete</span><span class="token punctuation">(</span><span class="token string">"delete from user where id = #&amp;#123;id&amp;#125;"</span><span class="token punctuation">)</span>
     <span class="token keyword">void</span> <span class="token function">delete</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token comment" spellcheck="true">/**
@@ -451,19 +451,19 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
      * @param state
      * @return
      */</span>
-    <span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where id = #{state}"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where id = #&amp;#123;state&amp;#125;"</span><span class="token punctuation">)</span>
     List<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token function">selectList</span><span class="token punctuation">(</span>Integer state<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>编写测试方法对Mapper进行简单的测试</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserTest</span> <span class="token keyword">extends</span> <span class="token class-name">BootMybatisApplicationTests</span> <span class="token punctuation">{</span>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserTest</span> <span class="token keyword">extends</span> <span class="token class-name">BootMybatisApplicationTests</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Logger LOGGER <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>UserTest<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
     <span class="token keyword">private</span> UserMapper userMapper<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testInsertUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testInsertUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         User user <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         user<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"thor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         user<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"1234"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -471,10 +471,10 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
         user<span class="token punctuation">.</span><span class="token function">setEmail</span><span class="token punctuation">(</span><span class="token string">"1234@gmail.com"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         user<span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         userMapper<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testUpdateUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testUpdateUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         User user <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         user<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         user<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"thor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -483,26 +483,26 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
         user<span class="token punctuation">.</span><span class="token function">setEmail</span><span class="token punctuation">(</span><span class="token string">"1234@gmail.com"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         user<span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         userMapper<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testFindById</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testFindById</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         User user <span class="token operator">=</span> userMapper<span class="token punctuation">.</span><span class="token function">findById</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         Assert<span class="token punctuation">.</span><span class="token function">assertNotEquals</span><span class="token punctuation">(</span>user<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
         LOGGER<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testDeleteUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testDeleteUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         userMapper<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testSelectList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testSelectList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         List<span class="token operator">&lt;</span>User<span class="token operator">></span> list <span class="token operator">=</span> userMapper<span class="token punctuation">.</span><span class="token function">selectList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         LOGGER<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>list<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="End"><a href="#End" class="headerlink" title="End"></a>End</h3><p>本文使用SpringBoot集成了Mybatis，但只简单的使用了Mybatis，编写了一个单表的栗子，使用的也是Annotation的形式，在日常开发中还是xml+interface的形式更方便编码。实际上Mybatis的功能非常强大，本文没有写出来，感兴趣请查阅官方文档。</p>
@@ -815,7 +815,7 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

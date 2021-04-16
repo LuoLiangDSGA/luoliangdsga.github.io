@@ -383,7 +383,7 @@ Redis 3.2.9
 <li>Redis 3.2.9</li>
 <li>一台机器，Linux或者macOS  </li>
 </ul>
-<p>我本机是macOS，所以这里以macOS为例。<br><a id="more"></a></p>
+<p>我本机是macOS，所以这里以macOS为例。<br><span id="more"></span></p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><pre class="line-numbers language-java"><code class="language-java">$ wget http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>download<span class="token punctuation">.</span>redis<span class="token punctuation">.</span>io<span class="token operator">/</span>releases<span class="token operator">/</span>redis<span class="token operator">-</span><span class="token number">3.2</span><span class="token punctuation">.</span><span class="token number">9</span><span class="token punctuation">.</span>tar<span class="token punctuation">.</span>gz
 $ tar xzf
 $ cd redis<span class="token operator">-</span><span class="token number">3.2</span><span class="token punctuation">.</span><span class="token number">9</span><span class="token operator">/</span>
@@ -419,7 +419,7 @@ $ <span class="token punctuation">.</span><span class="token punctuation">.</spa
 <pre class="line-numbers language-java"><code class="language-java"><span class="token punctuation">.</span>/redis<span class="token operator">-</span>trib<span class="token punctuation">.</span>rb create <span class="token operator">--</span>replicas <span class="token number">1</span> <span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">7000</span> <span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">7001</span> \
 <span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">7002</span> <span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">7003</span> <span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">7004</span> <span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">7005</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>这个命令在这里用于创建一个新的集群，–replicas 1表示为集群中的每个主节点创建一个从节点。redis-trib这时候会打印出一份预想中的配置给你看，如果觉得没有问题，输入yes，集群就开始创建了。<br>如下图所示，表示集群创建成功：<br><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fr2ukhfnl6j30ru16o16y.jpg" alt></p>
+<p>这个命令在这里用于创建一个新的集群，–replicas 1表示为集群中的每个主节点创建一个从节点。redis-trib这时候会打印出一份预想中的配置给你看，如果觉得没有问题，输入yes，集群就开始创建了。<br>如下图所示，表示集群创建成功：<br><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fr2ukhfnl6j30ru16o16y.jpg" alt=""></p>
 <h4 id="create-cluster脚本"><a href="#create-cluster脚本" class="headerlink" title="create-cluster脚本"></a>create-cluster脚本</h4><p>如果觉得这种方式太麻烦，也可以通过Redis源码目录下的utils/create-cluster文件夹中的create-cluster脚本创建集群。通过这个脚本可以创建一个3主3从的集群，并且端口默认从30001开始。但是通过这种方式就不能学习到那么多Redis集群的细节。<br>这个脚本主要有以下命令：</p>
 <ul>
 <li>create-cluster start</li>
@@ -444,7 +444,7 @@ OK
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看出Redis会根据key计算对应的slot，然后跳转到对应的node上去，和我们之前介绍的内容一致。</p>
 <h4 id="至此，一个3主3从的Redis集群就搭建完成了，接下来可能会写一篇使用Docker搭建Redis集群的文章。"><a href="#至此，一个3主3从的Redis集群就搭建完成了，接下来可能会写一篇使用Docker搭建Redis集群的文章。" class="headerlink" title="至此，一个3主3从的Redis集群就搭建完成了，接下来可能会写一篇使用Docker搭建Redis集群的文章。"></a>至此，一个3主3从的Redis集群就搭建完成了，接下来可能会写一篇使用Docker搭建Redis集群的文章。</h4><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="http://www.redis.cn/" target="_blank" rel="noopener">http://www.redis.cn/</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.redis.cn/">http://www.redis.cn/</a></li>
 </ul>
 
             </div>
@@ -749,7 +749,7 @@ Re
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

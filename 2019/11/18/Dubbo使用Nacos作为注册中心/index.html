@@ -265,14 +265,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.7k
+                        1.8k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        8 分
+                        9 分
                     </div>
                     
                 
@@ -289,7 +289,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="Dubbo使用Nacos作为注册中心"><a href="#Dubbo使用Nacos作为注册中心" class="headerlink" title="Dubbo使用Nacos作为注册中心"></a>Dubbo使用Nacos作为注册中心</h1><h2 id="Nacos是什么"><a href="#Nacos是什么" class="headerlink" title="Nacos是什么"></a>Nacos是什么</h2><p>官方定义是：Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。<br>Nacos是阿里搞出来的又一个开源项目，可以用于替代其他的注册中心，众所周知Eureka已经不再更新，目前Nacos已经支持和SpringBoot，Spring Cloud，Dubbo等集成，理论上可以实现不同微服务框架之间相互调用。</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>开始之前需要提前安装Nacos，可以通过构建源码运行或者直接下载打包好的zip文件解压后执行，在开始下面的步骤之前，确保Nacos已经启动，如果没有安装Nacos，请参考<a href="https://nacos.io/en-us/docs/quick-start.html" target="_blank" rel="noopener">Nacos快速入门</a>。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>开始之前需要提前安装Nacos，可以通过构建源码运行或者直接下载打包好的zip文件解压后执行，在开始下面的步骤之前，确保Nacos已经启动，如果没有安装Nacos，请参考<a target="_blank" rel="noopener" href="https://nacos.io/en-us/docs/quick-start.html">Nacos快速入门</a>。</p>
 <h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><blockquote>
 <p>首先创建一个父子结构的maven工程，大致如下：</p>
 </blockquote>
@@ -310,7 +310,7 @@
     &lt;groupId&gt;org.boot.dubbo&lt;/groupId&gt;
     &lt;name&gt;Apache Dubbo Spring Boot :: Samples : Registry Nacos&lt;/name&gt;
     &lt;description&gt;Apache Dubbo Spring Boot Registry Nacos Samples&lt;/description&gt;
-    &lt;version&gt;${revision}&lt;/version&gt;
+    &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
     &lt;packaging&gt;pom&lt;/packaging&gt;
 
     &lt;modules&gt;
@@ -331,7 +331,7 @@
     &lt;parent&gt;
         &lt;groupId&gt;org.boot.dubbo&lt;/groupId&gt;
         &lt;artifactId&gt;dubbo-spring-boot-registry-nacos&lt;/artifactId&gt;
-        &lt;version&gt;${revision}&lt;/version&gt;
+        &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
         &lt;relativePath&gt;../pom.xml&lt;/relativePath&gt;
     &lt;/parent&gt;
     &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
@@ -353,26 +353,26 @@
         &lt;dependency&gt;
             &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt;
             &lt;artifactId&gt;dubbo-spring-boot-starter&lt;/artifactId&gt;
-            &lt;version&gt;${revision}&lt;/version&gt;
+            &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
         &lt;/dependency&gt;
 
         &lt;!-- Dubbo Registry Nacos --&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt;
             &lt;artifactId&gt;dubbo-registry-nacos&lt;/artifactId&gt;
-            &lt;version&gt;${revision}&lt;/version&gt;
+            &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
         &lt;/dependency&gt;
 
         &lt;dependency&gt;
             &lt;groupId&gt;com.alibaba.nacos&lt;/groupId&gt;
             &lt;artifactId&gt;nacos-client&lt;/artifactId&gt;
-            &lt;version&gt;${nacos.version}&lt;/version&gt;
+            &lt;version&gt;$&#123;nacos.version&#125;&lt;/version&gt;
         &lt;/dependency&gt;
 
         &lt;dependency&gt;
             &lt;groupId&gt;org.boot.dubbo&lt;/groupId&gt;
             &lt;artifactId&gt;dubbo-spring-boot-sample-api&lt;/artifactId&gt;
-            &lt;version&gt;${revision}&lt;/version&gt;
+            &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
         &lt;/dependency&gt;
     &lt;/dependencies&gt;
 
@@ -388,8 +388,8 @@ spring.application.name=dubbo-registry-nacos-provider-sample
 dubbo.scan.base-packages=org.boot.dubbo.nacos.demo.provider.service
 
 # Dubbo Application
-## The default value of dubbo.application.name is ${spring.application.name}
-## dubbo.application.name=${spring.application.name}
+## The default value of dubbo.application.name is $&#123;spring.application.name&#125;
+## dubbo.application.name=$&#123;spring.application.name&#125;
 nacos.server-address = 127.0.0.1
 nacos.port = 8848
 
@@ -399,7 +399,7 @@ dubbo.protocol.name=dubbo
 dubbo.protocol.port=-1
 
 ## Dubbo Registry
-dubbo.registry.address=nacos://${nacos.server-address}:${nacos.port}
+dubbo.registry.address=nacos://$&#123;nacos.server-address&#125;:$&#123;nacos.port&#125;
 
 ## DemoService version
 demo.service.version=1.0.0
@@ -407,42 +407,42 @@ demo.service.version=1.0.0
 </code></pre><blockquote>
 <p>编写示例接口和实现</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">DemoService</span> <span class="token punctuation">{</span>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">DemoService</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
     String <span class="token function">sayHello</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-java"><code class="language-java">
-<span class="token annotation punctuation">@Service</span><span class="token punctuation">(</span>version <span class="token operator">=</span> <span class="token string">"${demo.service.version}"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultDemoService</span> <span class="token keyword">implements</span> <span class="token class-name">DemoService</span> <span class="token punctuation">{</span>
+<span class="token annotation punctuation">@Service</span><span class="token punctuation">(</span>version <span class="token operator">=</span> <span class="token string">"$&amp;#123;demo.service.version&amp;#125;"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultDemoService</span> <span class="token keyword">implements</span> <span class="token class-name">DemoService</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">/**
-     * The default value of ${dubbo.application.name} is ${spring.application.name}
+     * The default value of $&amp;#123;dubbo.application.name&amp;#125; is $&amp;#123;spring.application.name&amp;#125;
      */</span>
-    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"${dubbo.application.name}"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&amp;#123;dubbo.application.name&amp;#125;"</span><span class="token punctuation">)</span>
     <span class="token keyword">private</span> String serviceName<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> String <span class="token function">sayHello</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> String <span class="token function">sayHello</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> String<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"[%s] : Hello, %s"</span><span class="token punctuation">,</span> serviceName<span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里通过Dubbo提供的<code>@Service</code>注解暴露服务，注意和Spring提供的<code>@Service</code>注解区分开。</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@EnableAutoConfiguration</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DubboRegistryNacosProviderBootstrap</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DubboRegistryNacosProviderBootstrap</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">new</span> <span class="token class-name">SpringApplicationBuilder</span><span class="token punctuation">(</span>DubboRegistryNacosProviderBootstrap<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
                 <span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>这时候可以启动提供者，可以看到我们编写的服务以及注册在Nacos中</p>
 </blockquote>
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g929yhj72qj32120u0afr.jpg" alt></p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g929yhj72qj32120u0afr.jpg" alt=""></p>
 <h3 id="创建服务消费者"><a href="#创建服务消费者" class="headerlink" title="创建服务消费者"></a>创建服务消费者</h3><blockquote>
 <p>创建一个web项目用于消费我们刚才提供的服务</p>
 </blockquote>
@@ -453,7 +453,7 @@ demo.service.version=1.0.0
     &lt;parent&gt;
         &lt;groupId&gt;org.boot.dubbo&lt;/groupId&gt;
         &lt;artifactId&gt;dubbo-spring-boot-registry-nacos&lt;/artifactId&gt;
-        &lt;version&gt;${revision}&lt;/version&gt;
+        &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
         &lt;relativePath&gt;../pom.xml&lt;/relativePath&gt;
     &lt;/parent&gt;
     &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
@@ -475,32 +475,32 @@ demo.service.version=1.0.0
         &lt;dependency&gt;
             &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt;
             &lt;artifactId&gt;dubbo-spring-boot-starter&lt;/artifactId&gt;
-            &lt;version&gt;${revision}&lt;/version&gt;
+            &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
         &lt;/dependency&gt;
 
         &lt;!-- Dubbo Registry Nacos --&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;org.apache.dubbo&lt;/groupId&gt;
             &lt;artifactId&gt;dubbo-registry-nacos&lt;/artifactId&gt;
-            &lt;version&gt;${revision}&lt;/version&gt;
+            &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
         &lt;/dependency&gt;
 
         &lt;dependency&gt;
             &lt;groupId&gt;com.alibaba.nacos&lt;/groupId&gt;
             &lt;artifactId&gt;nacos-client&lt;/artifactId&gt;
-            &lt;version&gt;${nacos.version}&lt;/version&gt;
+            &lt;version&gt;$&#123;nacos.version&#125;&lt;/version&gt;
         &lt;/dependency&gt;
 
         &lt;dependency&gt;
             &lt;groupId&gt;org.boot.dubbo&lt;/groupId&gt;
             &lt;artifactId&gt;dubbo-spring-boot-sample-api&lt;/artifactId&gt;
-            &lt;version&gt;${revision}&lt;/version&gt;
+            &lt;version&gt;$&#123;revision&#125;&lt;/version&gt;
         &lt;/dependency&gt;
 
         &lt;dependency&gt;
             &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
             &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-            &lt;version&gt;${spring-boot.version}&lt;/version&gt;
+            &lt;version&gt;$&#123;spring-boot.version&#125;&lt;/version&gt;
         &lt;/dependency&gt;
     &lt;/dependencies&gt;
 
@@ -524,7 +524,7 @@ nacos:
 
 dubbo:
   registry:
-    address: nacos://${nacos.host}:${nacos.port}
+    address: nacos://$&#123;nacos.host&#125;:$&#123;nacos.port&#125;
 
 server:
   port: 8081
@@ -533,22 +533,22 @@ server:
 </blockquote>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
 <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/demo"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DemoController</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DemoController</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
-    <span class="token annotation punctuation">@Reference</span><span class="token punctuation">(</span>version <span class="token operator">=</span> <span class="token string">"${demo.service.version}"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Reference</span><span class="token punctuation">(</span>version <span class="token operator">=</span> <span class="token string">"$&amp;#123;demo.service.version&amp;#125;"</span><span class="token punctuation">)</span>
     <span class="token keyword">private</span> DemoService demoService<span class="token punctuation">;</span>
 
-    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/{name}"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> String <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span> String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/&amp;#123;name&amp;#125;"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span> String name<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> demoService<span class="token punctuation">.</span><span class="token function">sayHello</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里直接通过<code>@Reference</code>注解进行服务调用，比xml方式更加优雅方便。</p>
 <h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>直接通过浏览器访问/demo/{name}这个url进行访问即可，网页上显示<code>hello,xxx</code>表示服务消费成功。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>可以看到Dubbo重新维护之后，非常重视生态的建设，并且也在积极探索，Dubbo现在也是Apache基金会的孵化项目，未来可期，是除了Spring Cloud 之后又一个不错的选择。不同于其他注册中心的是，Nacos在阿里的支持下，生态发展得相当不错，并且已经可以用于生产环境。</p>
-<h4 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h4><p><a href="https://github.com/LuoLiangDSGA/spring-learning/tree/master/boot-dubbo-registry-nacos" target="_blank" rel="noopener">github</a></p>
+<h4 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h4><p><a target="_blank" rel="noopener" href="https://github.com/LuoLiangDSGA/spring-learning/tree/master/boot-dubbo-registry-nacos">github</a></p>
 
             </div>
             <hr/>
@@ -762,7 +762,7 @@ SpringMVC中给我们提供了很多方便的注解用于绑定数据，比如@R
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

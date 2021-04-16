@@ -268,7 +268,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        833
+                        861
                     </div>
                     
 
@@ -299,12 +299,12 @@
 <p>定义一个任务的bean</p>
 </blockquote>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TaskScheduler</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TaskScheduler</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Scheduled</span><span class="token punctuation">(</span>cron <span class="token operator">=</span> <span class="token string">"0/5 * * * * ?"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendShareWechatMessageTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendShareWechatMessageTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         <span class="token comment" spellcheck="true">// 任务代码</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里要说明两点:</p>
 <ol>
@@ -316,13 +316,13 @@
 </blockquote>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@EnableCaching</span>
 <span class="token annotation punctuation">@SpringBootApplication</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Application<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在我做完上述步骤, 我的定时任务并没有生效, 我反复确认我的配置没有问题. 同时, 也采用了面向谷歌编程的方法, 看到很多解决方法本质都是配置问题, 但是我的配置并没有问题.于是, 我通过debug发现了问题所在:</p>
 <blockquote>
@@ -330,35 +330,35 @@
 </blockquote>
 <pre><code>Class&lt;?&gt; targetClass = AopProxyUtils.ultimateTargetClass(bean);
 if (!this.nonAnnotatedClasses.contains(targetClass) &amp;&amp;
-        AnnotationUtils.isCandidateClass(targetClass, Arrays.asList(Scheduled.class, Schedules.class))) {
+        AnnotationUtils.isCandidateClass(targetClass, Arrays.asList(Scheduled.class, Schedules.class))) &#123;
     Map&lt;Method, Set&lt;Scheduled&gt;&gt; annotatedMethods = MethodIntrospector.selectMethods(targetClass,
-            (MethodIntrospector.MetadataLookup&lt;Set&lt;Scheduled&gt;&gt;) method -&gt; {
+            (MethodIntrospector.MetadataLookup&lt;Set&lt;Scheduled&gt;&gt;) method -&gt; &#123;
                 Set&lt;Scheduled&gt; scheduledMethods = AnnotatedElementUtils.getMergedRepeatableAnnotations(
                         method, Scheduled.class, Schedules.class);
                 return (!scheduledMethods.isEmpty() ? scheduledMethods : null);
-            });
-    if (annotatedMethods.isEmpty()) {
+            &#125;);
+    if (annotatedMethods.isEmpty()) &#123;
         this.nonAnnotatedClasses.add(targetClass);
-        if (logger.isTraceEnabled()) {
+        if (logger.isTraceEnabled()) &#123;
             logger.trace(&quot;No @Scheduled annotations found on bean class: &quot; + targetClass);
-        }
-    }
-    else {
+        &#125;
+    &#125;
+    else &#123;
         // Non-empty set of methods
         annotatedMethods.forEach((method, scheduledMethods) -&gt;
                 scheduledMethods.forEach(scheduled -&gt; processScheduled(scheduled, method, bean)));
-        if (logger.isTraceEnabled()) {
+        if (logger.isTraceEnabled()) &#123;
             logger.trace(annotatedMethods.size() + &quot; @Scheduled methods processed on bean &#39;&quot; + beanName +
                     &quot;&#39;: &quot; + annotatedMethods);
-        }
-    }
-}
+        &#125;
+    &#125;
+&#125;
 return bean;
 </code></pre><p>}</p>
 <pre><code>
 `ScheduledAnnotationBeanPostProcessor`是`spring-task`中处理`@Scheduled`注解任务的核心类,`ScheduledAnnotationBeanPostProcessor`实现了spring的`BeanPostProcessor`接口, 上面这个方法便是`BeanPostProcessor`中的重写方法, 简单来说, 这个方法在spring容器初始化完成之后会进行回调, 这个方法主要就是在回调时扫描回调的bean中,是否有`@Scheduled`注解的方法, 如果有就会加到定时任务中.但是可以看到最开始有一个判断, 有几个bean不会进行扫描, 其中一个便是`TaskScheduler`, 看到这里, 就知道为啥我定义的定时任务没生效了, 因为我定义定时任务的类也叫`TaskScheduler`, 但为啥在老的应用里就是正常的呢, 再看看老项目里相同的代码:
 
-</code></pre><p>@Override<br>public Object postProcessAfterInitialization(final Object bean, String beanName) {<br>    Class&lt;?&gt; targetClass = AopProxyUtils.ultimateTargetClass(bean);<br>    if (!this.nonAnnotatedClasses.contains(targetClass)) {<br>        Map&lt;Method, Set<scheduled>&gt; annotatedMethods = MethodIntrospector.selectMethods(targetClass,<br>                new MethodIntrospector.MetadataLookup&lt;Set<scheduled>&gt;() {<br>                    @Override<br>                    public Set<scheduled> inspect(Method method) {<br>                        Set<scheduled> scheduledMethods = AnnotatedElementUtils.getMergedRepeatableAnnotations(<br>                                method, Scheduled.class, Schedules.class);<br>                        return (!scheduledMethods.isEmpty() ? scheduledMethods : null);<br>                    }<br>                });<br>        if (annotatedMethods.isEmpty()) {<br>            this.nonAnnotatedClasses.add(targetClass);<br>            if (logger.isTraceEnabled()) {<br>                logger.trace(“No @Scheduled annotations found on bean class: “ + bean.getClass());<br>            }<br>        }<br>        else {<br>            // Non-empty set of methods<br>            for (Map.Entry&lt;Method, Set<scheduled>&gt; entry : annotatedMethods.entrySet()) {<br>                Method method = entry.getKey();<br>                for (Scheduled scheduled : entry.getValue()) {<br>                    processScheduled(scheduled, method, bean);<br>                }<br>            }<br>            if (logger.isDebugEnabled()) {<br>                logger.debug(annotatedMethods.size() + “ @Scheduled methods processed on bean ‘“ + beanName +<br>                        “‘: “ + annotatedMethods);<br>            }<br>        }<br>    }<br>    return bean;<br>}<br><code>`</code><br>可以看到, 老的spring代码里并没有上述判断</scheduled></scheduled></scheduled></scheduled></scheduled></p>
+</code></pre><p>@Override<br>public Object postProcessAfterInitialization(final Object bean, String beanName) {<br>    Class&lt;?&gt; targetClass = AopProxyUtils.ultimateTargetClass(bean);<br>    if (!this.nonAnnotatedClasses.contains(targetClass)) {<br>        Map&lt;Method, Set<Scheduled>&gt; annotatedMethods = MethodIntrospector.selectMethods(targetClass,<br>                new MethodIntrospector.MetadataLookup&lt;Set<Scheduled>&gt;() {<br>                    @Override<br>                    public Set<Scheduled> inspect(Method method) {<br>                        Set<Scheduled> scheduledMethods = AnnotatedElementUtils.getMergedRepeatableAnnotations(<br>                                method, Scheduled.class, Schedules.class);<br>                        return (!scheduledMethods.isEmpty() ? scheduledMethods : null);<br>                    }<br>                });<br>        if (annotatedMethods.isEmpty()) {<br>            this.nonAnnotatedClasses.add(targetClass);<br>            if (logger.isTraceEnabled()) {<br>                logger.trace(“No @Scheduled annotations found on bean class: “ + bean.getClass());<br>            }<br>        }<br>        else {<br>            // Non-empty set of methods<br>            for (Map.Entry&lt;Method, Set<Scheduled>&gt; entry : annotatedMethods.entrySet()) {<br>                Method method = entry.getKey();<br>                for (Scheduled scheduled : entry.getValue()) {<br>                    processScheduled(scheduled, method, bean);<br>                }<br>            }<br>            if (logger.isDebugEnabled()) {<br>                logger.debug(annotatedMethods.size() + “ @Scheduled methods processed on bean ‘“ + beanName +<br>                        “‘: “ + annotatedMethods);<br>            }<br>        }<br>    }<br>    return bean;<br>}<br><code>`</code><br>可以看到, 老的spring代码里并没有上述判断</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>到这里, 问题解决, 这个问题花了好几个小时去找原因, 特意记录一次, 从此网上又多了一个<code>spring-task</code>不生效的原因.</p>
 
             </div>
@@ -576,7 +576,7 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

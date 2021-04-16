@@ -266,7 +266,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        752
+                        774
                     </div>
                     
 
@@ -321,7 +321,7 @@ Splitter<span class="token punctuation">.</span><span class="token function">on<
 <li>构造一个简单的URI</li>
 </ul>
 <pre><code>@Test
-public void constructUri() {
+public void constructUri() &#123;
     UriComponents uriComponents = UriComponentsBuilder.newInstance()
             .scheme(&quot;http&quot;).host(&quot;www.github.com&quot;).path(&quot;/constructing-uri&quot;)
             .queryParam(&quot;name&quot;, &quot;tom&quot;)
@@ -330,7 +330,7 @@ public void constructUri() {
     assertEquals(&quot;/constructing-uri&quot;, uriComponents.getPath());
     assertEquals(&quot;name=tom&quot;, uriComponents.getQuery());
     assertEquals(&quot;/constructing-uri&quot;, uriComponents.toUriString());
-}
+&#125;
 </code></pre><p><code>uriComponents</code>可以使用<code>toUriString()</code>方法去输出拼接好的URI地址，这里的结果是：</p>
 <pre><code>http://www.github.com/constructing-uri?name=tom
 </code></pre><p>可以看到<code>UriComponentsBuilder</code>是流式API的形式，代码也非常容易理解:</p>
@@ -344,42 +344,42 @@ public void constructUri() {
 </ul>
 <p>有些参数中携带了特殊符号，这时候需要进行编码，<code>UriComponentsBuilder</code>编码也很简单：</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">constructUriEncoded</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">constructUriEncoded</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     UriComponents uriComponents <span class="token operator">=</span> UriComponentsBuilder<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
             <span class="token punctuation">.</span><span class="token function">scheme</span><span class="token punctuation">(</span><span class="token string">"http"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"www.github.com"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/constructing uri"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"/constructing%20uri"</span><span class="token punctuation">,</span> uriComponents<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>通过模板构造URI</li>
 </ul>
 <p>我们可以通过占位符的方式来构造URI，这种方式是Spring中常常使用的方式，如果用过RestTemplate，那么一定不会陌生。</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">constructUriFromTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">constructUriFromTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     UriComponents uriComponents <span class="token operator">=</span> UriComponentsBuilder<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">scheme</span><span class="token punctuation">(</span><span class="token string">"http"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"www.github.com"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/{path-name}"</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">"name={keyword}"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">scheme</span><span class="token punctuation">(</span><span class="token string">"http"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"www.github.com"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/&amp;#123;path-name&amp;#125;"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">"name=&amp;#123;keyword&amp;#125;"</span><span class="token punctuation">)</span>
             <span class="token punctuation">.</span><span class="token function">buildAndExpand</span><span class="token punctuation">(</span><span class="token string">"constructing-uri"</span><span class="token punctuation">,</span> <span class="token string">"tomcat"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"/constructing-uri"</span><span class="token punctuation">,</span> uriComponents<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>从已有的URI中获取信息</li>
 </ul>
 <p>既然存在自己构造URI，那么也有从已知的URI中获取信息的需求，<code>UriComponentsBuilder</code>也可以做到</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fromUriString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fromUriString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     UriComponents result <span class="token operator">=</span> UriComponentsBuilder
             <span class="token punctuation">.</span><span class="token function">fromUriString</span><span class="token punctuation">(</span><span class="token string">"https://www.github.com/constructing-uri?name=tomcat"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     MultiValueMap<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> expectedQueryParams <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedMultiValueMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     expectedQueryParams<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">,</span> <span class="token string">"tomcat"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">assertEquals</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">getQueryParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> expectedQueryParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>使用<code>fromUriString()</code>方法，便可以把一个字符串URI转换为<code>UriComponents</code>对象，并且可以通过<code>getQueryParams()</code>方法取出参数。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>UriComponentsBuilder</code>的用法远远不止这些，这些例子只是我日常开发中常常用到的，更多的可以参考<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html" target="_blank" rel="noopener">docs</a>，代码已经同步到<a href="https://note.youdao.com/" target="_blank" rel="noopener">男性交友网站</a>。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>UriComponentsBuilder</code>的用法远远不止这些，这些例子只是我日常开发中常常用到的，更多的可以参考<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html">docs</a>，代码已经同步到<a target="_blank" rel="noopener" href="https://note.youdao.com/">男性交友网站</a>。</p>
 
             </div>
             <hr/>
@@ -592,7 +592,7 @@ Spring中为JTA，JPA，Hibernate等事务API提供了一致性的编程模型�
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

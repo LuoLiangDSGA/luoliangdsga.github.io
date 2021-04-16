@@ -288,7 +288,7 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>本地搭建可以使用<a href="https://github.com/kubernetes-sigs/kind" target="_blank" rel="noopener">kind</a>或者<br><a href="https://github.com/kubernetes/minikube" target="_blank" rel="noopener">minikube</a>，这两个工具可以快速搭建本地环境，可以用作练习，要搭建生产集群，还是得使用<br><a href="https://kubernetes.io/zh/docs/reference/setup-tools/kubeadm/" target="_blank" rel="noopener">kubeadm</a>。</p>
+<p>本地搭建可以使用<a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/kind">kind</a>或者<br><a target="_blank" rel="noopener" href="https://github.com/kubernetes/minikube">minikube</a>，这两个工具可以快速搭建本地环境，可以用作练习，要搭建生产集群，还是得使用<br><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/reference/setup-tools/kubeadm/">kubeadm</a>。</p>
 </blockquote>
 <p><code>Kubeadm</code>是社区官方持续维护的集群搭建工具，在<code>Kubernertes v1.13</code> 版本的时候就已经GA了，它跟着<code>Kubernetes</code> 的版本一起发布，目前<code>Kubeadm</code>代码放在 <code>Kubernetes</code>的主代码库中。</p>
 <p>所以<code>Kubeadm</code>有一个很大的优势，随时可以搭建出最新的k8s集群，其他的工具则要等新版本k8s出来之后，进行一段时间的适配。并且使用<code>Kubeadm</code>日后进行k8s升级也是非常方便的，还有很多优势可以参考官方文档，现在k8s文档已经支持中文了。</p>
@@ -298,9 +298,9 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
 <ol>
 <li>首先需要安装docker</li>
 </ol>
-<p>docker的安装非常简单，<a href="https://docs.docker.com/engine/install/centos/" target="_blank" rel="noopener">官方文档写得非常清楚</a>。</p>
+<p>docker的安装非常简单，<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/centos/">官方文档写得非常清楚</a>。</p>
 <ol start="2">
-<li>安装<code>kubectl</code>、<code>kubelet</code>、<code>kubeadm</code><a id="more"></a>
+<li>安装<code>kubectl</code>、<code>kubelet</code>、<code>kubeadm</code><span id="more"></span>
 这一步很关键，需要先添加k8s的源，如果按照官方文档来安装，添加的是谷歌自己的源，如果服务器没翻墙后面的操作都没法进行，所以我们这里添加阿里云的源。</li>
 </ol>
 <pre><code>root@n227-090-158:~# cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
@@ -386,7 +386,7 @@ n227-090-158   Ready    master   61m   v1.18.0
 </code></pre><ol start="6">
 <li>生成token</li>
 </ol>
-<p>推荐使用Firefox浏览器，Chrome新版如果证书有问题已经不能继续访问了，Firefox可以，这个时候通过ip:30000访问dash-board会进入一个页面，提示你输入token，可以参考这个<a href="https://jimmysong.io/kubernetes-handbook/guide/auth-with-kubeconfig-or-token.html" target="_blank" rel="noopener">文章</a>生成token。生成之后填入输入框就可以进入dashboard主页面了。</p>
+<p>推荐使用Firefox浏览器，Chrome新版如果证书有问题已经不能继续访问了，Firefox可以，这个时候通过ip:30000访问dash-board会进入一个页面，提示你输入token，可以参考这个<a target="_blank" rel="noopener" href="https://jimmysong.io/kubernetes-handbook/guide/auth-with-kubeconfig-or-token.html">文章</a>生成token。生成之后填入输入框就可以进入dashboard主页面了。</p>
 <pre><code>root@n227-090-158:~# kubectl -n kube-system describe secret admin-token-fqxsw
 </code></pre><p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gpje7aabknj31c00u0nb1.jpg" alt="image"></p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>k8s现在安装已经比以前简单太多了，这篇文章作为个人学习记录，如果参考之后安装有什么问题可以在GitHub通过邮件联系我。</p>
@@ -611,7 +611,7 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             

@@ -262,7 +262,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        808
+                        827
                     </div>
                     
 
@@ -306,7 +306,7 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<a id="more"></a>
+<span id="more"></span>
 <blockquote>
 <p>yaml配置</p>
 </blockquote>
@@ -334,7 +334,7 @@
 </blockquote>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
 <span class="token annotation punctuation">@Document</span><span class="token punctuation">(</span>collection <span class="token operator">=</span> <span class="token string">"user"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 集合名称</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span>7520384490152472164L<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Id</span>
@@ -346,7 +346,7 @@
     <span class="token keyword">private</span> String password<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@CreatedDate</span>
     <span class="token keyword">private</span> Date gmtCreate<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre><code>1. @Id表明这是每一条文档的id，MongoDB会自动生成
 2. @Field可指定存储的键值名称，默认就是类字段名
@@ -355,7 +355,7 @@
 </code></pre><blockquote>
 <p>编写一个基础CRUD接口<code>UserService.java</code>，提供基础的用户CRUD方法</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserService</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">/**
      * 保存用户
      * @param user
@@ -380,26 +380,26 @@
      * @param id
      */</span>
     <span class="token keyword">void</span> <span class="token function">deleteUserById</span><span class="token punctuation">(</span>Long id<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>用户操作接口实现类<code>UserServiceImpl.java</code><br><code>`</code>java<br>@Service<br>public class UserServiceImpl implements UserService {<br>    @Resource<br>    private MongoTemplate mongoTemplate;</p>
 </blockquote>
 <pre><code>@Override
-public void saveUser(User user) {
+public void saveUser(User user) &#123;
     mongoTemplate.save(user);
-}
+&#125;
 
 @Override
-public User findUserByUsername(String username) {
+public User findUserByUsername(String username) &#123;
     Criteria criteria = Criteria.where(&quot;username&quot;).is(username);
     Query query = new Query(criteria);
 
     return mongoTemplate.findOne(query, User.class);
-}
+&#125;
 
 @Override
-public void updateUser(User user) {
+public void updateUser(User user) &#123;
     Criteria criteria = Criteria.where(&quot;id&quot;).is(user.getId());
     Query query = new Query(criteria);
     Update update = new Update().set(&quot;username&quot;, user.getUsername())
@@ -409,11 +409,11 @@ public void updateUser(User user) {
     //更新结果集的所有
 </code></pre><p>//        mongoTemplate.updateMulti(query, update, User.class);<br>    }</p>
 <pre><code>@Override
-public void deleteUserById(Long id) {
+public void deleteUserById(Long id) &#123;
     Criteria criteria = Criteria.where(&quot;id&quot;).is(id);
     Query query = new Query(criteria);
     mongoTemplate.remove(query);
-}
+&#125;
 </code></pre><p>}</p>
 <pre><code>
 ### MongoRepository方式
@@ -421,7 +421,7 @@ public void deleteUserById(Long id) {
 相比上面的方式，这种方式使用jpa来操作数据库，更加优雅、简单。只需要继承`MongoRepository`，里面已经提供了大多数基础的数据操作方法。
 
 ```java
-public interface UserRepository extends MongoRepository&lt;User, String&gt; {
+public interface UserRepository extends MongoRepository&lt;User, String&gt; &#123;
     /**
      * 按名称进行查询
      *
@@ -437,9 +437,9 @@ public interface UserRepository extends MongoRepository&lt;User, String&gt; {
      * @param pageable
      * @return
      */
-    @Query(&quot;{&#39;gmtCreate&#39;: ?0}&quot;)
+    @Query(&quot;&#123;&#39;gmtCreate&#39;: ?0&#125;&quot;)
     Page&lt;User&gt; queryBySql(String create, Pageable pageable);
-}
+&#125;
 </code></pre><p>在其他类中注入此类即可。</p>
 <h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>本篇文章只记录了MongoDB基本的CRUD操作，并且记录了两种操作方式，很多更高级的操作没有涉及，以后涉及到之后会进行补充。</p>
 
@@ -656,7 +656,7 @@ WebFlux是什么
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">50.2k</span>
+                <span class="white-color">52.8k</span>
             
 
             
