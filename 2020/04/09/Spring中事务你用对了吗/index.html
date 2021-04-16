@@ -1,0 +1,866 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Spring中事务你用对了吗, Fantasy">
+    <meta name="description" content="Spring中事务你用对了吗
+背景
+
+Spring中为JTA，JPA，Hibernate等事务API提供了一致性的编程模型，但是编程式事务需要编码支持，在实际中很少使用。所以Spring提供了声明式事务，配合SpringBoot，我们可以通">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Spring中事务你用对了吗 | Fantasy</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Fantasy</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Fantasy</div>
+        <div class="logo-desc">
+            
+            Stay hungry, Stay foolish.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Spring中事务你用对了吗
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/SpringBoot/" target="_blank">
+                                <span class="chip bg-color">SpringBoot</span>
+                            </a>
+                        
+                            <a href="/tags/Spring/" target="_blank">
+                                <span class="chip bg-color">Spring</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Java/" class="post-category" target="_blank">
+                                Java
+                            </a>
+                        
+                            <a href="/categories/Java/Spring/" class="post-category" target="_blank">
+                                Spring
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-04-09
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        3.4k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        18 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Spring中事务你用对了吗"><a href="#Spring中事务你用对了吗" class="headerlink" title="Spring中事务你用对了吗"></a>Spring中事务你用对了吗</h1><blockquote>
+<p>背景</p>
+</blockquote>
+<p>Spring中为JTA，JPA，Hibernate等事务API提供了一致性的编程模型，但是编程式事务需要编码支持，在实际中很少使用。所以Spring提供了声明式事务，<br>配合SpringBoot，我们可以通过@Transactional注解，轻松地实现事务的控制，让事务控制达到极简。注解事务固然方便，但是如果对它不够了解，很容易<br>留下坑，就我目前的项目中，有一些事务根本就没有生效。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><blockquote>
+<p>引入H2 Database</p>
+</blockquote>
+<pre><code>spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.properties.show_sql=true
+spring.jpa.properties.format_sql=true
+spring.jpa.properties.use_sql_comments=true
+spring.h2.console.enabled=true
+spring.h2.console.path=/console
+logging.level.org.springframework.orm.jpa=debug
+</code></pre><p>都是一些基础的配置，这里使用了jpa，并且把日志级别设置成debug，为了更方便的观察事务的执行情况。</p>
+<blockquote>
+<p>编写一个业务类</p>
+</blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataService</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> UserRepository userRepository<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> Logger logger <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>DataService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> RuntimeException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveA</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveA {}"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        User u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveB</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveB {}"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            User u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in saveB()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"print data:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        userRepository<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>user <span class="token operator">-</span><span class="token operator">></span> logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> RuntimeException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveAndRollback</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveAndRollback {}"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        User u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="验证栗子"><a href="#验证栗子" class="headerlink" title="验证栗子"></a>验证栗子</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableTransactionManagement</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token keyword">implements</span> <span class="token class-name">ApplicationRunner</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> DataService dataService<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> Logger logger <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>Application<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Application<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span>ApplicationArguments args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        <span class="token function">demo1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">demo1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        dataService<span class="token punctuation">.</span><span class="token function">saveA</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//1</span>
+        dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            dataService<span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//2</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an save exception"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        dataService<span class="token punctuation">.</span><span class="token function">saveB</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//3</span>
+        dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>代码1执行结果，上面是insert，下面是查询操作</p>
+</blockquote>
+<pre><code>2020-03-31 14:14:14.733 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.boot.transaction.service.DataService.saveA]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-java.lang.RuntimeException
+2020-03-31 14:14:14.733 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1955991197&lt;open&gt;)] for JPA transaction
+2020-03-31 14:14:14.740 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4e4162bc]
+2020-03-31 14:14:14.754  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveA frank
+2020-03-31 14:14:14.758 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1955991197&lt;open&gt;)] for JPA transaction
+2020-03-31 14:14:14.759 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2020-03-31 14:14:14.804 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2020-03-31 14:14:14.805 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1955991197&lt;open&gt;)]
+2020-03-31 14:14:14.822 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1955991197&lt;open&gt;)] after transaction
+</code></pre><pre><code>print data:
+2020-03-31 14:14:14.823 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2020-03-31 14:14:14.824 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(2045560071&lt;open&gt;)] for JPA transaction
+2020-03-31 14:14:14.841 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7e5efcab]
+2020-03-31 14:14:15.059 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2020-03-31 14:14:15.060 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2045560071&lt;open&gt;)]
+2020-03-31 14:14:15.060 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(2045560071&lt;open&gt;)] after transaction
+2020-03-31 14:14:15.061  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User{id=1, name=&#39;frank&#39;}
+</code></pre><p>这里可以看到插入成功了</p>
+<blockquote>
+<p>代码2执行结果</p>
+</blockquote>
+<pre><code>2020-03-31 14:14:15.062  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveAndRollback frank
+2020-03-31 14:14:15.062 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1796154990&lt;open&gt;)] for JPA transaction
+2020-03-31 14:14:15.062 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2020-03-31 14:14:15.063 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction rollback
+2020-03-31 14:14:15.063 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Rolling back JPA transaction on EntityManager [SessionImpl(1796154990&lt;open&gt;)]
+2020-03-31 14:14:15.067 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1796154990&lt;open&gt;)] after transaction
+2020-03-31 14:14:15.068  WARN 17477 --- [           main] org.boot.transaction.Application         : catch an save exception
+2020-03-31 14:14:15.068  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : print data:
+2020-03-31 14:14:15.068 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2020-03-31 14:14:15.069 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1138190994&lt;open&gt;)] for JPA transaction
+2020-03-31 14:14:15.069 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4a2bf50f]
+2020-03-31 14:14:15.076 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2020-03-31 14:14:15.076 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1138190994&lt;open&gt;)]
+2020-03-31 14:14:15.076 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1138190994&lt;open&gt;)] after transaction
+2020-03-31 14:14:15.076  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User{id=1, name=&#39;frank&#39;}
+</code></pre><p>从这里的结果可以看出，这时候数据没有插入，还是我们第一次添加的数据，说明事务生效了。</p>
+<blockquote>
+<p>代码3执行结果</p>
+</blockquote>
+<pre><code>2020-03-31 14:14:15.076  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveB jack
+2020-03-31 14:14:15.076  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveAndRollback jack
+2020-03-31 14:14:15.077 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2020-03-31 14:14:15.077 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1683617002&lt;open&gt;)] for JPA transaction
+2020-03-31 14:14:15.077 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@740b9a50]
+2020-03-31 14:14:15.077 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2020-03-31 14:14:15.077 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1683617002&lt;open&gt;)]
+2020-03-31 14:14:15.078 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1683617002&lt;open&gt;)] after transaction
+2020-03-31 14:14:15.078  WARN 17477 --- [           main] o.boot.transaction.service.DataService   : catch an exception in saveB()
+2020-03-31 14:14:15.078  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : print data:
+2020-03-31 14:14:15.078 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2020-03-31 14:14:15.079 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(589094312&lt;open&gt;)] for JPA transaction
+2020-03-31 14:14:15.079 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@6b70d1fb]
+2020-03-31 14:14:15.080 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2020-03-31 14:14:15.080 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(589094312&lt;open&gt;)]
+2020-03-31 14:14:15.081 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(589094312&lt;open&gt;)] after transaction
+2020-03-31 14:14:15.081  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User{id=1, name=&#39;frank&#39;}
+2020-03-31 14:14:15.081  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User{id=3, name=&#39;jack&#39;}
+</code></pre><p>这里看到最后的查询结果有两条数据，说明这里虽然产生了异常，但是数据没有回滚，说明事务没有生效。</p>
+<h3 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h3><p>从代码层面上看，代码2和代码3的区别是：代码2是直接调用的带@Transactional注解的方法（saveAndRollback），而代码3调用的方法（saveB）没有@Transactional注解，在saveB中调用了saveAndRollback方法，这属于内部调用，也就是通过this去调用对象的方法。而Spring的事务是通过AOP实现的，AOP会在加了事务注解的方法上进行增强，而Spring实现AOP主要是通过动态代理的方式，所以Spring做事务增强是在代理类上面做的增强，而我们用this去调用原来的方法，是没有做增强的，所以事务也就不会生效。</p>
+<blockquote>
+<p>解决方法也很简单，只有被AOP增强过的类事务才会生效，有三种：</p>
+</blockquote>
+<ol>
+<li>注入DataService本身调用</li>
+<li>通过ApplicationContext拿到bean之后调用</li>
+<li>使用AopContext获取到代理类调用</li>
+</ol>
+<p>所以我们在DataService中增加如下方法：</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> RuntimeException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveAndRollback</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveAndRollback {}"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    User u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeSelf</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        dataService<span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeSelf()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeWithApplicationContext</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">(</span><span class="token punctuation">(</span>DataService<span class="token punctuation">)</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"dataService"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeWithApplicationContext()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeWithAop</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 需要把@EnableAspectJAutoProxy注解中的(exposeProxy = true)</span>
+        <span class="token punctuation">(</span><span class="token punctuation">(</span>DataService<span class="token punctuation">)</span> AopContext<span class="token punctuation">.</span><span class="token function">currentProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeWithAop()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>再来运行看看结果</p>
+</blockquote>
+<pre class="line-numbers language-java"><code class="language-java">dataService<span class="token punctuation">.</span><span class="token function">saveA</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dataService<span class="token punctuation">.</span><span class="token function">invokeSelf</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dataService<span class="token punctuation">.</span><span class="token function">invokeWithApplicationContext</span><span class="token punctuation">(</span><span class="token string">"tom"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dataService<span class="token punctuation">.</span><span class="token function">invokeWithAop</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看到日志中，出现异常的地方出现了rollback字样，说明事务都生效了</p>
+<pre><code>2020-03-31 18:02:09.622 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1779787990&lt;open&gt;)] for JPA transaction
+2020-03-31 18:02:09.645 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@411fa0ce]
+2020-03-31 18:02:10.011 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2020-03-31 18:02:10.012 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1779787990&lt;open&gt;)]
+2020-03-31 18:02:10.012 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1779787990&lt;open&gt;)] after transaction
+2020-03-31 18:02:10.013  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User{id=1, name=&#39;frank&#39;}
+2020-03-31 18:02:10.013 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.boot.transaction.service.DataService.saveAndRollback]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-java.lang.RuntimeException
+2020-03-31 18:02:10.013 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1478269879&lt;open&gt;)] for JPA transaction
+2020-03-31 18:02:10.013 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@138f0661]
+2020-03-31 18:02:10.014  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : invoke saveAndRollback tom
+2020-03-31 18:02:10.014 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1478269879&lt;open&gt;)] for JPA transaction
+2020-03-31 18:02:10.014 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2020-03-31 18:02:10.015 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction rollback
+2020-03-31 18:02:10.016 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Rolling back JPA transaction on EntityManager [SessionImpl(1478269879&lt;open&gt;)]
+2020-03-31 18:02:10.018 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1478269879&lt;open&gt;)] after transaction
+2020-03-31 18:02:10.018  WARN 20635 --- [           main] o.boot.transaction.service.DataService   : catch an exception in invokeWithApplicationContext()
+2020-03-31 18:02:10.018  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : print data:
+2020-03-31 18:02:10.018 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2020-03-31 18:02:10.019 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(321795476&lt;open&gt;)] for JPA transaction
+2020-03-31 18:02:10.019 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4f235107]
+2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(321795476&lt;open&gt;)]
+2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(321795476&lt;open&gt;)] after transaction
+2020-03-31 18:02:10.020  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User{id=1, name=&#39;frank&#39;}
+2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.boot.transaction.service.DataService.saveAndRollback]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-java.lang.RuntimeException
+2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(977952572&lt;open&gt;)] for JPA transaction
+2020-03-31 18:02:10.021 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4f3356c0]
+2020-03-31 18:02:10.021  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : invoke saveAndRollback jack
+2020-03-31 18:02:10.021 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(977952572&lt;open&gt;)] for JPA transaction
+2020-03-31 18:02:10.021 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2020-03-31 18:02:10.022 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction rollback
+2020-03-31 18:02:10.022 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Rolling back JPA transaction on EntityManager [SessionImpl(977952572&lt;open&gt;)]
+2020-03-31 18:02:10.023 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(977952572&lt;open&gt;)] after transaction
+2020-03-31 18:02:10.023  WARN 20635 --- [           main] o.boot.transaction.service.DataService   : catch an exception in invokeWithAop()
+2020-03-31 18:02:10.023  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : print data:
+2020-03-31 18:02:10.023 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2020-03-31 18:02:10.023 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1367900185&lt;open&gt;)] for JPA transaction
+2020-03-31 18:02:10.023 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@6f50d55c]
+2020-03-31 18:02:10.024 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2020-03-31 18:02:10.024 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1367900185&lt;open&gt;)]
+2020-03-31 18:02:10.025 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1367900185&lt;open&gt;)] after transaction
+2020-03-31 18:02:10.025  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User{id=1, name=&#39;frank&#39;}
+</code></pre><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在 Spring 的 AOP 代理下，只有目标方法由外部调用，目标方法才由 Spring 生成的代理对象来管理，这会造成自调用问题。若同一类中的其他没有@Transactional 注解的方法内部调用有@Transactional 注解的方法，有@Transactional 注解的方法的事务被忽略，不会发生回滚。解决方法上面已经列出，并且放在了<a href="https://github.com/LuoLiangDSGA/spring-learning/tree/master/boot-transaction" target="_blank" rel="noopener">github</a>上。所以平时在内部调用带有事务的方法时，要小心一点。</p>
+<blockquote>
+<p>还有以下常见场景事务也会失效</p>
+</blockquote>
+<ol>
+<li>@Transactional注解到非public方法上</li>
+<li>如果在事务中抛出了未检查异常（继承自 RuntimeException的异常，也就是说如果有IO操作，抛出了IOException，事务是不会回滚的）或者Error，则 Spring 将回滚事务；除此之外，Spring 不会回滚事务。注意，这里说的是需要抛出，如果没有抛出，比如异常被catch吞了，事务是不会回滚的。</li>
+</ol>
+
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <span>
+                本文不允许转载。
+            </span>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: null,
+        id: '2020-04-09T16-28-37',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/08/04/SpringBoot%E4%B8%AD%E7%9A%84%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="SpringBoot中的参数校验">
+                        
+                        <span class="card-title">SpringBoot中的参数校验</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            SpringBoot中的参数校验
+背景
+
+为了保证数据的正确性, 避免埋坑, 参数校验在日常业务开发中用得非常多, 在Spring中用得最多的就是使用JSR303– Bean Validation规范提供的校验, Hibernate Val
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-08-04
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SpringBoot/" class="post-category" target="_blank">
+                                    SpringBoot
+                                </a>
+                            
+                            <a href="/categories/SpringBoot/Spring/" class="post-category" target="_blank">
+                                    Spring
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SpringBoot/" target="_blank">
+                        <span class="chip bg-color">SpringBoot</span>
+                    </a>
+                    
+                    <a href="/tags/Spring/" target="_blank">
+                        <span class="chip bg-color">Spring</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/02/14/%E5%9C%A8SpringMVC%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E6%8B%BC%E6%8E%A5URL/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="在SpringMVC中优雅的拼接URL">
+                        
+                        <span class="card-title">在SpringMVC中优雅的拼接URL</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            在SpringMVC中优雅的拼接URL背景
+在日常开发中常常会遇到拼接URL的情况，大多数时候可以手动拼接字符串来达到目的，但是这样的方式不够优雅，同时容易出错。其实SpringMVC中已经给我们提供好了工具，这个工具就是UriCompon
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java/" class="post-category" target="_blank">
+                                    Java
+                                </a>
+                            
+                            <a href="/categories/Java/SpringBoot/" class="post-category" target="_blank">
+                                    SpringBoot
+                                </a>
+                            
+                            <a href="/categories/Java/SpringBoot/Spring/" class="post-category" target="_blank">
+                                    Spring
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SpringBoot/" target="_blank">
+                        <span class="chip bg-color">SpringBoot</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://github.com/LuoLiangDSGA" target="_blank">Frank Lo</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">50.2k</span>
+            
+
+            
+			<!-- 
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+             -->
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LuoLiangDSGA" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:ll9420416@icloud.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=510896708" class="tooltipped" data-tooltip="QQ联系我: 510896708" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

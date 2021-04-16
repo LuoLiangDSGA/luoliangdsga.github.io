@@ -1,0 +1,703 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="使用kubeadm搭建k8s, Fantasy">
+    <meta name="description" content="前言
+本地搭建可以使用kind或者minikube，这两个工具可以快速搭建本地环境，可以用作练习，要搭建生产集群，还是得使用kubeadm。
+
+Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 版本的时候">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>使用kubeadm搭建k8s | Fantasy</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Fantasy</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Fantasy</div>
+        <div class="logo-desc">
+            
+            Stay hungry, Stay foolish.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        使用kubeadm搭建k8s
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/k8s/" target="_blank">
+                                <span class="chip bg-color">k8s</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Ops/" class="post-category" target="_blank">
+                                Ops
+                            </a>
+                        
+                            <a href="/categories/Ops/Docker/" class="post-category" target="_blank">
+                                Docker
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-04-15
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        1.3k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        5 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>本地搭建可以使用<a href="https://github.com/kubernetes-sigs/kind" target="_blank" rel="noopener">kind</a>或者<br><a href="https://github.com/kubernetes/minikube" target="_blank" rel="noopener">minikube</a>，这两个工具可以快速搭建本地环境，可以用作练习，要搭建生产集群，还是得使用<br><a href="https://kubernetes.io/zh/docs/reference/setup-tools/kubeadm/" target="_blank" rel="noopener">kubeadm</a>。</p>
+</blockquote>
+<p><code>Kubeadm</code>是社区官方持续维护的集群搭建工具，在<code>Kubernertes v1.13</code> 版本的时候就已经GA了，它跟着<code>Kubernetes</code> 的版本一起发布，目前<code>Kubeadm</code>代码放在 <code>Kubernetes</code>的主代码库中。</p>
+<p>所以<code>Kubeadm</code>有一个很大的优势，随时可以搭建出最新的k8s集群，其他的工具则要等新版本k8s出来之后，进行一段时间的适配。并且使用<code>Kubeadm</code>日后进行k8s升级也是非常方便的，还有很多优势可以参考官方文档，现在k8s文档已经支持中文了。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><blockquote>
+<p>准备一台服务器，<code>kubeadm</code>只支持<code>linux</code>，我这里使用的是Debian8，centOS也可以。</p>
+</blockquote>
+<ol>
+<li>首先需要安装docker</li>
+</ol>
+<p>docker的安装非常简单，<a href="https://docs.docker.com/engine/install/centos/" target="_blank" rel="noopener">官方文档写得非常清楚</a>。</p>
+<ol start="2">
+<li>安装<code>kubectl</code>、<code>kubelet</code>、<code>kubeadm</code><a id="more"></a>
+这一步很关键，需要先添加k8s的源，如果按照官方文档来安装，添加的是谷歌自己的源，如果服务器没翻墙后面的操作都没法进行，所以我们这里添加阿里云的源。</li>
+</ol>
+<pre><code>root@n227-090-158:~# cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+</code></pre><p>添加之后就可以安装基础组件了</p>
+<pre><code>root@n227-090-158:~# apt-get install kubectl kubelet kubeadm
+</code></pre><ol start="3">
+<li>初始化集群</li>
+</ol>
+<pre><code>root@n227-090-158:~# kubeadm init --pod-network-cidr=10.227.90.158/16 --image-repository registry.aliyuncs.com/google_containers --apiserver-advertise-address=192.168.122.21
+</code></pre><ul>
+<li>这里使用的是<code>kubeadm init</code>这个命令，并且通过<code>--image-repository</code>指定了阿里云镜像仓库地址，因为<code>k8s.grc.io</code>也是无法访问的。</li>
+<li>pod网段为10.227.90.158/16</li>
+<li>apiserver地址就是本地IP</li>
+</ul>
+<p>初始化成功后看到的是如下输出：</p>
+<pre><code>Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 10.227.90.158:6443 --token 9l1kct.s6x9p28h1bv8slkl \
+    --discovery-token-ca-cert-hash sha256:156a2d99de3c1113aee940c4a478bc5d4da9fb6a0f845a2a517a68e12158a3b8
+</code></pre><p>然后按照提示执行如下命令，这是在master节点上拷贝kubeconfig 文件到kubectl默认的kubeconfig路径下</p>
+<pre><code>root@n227-090-158:~# mkdir -p $HOME/.kube
+root@n227-090-158:~# sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+root@n227-090-158:~# sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre><ol start="4">
+<li>加入集群</li>
+</ol>
+<p>上面的输出中也给出了加入集群的命令，我们可以在另一个机器上输入上面的命令即可加入这个集群，但是要保证两台机器网络是互通的。</p>
+<pre><code>root@n227-090-158:~# kubeadm join 10.227.90.158:6443 --token 9l1kct.s6x9p28h1bv8slkl \
+    --discovery-token-ca-cert-hash sha256:156a2d99de3c1113aee940c4a478bc5d4da9fb6a0f845a2a517a68e12158a3b8
+</code></pre><ol start="5">
+<li>安装calico网络</li>
+</ol>
+<p>查看node和pod发现是notReady状态</p>
+<pre><code>root@n227-090-158:~# kubectl get node
+NAME           STATUS     ROLES    AGE   VERSION
+n227-090-158   NotReady   master   59m   v1.18.0
+root@n227-090-158:~# kubectl get pod --all-namespaces
+NAMESPACE     NAME                                        READY   STATUS    RESTARTS   AGE
+kube-system   coredns-7ff77c879f-fsj9l                    0/1     Pending   0          2m12s
+kube-system   coredns-7ff77c879f-q5ll2                    0/1     Pending   0          2m12s
+kube-system   etcd-master01.paas.com                      1/1     Running   0          2m22s
+kube-system   kube-apiserver-master01.paas.com            1/1     Running   0          2m22s
+kube-system   kube-controller-manager-master01.paas.com   1/1     Running   0          2m22s
+kube-system   kube-proxy-th472                            1/1     Running   0          2m12s
+kube-system   kube-scheduler-master01.paas.com            1/1     Running   0          2m22s
+</code></pre><p>这是因为corednspod没有启动，缺少网络pod，所以我们需要安装calico网络</p>
+<pre><code>root@n227-090-158:~# kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+</code></pre><p>安装完成后再查看集群状态，发现已经正常了</p>
+<pre><code>root@n227-090-158:~# kubectl get pod --all-namespaces
+NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE
+kube-system   calico-kube-controllers-65d7476764-mjjtm   1/1     Running   0          67s
+kube-system   calico-node-fk5qw                          1/1     Running   0          67s
+kube-system   coredns-7ff77c879f-kw2z7                   1/1     Running   0          60m
+kube-system   coredns-7ff77c879f-pbh9z                   1/1     Running   0          60m
+kube-system   etcd-n227-090-158                          1/1     Running   0          60m
+kube-system   kube-apiserver-n227-090-158                1/1     Running   0          60m
+kube-system   kube-controller-manager-n227-090-158       1/1     Running   0          60m
+kube-system   kube-proxy-rh2vr                           1/1     Running   0          60m
+kube-system   kube-scheduler-n227-090-158                1/1     Running   0          60m
+root@n227-090-158:~# kubectl get node
+NAME           STATUS   ROLES    AGE   VERSION
+n227-090-158   Ready    master   61m   v1.18.0
+</code></pre><ol start="6">
+<li>生成token</li>
+</ol>
+<p>推荐使用Firefox浏览器，Chrome新版如果证书有问题已经不能继续访问了，Firefox可以，这个时候通过ip:30000访问dash-board会进入一个页面，提示你输入token，可以参考这个<a href="https://jimmysong.io/kubernetes-handbook/guide/auth-with-kubeconfig-or-token.html" target="_blank" rel="noopener">文章</a>生成token。生成之后填入输入框就可以进入dashboard主页面了。</p>
+<pre><code>root@n227-090-158:~# kubectl -n kube-system describe secret admin-token-fqxsw
+</code></pre><p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gpje7aabknj31c00u0nb1.jpg" alt="image"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>k8s现在安装已经比以前简单太多了，这篇文章作为个人学习记录，如果参考之后安装有什么问题可以在GitHub通过邮件联系我。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>拉勾教育-Kubernetes 原理剖析与实战应用</li>
+</ul>
+
+            </div>
+            <hr/>
+
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <span>
+                本文不允许转载。
+            </span>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: null,
+        id: '2021-04-15T10-56-31',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/04/15/%E4%BD%BF%E7%94%A8kubeadm%E6%90%AD%E5%BB%BAk8s/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="使用kubeadm搭建k8s">
+                        
+                        <span class="card-title">使用kubeadm搭建k8s</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言
+本地搭建可以使用kind或者minikube，这两个工具可以快速搭建本地环境，可以用作练习，要搭建生产集群，还是得使用kubeadm。
+
+Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 版本的时候
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Ops/" class="post-category" target="_blank">
+                                    Ops
+                                </a>
+                            
+                            <a href="/categories/Ops/Docker/" class="post-category" target="_blank">
+                                    Docker
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/k8s/" target="_blank">
+                        <span class="chip bg-color">k8s</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/08/19/SSM%E9%87%8D%E6%9E%84%E5%88%B0SpringBoot%E5%AF%BC%E8%87%B4-Scheduled%E5%A4%B1%E6%95%88%E7%9A%84%E5%9D%91/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="SSM重构到SpringBoot导致@Scheduled失效的坑">
+                        
+                        <span class="card-title">SSM重构到SpringBoot导致@Scheduled失效的坑</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            SSM重构到SpringBoot定时任务失效的坑
+最近重构老项目, 把SSM的祖传代码升级成SpringBoot, 最后发现原先代码中使用了@Scheduled注解的定时任务不再执行.
+
+背景SSM项目中使用spring-task需要在xm
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-08-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SpringBoot/" class="post-category" target="_blank">
+                                    SpringBoot
+                                </a>
+                            
+                            <a href="/categories/SpringBoot/Spring/" class="post-category" target="_blank">
+                                    Spring
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/" target="_blank">
+                        <span class="chip bg-color">成长之路</span>
+                    </a>
+                    
+                    <a href="/tags/SpringBoot/" target="_blank">
+                        <span class="chip bg-color">SpringBoot</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://github.com/LuoLiangDSGA" target="_blank">Frank Lo</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">50.2k</span>
+            
+
+            
+			<!-- 
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+             -->
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/LuoLiangDSGA" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:ll9420416@icloud.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=510896708" class="tooltipped" data-tooltip="QQ联系我: 510896708" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
