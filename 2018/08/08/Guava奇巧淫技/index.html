@@ -29,7 +29,8 @@ Guava是谷歌出品的Java工具类库，提供了字符串处理[string proces
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -350,14 +351,14 @@ Guava是谷歌出品的Java工具类库，提供了字符串处理[string proces
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        775
+                        945
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        4 分
                     </div>
                     
                 
@@ -380,136 +381,136 @@ Guava是谷歌出品的Java工具类库，提供了字符串处理[string proces
 <blockquote>
 <p>分割字符串</p>
 </blockquote>
-<p><code>limit可以限制分割出的数组长度</code><br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> list <span class="token operator">=</span> <span class="token class-name">Splitter</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">trimResults</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">omitEmptyStrings</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">splitToList</span><span class="token punctuation">(</span><span class="token string">"aaa.bbb.ccc.. .ddd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p><code>limit可以限制分割出的数组长度</code><br><pre class="line-numbers language-java" data-language="java"><code class="language-java">List&lt;String&gt; list &#x3D; Splitter.on(&quot;.&quot;)
+                .trimResults()
+                .omitEmptyStrings()
+                .splitToList(&quot;aaa.bbb.ccc.. .ddd&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
 <blockquote>
 <p>分割字符串获取最后一个子串</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Iterables</span><span class="token punctuation">.</span><span class="token function">getLast</span><span class="token punctuation">(</span><span class="token class-name">Splitter</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">trimResults</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"aaa.bbb.ccc.. ccc.. .ddd"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Iterables.getLast(Splitter.on(&quot;.&quot;).trimResults().split(&quot;aaa.bbb.ccc.. ccc.. .ddd&quot;));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>数组转字符串</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> strings <span class="token operator">=</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">Joiner</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">skipNulls</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>strings<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">List&lt;String&gt; strings &#x3D; Lists.newArrayList(&quot;a&quot;, &quot;b&quot;, null, &quot;c&quot;);
+Joiner.on(&quot;-&quot;).skipNulls().join(strings);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <blockquote>
 <p>URL参数拼接  </p>
 </blockquote>
 <ul>
 <li><p>优雅的拼接出id=1&amp;name=java这样的URL参数</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Joiner</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"&amp;"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withKeyValueSeparator</span><span class="token punctuation">(</span><span class="token string">"="</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token class-name">ImmutableMap</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">,</span> <span class="token string">"java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Joiner.on(&quot;&amp;&quot;).withKeyValueSeparator(&quot;&#x3D;&quot;).join(ImmutableMap.of(&quot;id&quot;, 1, &quot;name&quot;, &quot;java&quot;));<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p>获取URL参数的值</p>
 </blockquote>
 </li>
 <li><p>轻松把URL参数的值转为Map</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Splitter</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"&amp;"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withKeyValueSeparator</span><span class="token punctuation">(</span><span class="token string">"="</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"id=1&amp;name=java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Splitter.on(&quot;&amp;&quot;).withKeyValueSeparator(&quot;&#x3D;&quot;).split(&quot;id&#x3D;1&amp;name&#x3D;java&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 </ul>
 <h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><blockquote>
 <p>创建不可变集合，三种方式</p>
 </blockquote>
-<p>1.of方式<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ImmutableMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> immutableMap <span class="token operator">=</span> <span class="token class-name">ImmutableMap</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">,</span> <span class="token string">"guava"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>2.copyOf方式<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">,</span> <span class="token string">"guava"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">ImmutableMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> immutableMap <span class="token operator">=</span> <span class="token class-name">ImmutableMap</span><span class="token punctuation">.</span><span class="token function">copyOf</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>3.builder模式<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">,</span> <span class="token string">"guava"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">ImmutableMap</span> immutableMap <span class="token operator">=</span> <span class="token class-name">ImmutableMap</span><span class="token punctuation">.</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">putAll</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"age"</span><span class="token punctuation">,</span> <span class="token string">"20"</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>1.of方式<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">ImmutableMap&lt;String, String&gt; immutableMap &#x3D; ImmutableMap.of(&quot;id&quot;, &quot;1&quot;, &quot;name&quot;, &quot;guava&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>2.copyOf方式<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">Map&lt;String, String&gt; map &#x3D; new HashMap&lt;&gt;();
+map.put(&quot;id&quot;, &quot;1&quot;);
+map.put(&quot;name&quot;, &quot;guava&quot;);
+ImmutableMap&lt;String, String&gt; immutableMap &#x3D; ImmutableMap.copyOf(map);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>3.builder模式<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">Map&lt;String, String&gt; map &#x3D; new HashMap&lt;&gt;();
+map.put(&quot;id&quot;, &quot;1&quot;);
+map.put(&quot;name&quot;, &quot;guava&quot;);
+ImmutableMap immutableMap &#x3D; ImmutableMap.&lt;String, String&gt;builder()
+                .putAll(map)
+                .put(&quot;age&quot;, &quot;20&quot;)
+                .build();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <blockquote>
 <p>集合的静态工厂方法</p>
 </blockquote>
 <blockquote>
 <p>Lists</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> list <span class="token operator">=</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">newArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">List</span> countUp <span class="token operator">=</span> <span class="token class-name">Ints</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">List</span> countDown <span class="token operator">=</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span>countUp<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123;5, 4, 3, 2, 1&#125;</span>
-<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">List</span><span class="token punctuation">></span></span> parts <span class="token operator">=</span> <span class="token class-name">Lists</span><span class="token punctuation">.</span><span class="token function">partition</span><span class="token punctuation">(</span>countUp<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [[1, 2], [3, 4], [5]]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">List&lt;String&gt; list &#x3D; Lists.newArrayList();
+List countUp &#x3D; Ints.asList(1, 2, 3, 4, 5);
+List countDown &#x3D; Lists.reverse(countUp); &#x2F;&#x2F; &#123;5, 4, 3, 2, 1&#125;
+List&lt;List&gt; parts &#x3D; Lists.partition(countUp, 2); &#x2F;&#x2F; [[1, 2], [3, 4], [5]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>Maps</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">></span></span> left <span class="token operator">=</span> <span class="token class-name">ImmutableMap</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">></span></span> right <span class="token operator">=</span> <span class="token class-name">ImmutableMap</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"d"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"f"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">MapDifference</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">></span></span> diff <span class="token operator">=</span> <span class="token class-name">Maps</span><span class="token punctuation">.</span><span class="token function">difference</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-diff<span class="token punctuation">.</span><span class="token function">entriesInCommon</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123;b=2&#125;</span>
-diff<span class="token punctuation">.</span><span class="token function">entriesOnlyOnLeft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123;a=1, c=3&#125;</span>
-diff<span class="token punctuation">.</span><span class="token function">entriesOnlyOnRight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// &#123;d=1, f=3&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Map&lt;String, Integer&gt; left &#x3D; ImmutableMap.of(&quot;a&quot;, 1, &quot;b&quot;, 2, &quot;c&quot;, 3);
+Map&lt;String, Integer&gt; right &#x3D; ImmutableMap.of(&quot;d&quot;, 1, &quot;b&quot;, 2, &quot;f&quot;, 3);
+MapDifference&lt;String, Integer&gt; diff &#x3D; Maps.difference(left, right);
+diff.entriesInCommon(); &#x2F;&#x2F; &#123;b&#x3D;2&#125;
+diff.entriesOnlyOnLeft(); &#x2F;&#x2F; &#123;a&#x3D;1, c&#x3D;3&#125;
+diff.entriesOnlyOnRight(); &#x2F;&#x2F; &#123;d&#x3D;1, f&#x3D;3&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="IO操作"><a href="#IO操作" class="headerlink" title="IO操作"></a>IO操作</h3><blockquote>
 <p>byte[]转为InputStream</p>
 </blockquote>
 <ul>
 <li>jdk</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> initialArray <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token class-name">InputStream</span> targetStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayInputStream</span><span class="token punctuation">(</span>initialArray<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">byte[] initialArray &#x3D; &#123; 0, 1, 2 &#125;;
+InputStream targetStream &#x3D; new ByteArrayInputStream(initialArray);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <ul>
 <li>guava</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> initialArray <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token class-name">InputStream</span> targetStream <span class="token operator">=</span> <span class="token class-name">ByteSource</span><span class="token punctuation">.</span><span class="token function">wrap</span><span class="token punctuation">(</span>initialArray<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">openStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">byte[] initialArray &#x3D; &#123; 0, 1, 2 &#125;;
+InputStream targetStream &#x3D; ByteSource.wrap(initialArray).openStream();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <blockquote>
 <p>InputStream转为byte[]</p>
 </blockquote>
 <ul>
 <li>jdk</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InputStream</span> initialStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayInputStream</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">InputStream initialStream &#x3D; new ByteArrayInputStream(new byte[] &#123; 0, 1, 2 &#125;);
  
-<span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> targetArray <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span>initialStream<span class="token punctuation">.</span><span class="token function">available</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-initialStream<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>targetArray<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+byte[] targetArray &#x3D; new byte[initialStream.available()];
+initialStream.read(targetArray);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>guava</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">InputStream</span> initialStream <span class="token operator">=</span> <span class="token class-name">ByteSource</span><span class="token punctuation">.</span><span class="token function">wrap</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">openStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">InputStream initialStream &#x3D; ByteSource.wrap(new byte[] &#123; 0, 1, 2 &#125;).openStream();
      
-<span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> targetArray <span class="token operator">=</span> <span class="token class-name">ByteStreams</span><span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span>initialStream<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+byte[] targetArray &#x3D; ByteStreams.toByteArray(initialStream);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>文件转换为流或字节数组</p>
 </blockquote>
-<p><code>Guava  Files类</code><br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//文件转换为输入流</span>
-<span class="token class-name">InputStream</span> inputStream <span class="token operator">=</span> <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">asByteSource</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">openStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//文件转换为字节数组</span>
-<span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> buff <span class="token operator">=</span> <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">asByteSource</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p><code>Guava  Files类</code><br><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F;文件转换为输入流
+InputStream inputStream &#x3D; Files.asByteSource(file).openStream();
+&#x2F;&#x2F;文件转换为字节数组
+byte[] buff &#x3D; Files.asByteSource(file).read();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
 <blockquote>
 <p>其他文件操作</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">getNameWithoutExtension</span><span class="token punctuation">(</span><span class="token string">"/xxx/name.java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//return name</span>
-<span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">getFileExtension</span><span class="token punctuation">(</span><span class="token string">"/xxx/name.java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//return java</span>
-<span class="token comment">//对文件hash，可自选算法</span>
-<span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">asByteSource</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hash</span><span class="token punctuation">(</span><span class="token class-name">Hashing</span><span class="token punctuation">.</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Files.getNameWithoutExtension(&quot;&#x2F;xxx&#x2F;name.java&quot;);  &#x2F;&#x2F;return name
+Files.getFileExtension(&quot;&#x2F;xxx&#x2F;name.java&quot;);   &#x2F;&#x2F;return java
+&#x2F;&#x2F;对文件hash，可自选算法
+Files.asByteSource(file).hash(Hashing.md5());<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><blockquote>
 <p>优雅地进行判断</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Preconditions</span><span class="token punctuation">.</span><span class="token function">checkNotNull</span><span class="token punctuation">(</span>neme<span class="token punctuation">,</span> <span class="token string">"neme为null"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Preconditions.checkNotNull(neme, &quot;neme为null&quot;);
 
-<span class="token class-name">Preconditions</span><span class="token punctuation">.</span><span class="token function">checkArgument</span><span class="token punctuation">(</span>age<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"age 必须大于0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Preconditions.checkArgument(age&gt;0, &quot;age 必须大于0&quot;);
 
-<span class="token class-name">Preconditions</span><span class="token punctuation">.</span><span class="token function">checkElementIndex</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> list<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// index>=0 &amp;&amp; index&lt;size</span>
+Preconditions.checkElementIndex(1, list.size());   &#x2F;&#x2F; index&gt;&#x3D;0 &amp;&amp; index&lt;size
 
-<span class="token class-name">Preconditions</span><span class="token punctuation">.</span><span class="token function">checkPositionIndex</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> list<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// index>=0 &amp;&amp; index&lt;=size</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Preconditions.checkPositionIndex(1, list.size());  &#x2F;&#x2F; index&gt;&#x3D;0 &amp;&amp; index&lt;&#x3D;size<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="对象操作"><a href="#对象操作" class="headerlink" title="对象操作"></a>对象操作</h3><blockquote>
 <p>JDK7之后的Objects类已经提供了这些方法，可以直接使用JDK的</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Objects</span><span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token string">"aaa"</span><span class="token punctuation">,</span> <span class="token string">"bbb"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Objects.equal(&quot;aaa&quot;, &quot;bbb&quot;);
 
-<span class="token class-name">Objects</span><span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token string">"aaa"</span><span class="token punctuation">,</span> <span class="token string">"bbb"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+Objects.hashCode(&quot;aaa&quot;, &quot;bbb&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><blockquote>
 <p>反射平时使用的较少，记录一个简化动态代理创建的方法</p>
 </blockquote>
 <ul>
 <li>JDK方式</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">newProxyInstance</span><span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">&#123;</span><span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-invocationHandler<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Proxy.newProxyInstance(User.class.getClassLoader(), new Class&lt;?&gt;[] &#123;User.class&#125;,
+invocationHandler);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <ul>
 <li>Guava方式非常简洁</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Reflection</span><span class="token punctuation">.</span><span class="token function">newProxy</span><span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> invocationHandler<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Reflection.newProxy(User.class, invocationHandler);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>到这里就结束了，如果后面有实用的Guava技巧也会继续补充。个人总结，难免会有不准确的地方，欢迎大家指正和补充，共同进步。</p>
 
             </div>
@@ -597,6 +598,68 @@ invocationHandler<span class="token punctuation">)</span><span class="token punc
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2018/09/20/SpringBoot2%E4%B9%8BWebFlux%E5%88%9D%E4%BD%93%E9%AA%8C/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="SpringBoot2之WebFlux初体验">
+                        
+                        <span class="card-title">SpringBoot2之WebFlux初体验</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            开始SpringBoot升级到2.0版本之后，支持了WebFlux，初次体验后记录笔记如下
+
+
+WebFlux是什么
+
+相对于SpringMVC，MVC是基于Servlet API和Servlet容器设计的。Spring WebFlux
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-09-20
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SpringBoot/" class="post-category" target="_blank">
+                                    SpringBoot
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SpringBoot/" target="_blank">
+                        <span class="chip bg-color">SpringBoot</span>
+                    </a>
+                    
+                    <a href="/tags/WebFlux/" target="_blank">
+                        <span class="chip bg-color">WebFlux</span>
+                    </a>
+                    
+                    <a href="/tags/Reactor/" target="_blank">
+                        <span class="chip bg-color">Reactor</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2018/08/08/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%90%91%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%8F%90%E4%BA%A4PR%E7%9A%84%E8%BF%87%E7%A8%8B/">
                     <div class="card-image">
                         
@@ -616,9 +679,9 @@ invocationHandler<span class="token punctuation">)</span><span class="token punc
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-08-08
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-08-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -640,67 +703,6 @@ invocationHandler<span class="token punctuation">)</span><span class="token punc
                     
                     <a href="/tags/%E5%BC%80%E6%BA%90/" target="_blank">
                         <span class="chip bg-color">开源</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2018/06/25/SpringBoot-Vue-js%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E5%AE%9E%E7%8E%B0%E5%A4%A7%E6%96%87%E4%BB%B6%E5%88%86%E5%9D%97%E4%B8%8A%E4%BC%A0/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="SpringBoot+Vue.js前后端分离实现大文件分块上传">
-                        
-                        <span class="card-title">SpringBoot+Vue.js前后端分离实现大文件分块上传</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-原文地址:  luoliangDSGA’s blog博客地址:  https://luoliangdsga.github.io欢迎转载，转载请注明作者及出处，谢谢！
-
-SpringBoot+Vue.js前后端分离实现大文件分块上传
-之前写
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-06-25
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/SpringBoot/" class="post-category" target="_blank">
-                                    SpringBoot
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/SpringBoot/" target="_blank">
-                        <span class="chip bg-color">SpringBoot</span>
-                    </a>
-                    
-                    <a href="/tags/Vue-js/" target="_blank">
-                        <span class="chip bg-color">Vue.js</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" target="_blank">
-                        <span class="chip bg-color">文件上传</span>
                     </a>
                     
                 </div>
@@ -821,7 +823,7 @@ SpringBoot+Vue.js前后端分离实现大文件分块上传
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

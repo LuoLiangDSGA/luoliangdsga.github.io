@@ -29,7 +29,8 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -350,14 +351,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2k
+                        2.4k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        9 分
+                        11 分
                     </div>
                     
                 
@@ -397,80 +398,80 @@
        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h4 id="构造器注入"><a href="#构造器注入" class="headerlink" title="构造器注入"></a>构造器注入</h4><ol>
-<li>新建一个User类作为注入的例子，添加get，set方法，重写toString方法，添加两个参数不同的构造器。<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> id<span class="token punctuation">;</span>
+<li>新建一个User类作为注入的例子，添加get，set方法，重写toString方法，添加两个参数不同的构造器。<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class User &#123;
+    private String id;
 
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    private String name;
 
-    <span class="token keyword">private</span> <span class="token class-name">Integer</span> age<span class="token punctuation">;</span>
+    private Integer age;
 
-    <span class="token keyword">public</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token class-name">String</span> id<span class="token punctuation">,</span> <span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public User(String id, String name) &#123;
+        this.id &#x3D; id;
+        this.name &#x3D; name;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token class-name">Integer</span> age<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public User(String name, Integer age) &#123;
+        this.name &#x3D; name;
+        this.age &#x3D; age;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> id<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public String getId() &#123;
+        return id;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span><span class="token class-name">String</span> id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setId(String id) &#123;
+        this.id &#x3D; id;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public String getName() &#123;
+        return name;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setName(String name) &#123;
+        this.name &#x3D; name;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">Integer</span> <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> age<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public Integer getAge() &#123;
+        return age;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAge</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> age<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setAge(Integer age) &#123;
+        this.age &#x3D; age;
+    &#125;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token string">"User&#123;"</span> <span class="token operator">+</span>
-                <span class="token string">"id='"</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
-                <span class="token string">", name='"</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
-                <span class="token string">", age="</span> <span class="token operator">+</span> age <span class="token operator">+</span>
-                <span class="token string">'&#125;'</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>xml配置如下，有三种不同的写法<br>在resource下面新建application-constructor.xml<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">?</span>xml version<span class="token operator">=</span><span class="token string">"1.0"</span> encoding<span class="token operator">=</span><span class="token string">"UTF-8"</span><span class="token operator">?</span><span class="token operator">></span>
-<span class="token operator">&lt;</span>beans xmlns<span class="token operator">:</span>xsi<span class="token operator">=</span><span class="token string">"http://www.w3.org/2001/XMLSchema-instance"</span>
-       xmlns<span class="token operator">=</span><span class="token string">"http://www.springframework.org/schema/beans"</span>
-       xsi<span class="token operator">:</span>schemaLocation<span class="token operator">=</span><span class="token string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="token operator">></span>
+    @Override
+    public String toString() &#123;
+        return &quot;User&#123;&quot; +
+                &quot;id&#x3D;&#39;&quot; + id + &#39;\&#39;&#39; +
+                &quot;, name&#x3D;&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, age&#x3D;&quot; + age +
+                &#39;&#125;&#39;;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>xml配置如下，有三种不同的写法<br>在resource下面新建application-constructor.xml<pre class="line-numbers language-java" data-language="java"><code class="language-java">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;
+       xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;
+       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>构造方法注入<span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>使用index属性来显式指定构造参数的索引<span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>bean id<span class="token operator">=</span><span class="token string">"user1"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"org.spring.ioc.entity.User"</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>constructor<span class="token operator">-</span>arg index<span class="token operator">=</span><span class="token string">"0"</span> value<span class="token operator">=</span><span class="token string">"1234"</span><span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>constructor<span class="token operator">-</span>arg index<span class="token operator">=</span><span class="token string">"1"</span> value<span class="token operator">=</span><span class="token string">"spring"</span><span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>bean<span class="token operator">></span>
+    &lt;!--构造方法注入--&gt;
+    &lt;!--使用index属性来显式指定构造参数的索引--&gt;
+    &lt;bean id&#x3D;&quot;user1&quot; class&#x3D;&quot;org.spring.ioc.entity.User&quot;&gt;
+        &lt;constructor-arg index&#x3D;&quot;0&quot; value&#x3D;&quot;1234&quot;&#x2F;&gt;
+        &lt;constructor-arg index&#x3D;&quot;1&quot; value&#x3D;&quot;spring&quot;&#x2F;&gt;
+    &lt;&#x2F;bean&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>使用type属性显式指定简单类型的构造器参数类型，这里对应的是<span class="token class-name">User</span>类中传入name<span class="token punctuation">,</span>age的构造器<span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>bean id<span class="token operator">=</span><span class="token string">"user2"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"org.spring.ioc.entity.User"</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>constructor<span class="token operator">-</span>arg type<span class="token operator">=</span><span class="token string">"java.lang.String"</span> value<span class="token operator">=</span><span class="token string">"spring"</span><span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>constructor<span class="token operator">-</span>arg type<span class="token operator">=</span><span class="token string">"java.lang.Integer"</span> value<span class="token operator">=</span><span class="token string">"20"</span><span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>bean<span class="token operator">></span>
+    &lt;!--使用type属性显式指定简单类型的构造器参数类型，这里对应的是User类中传入name,age的构造器--&gt;
+    &lt;bean id&#x3D;&quot;user2&quot; class&#x3D;&quot;org.spring.ioc.entity.User&quot;&gt;
+        &lt;constructor-arg type&#x3D;&quot;java.lang.String&quot; value&#x3D;&quot;spring&quot;&#x2F;&gt;
+        &lt;constructor-arg type&#x3D;&quot;java.lang.Integer&quot; value&#x3D;&quot;20&quot;&#x2F;&gt;
+    &lt;&#x2F;bean&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>也可以使用构造器参数命名来指定值的类型<span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>bean id<span class="token operator">=</span><span class="token string">"user3"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"org.spring.ioc.entity.User"</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>constructor<span class="token operator">-</span>arg name<span class="token operator">=</span><span class="token string">"id"</span> value<span class="token operator">=</span><span class="token string">"1234"</span><span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>constructor<span class="token operator">-</span>arg name<span class="token operator">=</span><span class="token string">"name"</span> value<span class="token operator">=</span><span class="token string">"spring"</span><span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>bean<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>beans<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    &lt;!--也可以使用构造器参数命名来指定值的类型--&gt;
+    &lt;bean id&#x3D;&quot;user3&quot; class&#x3D;&quot;org.spring.ioc.entity.User&quot;&gt;
+        &lt;constructor-arg name&#x3D;&quot;id&quot; value&#x3D;&quot;1234&quot;&#x2F;&gt;
+        &lt;constructor-arg name&#x3D;&quot;name&quot; value&#x3D;&quot;spring&quot;&#x2F;&gt;
+    &lt;&#x2F;bean&gt;
+&lt;&#x2F;beans&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 在bean的constructor-arg元素下进行指定，constructor-arg顾名思义就是构造器参数的意思，其中包括了三个属性配置</li>
 </ol>
 <ul>
@@ -479,163 +480,163 @@
 <li>name 构造器参数名，根据名称进行匹配注入</li>
 </ul>
 <ol start="3">
-<li>验证<br>现在可以启动Spring容器来验证bean是否注入成功<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">static</span> <span class="token class-name">String</span> APPLICATION <span class="token operator">=</span> <span class="token string">"classpath:application-*.xml"</span><span class="token punctuation">;</span>
+<li>验证<br>现在可以启动Spring容器来验证bean是否注入成功<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Main &#123;
+    private final static String APPLICATION &#x3D; &quot;classpath:application-*.xml&quot;;
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-      <span class="token comment">//加载xml配置文件</span>
-      <span class="token class-name">ApplicationContext</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span>APPLICATION<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token function">constructorInject</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public static void main(String[] args) &#123;
+      &#x2F;&#x2F;加载xml配置文件
+      ApplicationContext context &#x3D; new ClassPathXmlApplicationContext(APPLICATION);
+      constructorInject(context);
+    &#125;
 
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">constructorInject</span><span class="token punctuation">(</span><span class="token class-name">ApplicationContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//获取bean实例，传入的参数值为xml中配置的id</span>
-        <span class="token class-name">User</span> user1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"user1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user1<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">User</span> user2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"user2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user2<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">User</span> user3 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"user3"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user3<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    private static void constructorInject(ApplicationContext context) &#123;
+        &#x2F;&#x2F;获取bean实例，传入的参数值为xml中配置的id
+        User user1 &#x3D; (User) context.getBean(&quot;user1&quot;);
+        System.out.println(user1.toString());
+        User user2 &#x3D; (User) context.getBean(&quot;user2&quot;);
+        System.out.println(user2.toString());
+        User user3 &#x3D; (User) context.getBean(&quot;user3&quot;);
+        System.out.println(user3.toString());
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ol>
-<p>输出结果如下：<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">User</span><span class="token punctuation">&#123;</span>id<span class="token operator">=</span><span class="token string">'1234'</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'spring'</span><span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">&#125;</span>
-<span class="token class-name">User</span><span class="token punctuation">&#123;</span>id<span class="token operator">=</span><span class="token string">'null'</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'spring'</span><span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">&#125;</span>
-<span class="token class-name">User</span><span class="token punctuation">&#123;</span>id<span class="token operator">=</span><span class="token string">'1234'</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'spring'</span><span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>输出结果如下：<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">User&#123;id&#x3D;&#39;1234&#39;, name&#x3D;&#39;spring&#39;, age&#x3D;null&#125;
+User&#123;id&#x3D;&#39;null&#39;, name&#x3D;&#39;spring&#39;, age&#x3D;20&#125;
+User&#123;id&#x3D;&#39;1234&#39;, name&#x3D;&#39;spring&#39;, age&#x3D;null&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <p>可以看出我们定义的User对象已经成功交给Spring容器管理</p>
 <h4 id="Setter注入"><a href="#Setter注入" class="headerlink" title="Setter注入"></a>Setter注入</h4><p>Setter注入也需要在xml中进行配置，在调用了无参的构造方法或者无参的静态工厂方法实例化bean之后，容器通过回调bean的setter方法来完成setter注入。  </p>
 <ol>
-<li>接下来新建Blog，Author两个类，添加get，set方法，重写toString方法：<br>Blog类：<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Blog</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+<li>接下来新建Blog，Author两个类，添加get，set方法，重写toString方法：<br>Blog类：<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Blog &#123;
+    private String name;
 
-    <span class="token keyword">private</span> <span class="token class-name">String</span> content<span class="token punctuation">;</span>
+    private String content;
 
-    <span class="token keyword">private</span> <span class="token class-name">Long</span> date<span class="token punctuation">;</span>
+    private Long date;
 
-    <span class="token keyword">private</span> <span class="token class-name">Author</span> author<span class="token punctuation">;</span>
+    private Author author;
 
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public String getName() &#123;
+        return name;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setName(String name) &#123;
+        this.name &#x3D; name;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> content<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public String getContent() &#123;
+        return content;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setContent</span><span class="token punctuation">(</span><span class="token class-name">String</span> content<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>content <span class="token operator">=</span> content<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setContent(String content) &#123;
+        this.content &#x3D; content;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">Long</span> <span class="token function">getDate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> date<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public Long getDate() &#123;
+        return date;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setDate</span><span class="token punctuation">(</span><span class="token class-name">Long</span> date<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>date <span class="token operator">=</span> date<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setDate(Long date) &#123;
+        this.date &#x3D; date;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">Author</span> <span class="token function">getAuthor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> author<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public Author getAuthor() &#123;
+        return author;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAuthor</span><span class="token punctuation">(</span><span class="token class-name">Author</span> author<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>author <span class="token operator">=</span> author<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setAuthor(Author author) &#123;
+        this.author &#x3D; author;
+    &#125;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token string">"Blog&#123;"</span> <span class="token operator">+</span>
-                <span class="token string">"name='"</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
-                <span class="token string">", content='"</span> <span class="token operator">+</span> content <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
-                <span class="token string">", date="</span> <span class="token operator">+</span> date <span class="token operator">+</span>
-                <span class="token string">", author="</span> <span class="token operator">+</span> author <span class="token operator">+</span>
-                <span class="token string">'&#125;'</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-Author类：  <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Author</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    @Override
+    public String toString() &#123;
+        return &quot;Blog&#123;&quot; +
+                &quot;name&#x3D;&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, content&#x3D;&#39;&quot; + content + &#39;\&#39;&#39; +
+                &quot;, date&#x3D;&quot; + date +
+                &quot;, author&#x3D;&quot; + author +
+                &#39;&#125;&#39;;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Author类：  <pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Author &#123;
+    private String name;
 
-    <span class="token keyword">private</span> <span class="token class-name">Integer</span> age<span class="token punctuation">;</span>
+    private Integer age;
 
-    <span class="token keyword">private</span> <span class="token class-name">String</span> url<span class="token punctuation">;</span>
+    private String url;
 
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public String getName() &#123;
+        return name;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setName(String name) &#123;
+        this.name &#x3D; name;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">Integer</span> <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> age<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public Integer getAge() &#123;
+        return age;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAge</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> age<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setAge(Integer age) &#123;
+        this.age &#x3D; age;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> url<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public String getUrl() &#123;
+        return url;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setUrl</span><span class="token punctuation">(</span><span class="token class-name">String</span> url<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>url <span class="token operator">=</span> url<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void setUrl(String url) &#123;
+        this.url &#x3D; url;
+    &#125;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token string">"Author&#123;"</span> <span class="token operator">+</span>
-                <span class="token string">"name='"</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
-                <span class="token string">", age="</span> <span class="token operator">+</span> age <span class="token operator">+</span>
-                <span class="token string">", url='"</span> <span class="token operator">+</span> url <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
-                <span class="token string">'&#125;'</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+    @Override
+    public String toString() &#123;
+        return &quot;Author&#123;&quot; +
+                &quot;name&#x3D;&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, age&#x3D;&quot; + age +
+                &quot;, url&#x3D;&#39;&quot; + url + &#39;\&#39;&#39; +
+                &#39;&#125;&#39;;
+    &#125;
+&#125;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>xml配置<br>setter注入是通过在bean下面配置property元素来完成的，在resource下面新建application-setter.xml</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">&lt;</span><span class="token operator">?</span>xml version<span class="token operator">=</span><span class="token string">"1.0"</span> encoding<span class="token operator">=</span><span class="token string">"UTF-8"</span><span class="token operator">?</span><span class="token operator">></span>
-<span class="token operator">&lt;</span>beans xmlns<span class="token operator">:</span>xsi<span class="token operator">=</span><span class="token string">"http://www.w3.org/2001/XMLSchema-instance"</span>
-       xmlns<span class="token operator">=</span><span class="token string">"http://www.springframework.org/schema/beans"</span>
-       xsi<span class="token operator">:</span>schemaLocation<span class="token operator">=</span><span class="token string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="token operator">></span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;
+       xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;
+       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>setter注入<span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>bean id<span class="token operator">=</span><span class="token string">"blog"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"org.spring.ioc.entity.Blog"</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>property name<span class="token operator">=</span><span class="token string">"name"</span> value<span class="token operator">=</span><span class="token string">"spring-ioc"</span><span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>property name<span class="token operator">=</span><span class="token string">"content"</span> value<span class="token operator">=</span><span class="token string">"spring"</span><span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>property name<span class="token operator">=</span><span class="token string">"date"</span> value<span class="token operator">=</span><span class="token string">"1520232449944"</span><span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>property name<span class="token operator">=</span><span class="token string">"author"</span> ref<span class="token operator">=</span><span class="token string">"author"</span><span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>bean<span class="token operator">></span>
+    &lt;!--setter注入--&gt;
+    &lt;bean id&#x3D;&quot;blog&quot; class&#x3D;&quot;org.spring.ioc.entity.Blog&quot;&gt;
+        &lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;spring-ioc&quot;&#x2F;&gt;
+        &lt;property name&#x3D;&quot;content&quot; value&#x3D;&quot;spring&quot;&#x2F;&gt;
+        &lt;property name&#x3D;&quot;date&quot; value&#x3D;&quot;1520232449944&quot;&#x2F;&gt;
+        &lt;property name&#x3D;&quot;author&quot; ref&#x3D;&quot;author&quot;&#x2F;&gt;
+    &lt;&#x2F;bean&gt;
 
-    <span class="token operator">&lt;</span>bean id<span class="token operator">=</span><span class="token string">"author"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"org.spring.ioc.entity.Author"</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>property name<span class="token operator">=</span><span class="token string">"name"</span> value<span class="token operator">=</span><span class="token string">"luoliang"</span><span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>property name<span class="token operator">=</span><span class="token string">"age"</span> value<span class="token operator">=</span><span class="token string">"18"</span><span class="token operator">/</span><span class="token operator">></span>
-        <span class="token operator">&lt;</span>property name<span class="token operator">=</span><span class="token string">"url"</span> value<span class="token operator">=</span><span class="token string">"https://luoliangdsga.github.io"</span><span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>bean<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>beans<span class="token operator">></span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    &lt;bean id&#x3D;&quot;author&quot; class&#x3D;&quot;org.spring.ioc.entity.Author&quot;&gt;
+        &lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;luoliang&quot;&#x2F;&gt;
+        &lt;property name&#x3D;&quot;age&quot; value&#x3D;&quot;18&quot;&#x2F;&gt;
+        &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;https:&#x2F;&#x2F;luoliangdsga.github.io&quot;&#x2F;&gt;
+    &lt;&#x2F;bean&gt;
+&lt;&#x2F;beans&gt;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>配置很简单，通过制定property元素的name和value属性，设置变量名对应的值，其中author属性引用的另一个bean，所以使用了ref属性。</p>
 </li>
 <li><p>验证</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">static</span> <span class="token class-name">String</span> APPLICATION <span class="token operator">=</span> <span class="token string">"classpath:application-*.xml"</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Main &#123;
+    private final static String APPLICATION &#x3D; &quot;classpath:application-*.xml&quot;;
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//加载xml配置文件</span>
-        <span class="token class-name">ApplicationContext</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span>APPLICATION<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">setterInject</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public static void main(String[] args) &#123;
+        &#x2F;&#x2F;加载xml配置文件
+        ApplicationContext context &#x3D; new ClassPathXmlApplicationContext(APPLICATION);
+        setterInject(context);
+    &#125;
 
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">setterInject</span><span class="token punctuation">(</span><span class="token class-name">ApplicationContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Blog</span> blog <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">Blog</span><span class="token punctuation">)</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"blog"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>blog<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    private static void setterInject(ApplicationContext context) &#123;
+        Blog blog &#x3D; (Blog) context.getBean(&quot;blog&quot;);
+        System.out.println(blog.toString());
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>结果如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Blog</span><span class="token punctuation">&#123;</span>name<span class="token operator">=</span><span class="token string">'spring-ioc'</span><span class="token punctuation">,</span> content<span class="token operator">=</span><span class="token string">'spring'</span><span class="token punctuation">,</span> date<span class="token operator">=</span><span class="token number">1520232449944</span><span class="token punctuation">,</span> author<span class="token operator">=</span><span class="token class-name">Author</span><span class="token punctuation">&#123;</span>name<span class="token operator">=</span><span class="token string">'luoliang'</span><span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">18</span><span class="token punctuation">,</span> url<span class="token operator">=</span><span class="token string">'https://luoliangdsga.github.io'</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Blog&#123;name&#x3D;&#39;spring-ioc&#39;, content&#x3D;&#39;spring&#39;, date&#x3D;1520232449944, author&#x3D;Author&#123;name&#x3D;&#39;luoliang&#39;, age&#x3D;18, url&#x3D;&#39;https:&#x2F;&#x2F;luoliangdsga.github.io&#39;&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>所有我们配置的属性都注入成功。</p>
 </li>
 </ol>
@@ -942,7 +943,7 @@ Redis是一个高性能的内存数据库，在日常开发中运用非常的广
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

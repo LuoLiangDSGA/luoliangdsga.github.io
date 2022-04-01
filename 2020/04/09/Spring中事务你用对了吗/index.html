@@ -31,7 +31,8 @@ Spring中为JTA，JPA，Hibernate等事务API提供了一致性的编程模型�
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -312,79 +313,79 @@ logging.level.org.springframework.orm.jpa&#x3D;debug<span aria-hidden="true" cla
 <blockquote>
 <p>编写一个业务类</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataService</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Service
+public class DataService &#123;
 
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">private</span> <span class="token class-name">UserRepository</span> userRepository<span class="token punctuation">;</span>
+    @Autowired
+    private UserRepository userRepository;
    
-    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> logger <span class="token operator">=</span> <span class="token class-name">LoggerFactory</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">DataService</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    private final Logger logger &#x3D; LoggerFactory.getLogger(DataService.class);
 
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveA</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveA &#123;&#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">User</span> u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    @Transactional(rollbackFor &#x3D; RuntimeException.class)
+    public void saveA(String user) &#123;
+        logger.info(&quot;invoke saveA &#123;&#125;&quot;, user);
+        User u &#x3D; new User();
+        u.setName(user);
+        userRepository.save(u);
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveB</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveB &#123;&#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-            <span class="token class-name">User</span> u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in saveB()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
+    public void saveB(String user) &#123;
+        logger.info(&quot;invoke saveB &#123;&#125;&quot;, user);
+        try &#123;
+            User u &#x3D; new User();
+            u.setName(user);
+            this.saveAndRollback(user);
+        &#125; catch (RuntimeException e) &#123;
+            logger.warn(&quot;catch an exception in saveB()&quot;);
+        &#125;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"print data:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        userRepository<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>user <span class="token operator">-></span> logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public void findAll() &#123;
+        logger.info(&quot;print data:&quot;);
+        userRepository.findAll().forEach(user -&gt; logger.info(user.toString()));
+    &#125;
 
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveAndRollback</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveAndRollback &#123;&#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">User</span> u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    @Transactional(rollbackFor &#x3D; RuntimeException.class)
+    public void saveAndRollback(String user) &#123;
+        logger.info(&quot;invoke saveAndRollback &#123;&#125;&quot;, user);
+        User u &#x3D; new User();
+        u.setName(user);
+        userRepository.save(u);
+        throw new RuntimeException();
+    &#125;
 
-<span class="token punctuation">&#125;</span>
+&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="验证栗子"><a href="#验证栗子" class="headerlink" title="验证栗子"></a>验证栗子</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
-<span class="token annotation punctuation">@EnableTransactionManagement</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token keyword">implements</span> <span class="token class-name">ApplicationRunner</span> <span class="token punctuation">&#123;</span>
+<h3 id="验证栗子"><a href="#验证栗子" class="headerlink" title="验证栗子"></a>验证栗子</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">@SpringBootApplication
+@EnableTransactionManagement
+public class Application implements ApplicationRunner &#123;
 
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">private</span> <span class="token class-name">DataService</span> dataService<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> logger <span class="token operator">=</span> <span class="token class-name">LoggerFactory</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">Application</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    @Autowired
+    private DataService dataService;
+    private final Logger logger &#x3D; LoggerFactory.getLogger(Application.class);
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">Application</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public static void main(String[] args) &#123;
+        SpringApplication.run(Application.class, args);
+    &#125;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ApplicationArguments</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">demo1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    @Override
+    public void run(ApplicationArguments args) throws Exception &#123;
+        demo1();
+    &#125;
 
-    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">demo1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        dataService<span class="token punctuation">.</span><span class="token function">saveA</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//1</span>
-        dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-            dataService<span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//2</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an save exception"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        dataService<span class="token punctuation">.</span><span class="token function">saveB</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//3</span>
-        dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    private void demo1() &#123;
+        dataService.saveA(&quot;frank&quot;);&#x2F;&#x2F;1
+        dataService.findAll();
+        try &#123;
+            dataService.saveAndRollback(&quot;frank&quot;);&#x2F;&#x2F;2
+        &#125; catch (Exception e) &#123;
+            logger.warn(&quot;catch an save exception&quot;);
+        &#125;
+        dataService.findAll();
+        dataService.saveB(&quot;jack&quot;);&#x2F;&#x2F;3
+        dataService.findAll();
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>代码1执行结果，上面是insert，下面是查询操作</p>
 </blockquote>
@@ -457,49 +458,49 @@ logging.level.org.springframework.orm.jpa&#x3D;debug<span aria-hidden="true" cla
 <li>使用AopContext获取到代理类调用</li>
 </ol>
 <p>所以我们在DataService中增加如下方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveAndRollback</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveAndRollback &#123;&#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">User</span> u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Transactional(rollbackFor &#x3D; RuntimeException.class)
+public void saveAndRollback(String user) &#123;
+    logger.info(&quot;invoke saveAndRollback &#123;&#125;&quot;, user);
+    User u &#x3D; new User();
+    u.setName(user);
+    userRepository.save(u);
+    throw new RuntimeException();
+&#125;
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeSelf</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-        dataService<span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeSelf()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+public void invokeSelf(String user) &#123;
+    try &#123;
+        dataService.saveAndRollback(user);
+    &#125; catch (RuntimeException e) &#123;
+        logger.warn(&quot;catch an exception in invokeSelf()&quot;);
+    &#125;
+&#125;
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeWithApplicationContext</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-        <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">DataService</span><span class="token punctuation">)</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"dataService"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeWithApplicationContext()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+public void invokeWithApplicationContext(String user) &#123;
+    try &#123;
+        ((DataService) applicationContext.getBean(&quot;dataService&quot;)).saveAndRollback(user);
+    &#125; catch (RuntimeException e) &#123;
+        logger.warn(&quot;catch an exception in invokeWithApplicationContext()&quot;);
+    &#125;
+&#125;
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeWithAop</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 需要把@EnableAspectJAutoProxy注解中的(exposeProxy = true)</span>
-        <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">DataService</span><span class="token punctuation">)</span> <span class="token class-name">AopContext</span><span class="token punctuation">.</span><span class="token function">currentProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeWithAop()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+public void invokeWithAop(String user) &#123;
+    try &#123;
+        &#x2F;&#x2F; 需要把@EnableAspectJAutoProxy注解中的(exposeProxy &#x3D; true)
+        ((DataService) AopContext.currentProxy()).saveAndRollback(user);
+    &#125; catch (RuntimeException e) &#123;
+        logger.warn(&quot;catch an exception in invokeWithAop()&quot;);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>再来运行看看结果</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">dataService<span class="token punctuation">.</span><span class="token function">saveA</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dataService<span class="token punctuation">.</span><span class="token function">invokeSelf</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dataService<span class="token punctuation">.</span><span class="token function">invokeWithApplicationContext</span><span class="token punctuation">(</span><span class="token string">"tom"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dataService<span class="token punctuation">.</span><span class="token function">invokeWithAop</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">dataService.saveA(&quot;frank&quot;);
+dataService.invokeSelf(&quot;frank&quot;);
+dataService.findAll();
+dataService.invokeWithApplicationContext(&quot;tom&quot;);
+dataService.findAll();
+dataService.invokeWithAop(&quot;jack&quot;);
+dataService.findAll();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到日志中，出现异常的地方出现了rollback字样，说明事务都生效了</p>
 <pre class="line-numbers language-none"><code class="language-none">2020-03-31 18:02:09.622 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1779787990&lt;open&gt;)] for JPA transaction
 2020-03-31 18:02:09.645 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@411fa0ce]
@@ -769,7 +770,7 @@ dataService<span class="token punctuation">.</span><span class="token function">
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

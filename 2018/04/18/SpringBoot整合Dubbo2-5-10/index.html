@@ -28,7 +28,8 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -260,7 +261,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.7k
+                        1.8k
                     </div>
                     
 
@@ -434,51 +435,51 @@
 <ol start="2">
 <li>接着使用properties进行SpringBoot和Dubbo的配置，配置如下：</li>
 </ol>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">spring.application.name=springboot<span class="token punctuation">-</span>dubbo<span class="token punctuation">-</span>provider
-server.port=9090
-<span class="token comment">#dubbo配置</span>
-dubbo.application.id=springboot<span class="token punctuation">-</span>dubbo<span class="token punctuation">-</span>provider
-dubbo.application.name=springboot<span class="token punctuation">-</span>dubbo<span class="token punctuation">-</span>provider
-dubbo.application.owner=luoliang
-<span class="token comment">#协议配置</span>
-dubbo.protocol.id=dubbo
-dubbo.protocol.name=dubbo
-<span class="token comment">#把默认的20880端口换成12345</span>
-dubbo.protocol.port=12345
-<span class="token comment">#服务注册配置</span>
-dubbo.registry.id=my<span class="token punctuation">-</span>registry
-dubbo.registry.address=zookeeper<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span><span class="token number">2181</span>
-<span class="token comment">#配置dubbo的包扫描，针对dubbo的@Service, @Reference注解</span>
-dubbo.scan.base<span class="token punctuation">-</span>packages=org.boot.dubbo.provider.service
-<span class="token comment">#dubbo健康监控</span>
-endpoints.dubbo.enabled=true
-management.health.dubbo.status.defaults=memory
-management.health.dubbo.status.extras=load<span class="token punctuation">,</span>threadpool
-management.port=9091<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">spring.application.name&#x3D;springboot-dubbo-provider
+server.port&#x3D;9090
+#dubbo配置
+dubbo.application.id&#x3D;springboot-dubbo-provider
+dubbo.application.name&#x3D;springboot-dubbo-provider
+dubbo.application.owner&#x3D;luoliang
+#协议配置
+dubbo.protocol.id&#x3D;dubbo
+dubbo.protocol.name&#x3D;dubbo
+#把默认的20880端口换成12345
+dubbo.protocol.port&#x3D;12345
+#服务注册配置
+dubbo.registry.id&#x3D;my-registry
+dubbo.registry.address&#x3D;zookeeper:&#x2F;&#x2F;localhost:2181
+#配置dubbo的包扫描，针对dubbo的@Service, @Reference注解
+dubbo.scan.base-packages&#x3D;org.boot.dubbo.provider.service
+#dubbo健康监控
+endpoints.dubbo.enabled&#x3D;true
+management.health.dubbo.status.defaults&#x3D;memory
+management.health.dubbo.status.extras&#x3D;load,threadpool
+management.port&#x3D;9091<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol start="3">
 <li><p>进行了上面两步之后，Dubbo已经集成好了，接下来就可以直接开始撸服务代码了，可以直接使用注解来暴露服务接口</p>
 <ul>
 <li>先在api中写一个interface</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">HelloService</span> <span class="token punctuation">&#123;</span>
-    <span class="token class-name">String</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public interface HelloService &#123;
+    String sayHello(String name);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>实现接口，加上自己的业务逻辑</li>
 </ul>
 </li>
 </ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span><span class="token punctuation">(</span>version <span class="token operator">=</span> <span class="token string">"1.0.0"</span><span class="token punctuation">,</span>
-        application <span class="token operator">=</span> <span class="token string">"$&#123;dubbo.application.id&#125;"</span><span class="token punctuation">,</span>
-        protocol <span class="token operator">=</span> <span class="token string">"$&#123;dubbo.protocol.id&#125;"</span><span class="token punctuation">,</span>
-        registry <span class="token operator">=</span> <span class="token string">"$&#123;dubbo.registry.id&#125;"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">HelloService</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Service(version &#x3D; &quot;1.0.0&quot;,
+        application &#x3D; &quot;$&#123;dubbo.application.id&#125;&quot;,
+        protocol &#x3D; &quot;$&#123;dubbo.protocol.id&#125;&quot;,
+        registry &#x3D; &quot;$&#123;dubbo.registry.id&#125;&quot;)
+public class HelloServiceImpl implements HelloService &#123;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token string">"Hello, "</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">" (from Spring Boot)"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    @Override
+    public String sayHello(String name) &#123;
+        return &quot;Hello, &quot; + name + &quot; (from Spring Boot)&quot;;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>注意，这里的service注解是com.alibaba.dubbo.config.annotation.Service</p>
 <h3 id="创建消费者"><a href="#创建消费者" class="headerlink" title="创建消费者"></a>创建消费者</h3><ol>
 <li>配置消费者者的pom.xml</li>
@@ -559,42 +560,42 @@ management.port=9091<span aria-hidden="true" class="line-numbers-rows"><span></s
 <ol start="2">
 <li>application.properties配置如下:</li>
 </ol>
-<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">spring.application.name=springboot<span class="token punctuation">-</span>dubbo<span class="token punctuation">-</span>consumer
-server.port=8081
-<span class="token comment">#dubbo配置</span>
-dubbo.application.id=springboot<span class="token punctuation">-</span>dubbo<span class="token punctuation">-</span>consumer
-dubbo.application.name=springboot<span class="token punctuation">-</span>dubbo<span class="token punctuation">-</span>consumer
-dubbo.application.owner=luoliang
-<span class="token comment">#服务注册配置</span>
-dubbo.registry.id=my<span class="token punctuation">-</span>registry
-dubbo.registry.address=zookeeper<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span><span class="token number">2181</span>
-management.port=8082<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml">spring.application.name&#x3D;springboot-dubbo-consumer
+server.port&#x3D;8081
+#dubbo配置
+dubbo.application.id&#x3D;springboot-dubbo-consumer
+dubbo.application.name&#x3D;springboot-dubbo-consumer
+dubbo.application.owner&#x3D;luoliang
+#服务注册配置
+dubbo.registry.id&#x3D;my-registry
+dubbo.registry.address&#x3D;zookeeper:&#x2F;&#x2F;localhost:2181
+management.port&#x3D;8082<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol start="3">
 <li>编写service来消费dubbo的服务，主要代码如下：</li>
 </ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConsumerServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">ConsumerService</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Reference</span><span class="token punctuation">(</span>version <span class="token operator">=</span> <span class="token string">"1.0.0"</span><span class="token punctuation">,</span>
-            application <span class="token operator">=</span> <span class="token string">"$&#123;dubbo.application.id&#125;"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> <span class="token class-name">HelloService</span> helloService<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Service
+public class ConsumerServiceImpl implements ConsumerService &#123;
+    @Reference(version &#x3D; &quot;1.0.0&quot;,
+            application &#x3D; &quot;$&#123;dubbo.application.id&#125;&quot;)
+    private HelloService helloService;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> helloService<span class="token punctuation">.</span><span class="token function">sayHello</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    @Override
+    public String sayHello(String name) &#123;
+        return helloService.sayHello(name);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre><code>在mvc的controller中注入此服务
-</code></pre><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
-<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/user"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultController</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Resource</span>
-    <span class="token keyword">private</span> <span class="token class-name">ConsumerService</span> consumerService<span class="token punctuation">;</span>
+</code></pre><pre class="line-numbers language-java" data-language="java"><code class="language-java">@RestController
+@RequestMapping(&quot;&#x2F;user&quot;)
+public class DefaultController &#123;
+    @Resource
+    private ConsumerService consumerService;
 
-    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/sayHello"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> consumerService<span class="token punctuation">.</span><span class="token function">sayHello</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+    @RequestMapping(&quot;&#x2F;sayHello&quot;)
+    public String register(String name) &#123;
+        return consumerService.sayHello(name);
+    &#125;
+&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h5 id="到这里，整个项目基本结构已经搭建完成，consumer已经能够消费provider提供的服务。"><a href="#到这里，整个项目基本结构已经搭建完成，consumer已经能够消费provider提供的服务。" class="headerlink" title="到这里，整个项目基本结构已经搭建完成，consumer已经能够消费provider提供的服务。"></a>到这里，整个项目基本结构已经搭建完成，consumer已经能够消费provider提供的服务。</h5><blockquote>
 <p>现在来测试一下，分别启动provider和consumer，打开浏览器，输入<a target="_blank" rel="noopener" href="http://localhost:8081/user/sayHello?name=dubbo">http://localhost:8081/user/sayHello?name=dubbo</a></p>
@@ -821,7 +822,7 @@ Vue+SpringBoot实现前后端分离的文件上传这篇文章需要一定V
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

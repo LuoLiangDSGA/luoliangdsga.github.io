@@ -29,7 +29,8 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -265,7 +266,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.4k
+                        1.5k
                     </div>
                     
 
@@ -329,78 +330,78 @@
 </li>
 </ul>
 <p><code>MongoProperties.java</code></p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>
-    prefix <span class="token operator">=</span> <span class="token string">"spring.data.mongodb"</span>
-<span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MongoProperties</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> DEFAULT_PORT <span class="token operator">=</span> <span class="token number">27017</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> DEFAULT_URI <span class="token operator">=</span> <span class="token string">"mongodb://localhost/test"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> host<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">Integer</span> port <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> uri<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> database<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> authenticationDatabase<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> gridFsDatabase<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> username<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> password<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> fieldNamingStrategy<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@ConfigurationProperties(
+    prefix &#x3D; &quot;spring.data.mongodb&quot;
+)
+public class MongoProperties &#123;
+    public static final int DEFAULT_PORT &#x3D; 27017;
+    public static final String DEFAULT_URI &#x3D; &quot;mongodb:&#x2F;&#x2F;localhost&#x2F;test&quot;;
+    private String host;
+    private Integer port &#x3D; null;
+    private String uri;
+    private String database;
+    private String authenticationDatabase;
+    private String gridFsDatabase;
+    private String username;
+    private char[] password;
+    private Class&lt;?&gt; fieldNamingStrategy;
 
-    <span class="token keyword">public</span> <span class="token class-name">MongoProperties</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token punctuation">&#125;</span>
+    public MongoProperties() &#123;
+    &#125;
+    ...
+&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>看了这个，很简单对吧， 开始写我们自己的配置类，就叫做DataProperties吧，怎么写？复制粘贴就行了，为了不让别人觉得我们在复制粘贴，我们删点字段，同时把配置前缀改改，就是上面的<code>@ConfigurationProperties</code>注解里面的prefix属性<br><code>DataProperties.java</code><br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"data"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataProperties</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> DEFAULT_URI <span class="token operator">=</span> <span class="token string">"localhost:3306"</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> DEFAULT_TYPE <span class="token operator">=</span> <span class="token string">"mysql"</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> DEFAULT_ENABLED <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">Boolean</span> enabled<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> uri<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> type<span class="token punctuation">;</span>
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> 省略getter setter方法   
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>这样就搞定了，在下面添加了自动配置之后，配置文件中以data为前缀的配置，会被自动赋值到这个对象对应的字段上，如果没有配置，就会使用默认的值，这就解释了为啥我们添加了<code>spring-boot-starter-data-mongodb</code>之后，如果不配任何东西，应用启动时就会默认连接<code>mongodb://localhost/test</code>这个地址</p>
+<p>看了这个，很简单对吧， 开始写我们自己的配置类，就叫做DataProperties吧，怎么写？复制粘贴就行了，为了不让别人觉得我们在复制粘贴，我们删点字段，同时把配置前缀改改，就是上面的<code>@ConfigurationProperties</code>注解里面的prefix属性<br><code>DataProperties.java</code><br><pre class="line-numbers language-java" data-language="java"><code class="language-java">@ConfigurationProperties(prefix &#x3D; &quot;data&quot;)
+public class DataProperties &#123;
+    public static final String DEFAULT_URI &#x3D; &quot;localhost:3306&quot;;
+    public static final String DEFAULT_TYPE &#x3D; &quot;mysql&quot;;
+    public static final boolean DEFAULT_ENABLED &#x3D; false;
+    private Boolean enabled;
+    private String uri;
+    private String type;
+    ... 省略getter setter方法   
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>这样就搞定了，在下面添加了自动配置之后，配置文件中以data为前缀的配置，会被自动赋值到这个对象对应的字段上，如果没有配置，就会使用默认的值，这就解释了为啥我们添加了<code>spring-boot-starter-data-mongodb</code>之后，如果不配任何东西，应用启动时就会默认连接<code>mongodb://localhost/test</code>这个地址</p>
 <ul>
 <li>编写模板类<blockquote>
 <p><code>spring-boot-starter-mongo</code>中有一个<code>MongoTemplate</code>，所以我们也编写一个类，用于验证我们的自动配置是否生效</p>
 </blockquote>
 </li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyDataTemplate</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">Logger</span> logger <span class="token operator">=</span> <span class="token class-name">LoggerFactory</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">MyDataTemplate</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> url<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> type<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class MyDataTemplate &#123;
+    private Logger logger &#x3D; LoggerFactory.getLogger(MyDataTemplate.class);
+    private String url;
+    private String type;
 
-    <span class="token keyword">public</span> <span class="token class-name">MyDataTemplate</span><span class="token punctuation">(</span><span class="token class-name">String</span> url<span class="token punctuation">,</span> <span class="token class-name">String</span> type<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>url <span class="token operator">=</span> url<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>type <span class="token operator">=</span> type<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public MyDataTemplate(String url, String type) &#123;
+        this.url &#x3D; url;
+        this.type &#x3D; type;
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"=========> get data from: (&#123;&#125;), type=(&#123;&#125;)"</span><span class="token punctuation">,</span> url<span class="token punctuation">,</span> type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    public String getData() &#123;
+        logger.info(&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt; get data from: (&#123;&#125;), type&#x3D;(&#123;&#125;)&quot;, url, type);
 
-        <span class="token keyword">return</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"%s-%s(time：%s)"</span><span class="token punctuation">,</span> url<span class="token punctuation">,</span> type<span class="token punctuation">,</span> <span class="token class-name">LocalDateTime</span><span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        return String.format(&quot;%s-%s(time：%s)&quot;, url, type, LocalDateTime.now());
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre><code>这个类的作用就是打印当前的数据库配置信息
 </code></pre><ul>
 <li>编写配置类</li>
 </ul>
 <p><code>MyDataTemplateAutoConfiguration.java</code></p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
-<span class="token annotation punctuation">@ConditionalOnClass</span><span class="token punctuation">(</span><span class="token class-name">MyDataTemplate</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@EnableConfigurationProperties</span><span class="token punctuation">(</span><span class="token class-name">DataProperties</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyDataTemplateAutoConfiguration</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">private</span> <span class="token class-name">DataProperties</span> properties<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Configuration
+@ConditionalOnClass(MyDataTemplate.class)
+@EnableConfigurationProperties(DataProperties.class)
+public class MyDataTemplateAutoConfiguration &#123;
+    @Autowired
+    private DataProperties properties;
 
-    <span class="token annotation punctuation">@Bean</span>
-    <span class="token annotation punctuation">@ConditionalOnMissingBean</span>
-    <span class="token annotation punctuation">@ConditionalOnProperty</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"data"</span><span class="token punctuation">,</span> value <span class="token operator">=</span> <span class="token string">"enabled"</span><span class="token punctuation">,</span> havingValue <span class="token operator">=</span> <span class="token string">"true"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token class-name">MyDataTemplate</span> <span class="token function">myDataTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">MyDataTemplate</span><span class="token punctuation">(</span>properties<span class="token punctuation">.</span><span class="token function">getUri</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> properties<span class="token punctuation">.</span><span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnProperty(prefix &#x3D; &quot;data&quot;, value &#x3D; &quot;enabled&quot;, havingValue &#x3D; &quot;true&quot;)
+    public MyDataTemplate myDataTemplate() &#123;
+        return new MyDataTemplate(properties.getUri(), properties.getType());
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre><code>@Configuration：表名这是一个Spring配置
 @ConditionalOnClass(MyDataTemplate.class)：会在classpath中有MyDataTemplate类的时候进行配置
 @EnableConfigurationProperties(DataProperties.class)：将带有@ConfigurationProperties注解的类注入为Spring容器的Bean
@@ -427,18 +428,18 @@ my.boot.starter.MyDataTemplateAutoConfiguration<span aria-hidden="true" class="l
 </code></pre><blockquote>
 <p>按照上面starter的写法，我们可以直接使用DataTemplate，因为他已经自动配置并且加入到Spring容器中</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
-<span class="token keyword">private</span> <span class="token class-name">MyDataTemplate</span> myDataTemplate<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Autowired
+private MyDataTemplate myDataTemplate;
 
-<span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">contextLoads</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-<span class="token punctuation">&#125;</span>
+@Test
+public void contextLoads() &#123;
+&#125;
 
-<span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token class-name">String</span> result <span class="token operator">=</span> myDataTemplate<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"get data result：&#123;&#125;"</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+@Test
+public void test() &#123;
+    String result &#x3D; myDataTemplate.getData();
+    logger.info(&quot;get data result：&#123;&#125;&quot;, result);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>在yaml中添加enabled属性，这样会自动注入DataTemplate</p>
 </blockquote>
@@ -685,7 +686,7 @@ mybatis是一款优秀的持久层框架，支持定制化SQL，存储过程和�
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

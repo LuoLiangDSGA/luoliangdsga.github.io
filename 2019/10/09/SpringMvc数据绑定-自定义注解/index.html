@@ -29,7 +29,8 @@ SpringMVC中给我们提供了很多方便的注解用于绑定数据，比如@R
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -265,7 +266,7 @@ SpringMVC中给我们提供了很多方便的注解用于绑定数据，比如@R
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.4k
+                        1.5k
                     </div>
                     
 
@@ -294,265 +295,265 @@ SpringMVC中给我们提供了很多方便的注解用于绑定数据，比如@R
 <h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><ul>
 <li>既然SpringMVC中给我们实现了那么多的默认注解，那就看看SpringMVC是怎么做到的，下面是<code>PathVariableMethodArgumentResolver</code>的部分源码：</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;**
  * Resolves method arguments annotated with an @&#123;@link PathVariable&#125;.
  *
- * &lt;p>An @&#123;@link PathVariable&#125; is a named value that gets resolved from a URI template variable.
+ * &lt;p&gt;An @&#123;@link PathVariable&#125; is a named value that gets resolved from a URI template variable.
  * It is always required and does not have a default value to fall back on. See the base class
  * &#123;@link org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver&#125;
  * for more information on how named values are processed.
  *
- * &lt;p>If the method parameter type is &#123;@link Map&#125;, the name specified in the annotation is used
+ * &lt;p&gt;If the method parameter type is &#123;@link Map&#125;, the name specified in the annotation is used
  * to resolve the URI variable String value. The value is then converted to a &#123;@link Map&#125; via
  * type conversion, assuming a suitable &#123;@link Converter&#125; or &#123;@link PropertyEditor&#125; has been
  * registered.
  *
- * &lt;p>A &#123;@link WebDataBinder&#125; is invoked to apply type conversion to resolved path variable
- * values that don't yet match the method parameter type.
+ * &lt;p&gt;A &#123;@link WebDataBinder&#125; is invoked to apply type conversion to resolved path variable
+ * values that don&#39;t yet match the method parameter type.
  *
  * @author Rossen Stoyanchev
  * @author Arjen Poutsma
  * @author Juergen Hoeller
  * @since 3.1
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PathVariableMethodArgumentResolver</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractNamedValueMethodArgumentResolver</span>
-		<span class="token keyword">implements</span> <span class="token class-name">UriComponentsContributor</span> <span class="token punctuation">&#123;</span>
+ *&#x2F;
+public class PathVariableMethodArgumentResolver extends AbstractNamedValueMethodArgumentResolver
+		implements UriComponentsContributor &#123;
 
-	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">TypeDescriptor</span> STRING_TYPE_DESCRIPTOR <span class="token operator">=</span> <span class="token class-name">TypeDescriptor</span><span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	private static final TypeDescriptor STRING_TYPE_DESCRIPTOR &#x3D; TypeDescriptor.valueOf(String.class);
 
 
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">supportsParameter</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>parameter<span class="token punctuation">.</span><span class="token function">hasParameterAnnotation</span><span class="token punctuation">(</span><span class="token class-name">PathVariable</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">isAssignableFrom</span><span class="token punctuation">(</span>parameter<span class="token punctuation">.</span><span class="token function">nestedIfOptional</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getNestedParameterType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			<span class="token class-name">PathVariable</span> pathVariable <span class="token operator">=</span> parameter<span class="token punctuation">.</span><span class="token function">getParameterAnnotation</span><span class="token punctuation">(</span><span class="token class-name">PathVariable</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token keyword">return</span> <span class="token punctuation">(</span>pathVariable <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">hasText</span><span class="token punctuation">(</span>pathVariable<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
-		<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
+	@Override
+	public boolean supportsParameter(MethodParameter parameter) &#123;
+		if (!parameter.hasParameterAnnotation(PathVariable.class)) &#123;
+			return false;
+		&#125;
+		if (Map.class.isAssignableFrom(parameter.nestedIfOptional().getNestedParameterType())) &#123;
+			PathVariable pathVariable &#x3D; parameter.getParameterAnnotation(PathVariable.class);
+			return (pathVariable !&#x3D; null &amp;&amp; StringUtils.hasText(pathVariable.value()));
+		&#125;
+		return true;
+	&#125;
 
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">protected</span> <span class="token class-name">NamedValueInfo</span> <span class="token function">createNamedValueInfo</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">PathVariable</span> ann <span class="token operator">=</span> parameter<span class="token punctuation">.</span><span class="token function">getParameterAnnotation</span><span class="token punctuation">(</span><span class="token class-name">PathVariable</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token class-name">Assert</span><span class="token punctuation">.</span><span class="token function">state</span><span class="token punctuation">(</span>ann <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token string">"No PathVariable annotation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">PathVariableNamedValueInfo</span><span class="token punctuation">(</span>ann<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
+	@Override
+	protected NamedValueInfo createNamedValueInfo(MethodParameter parameter) &#123;
+		PathVariable ann &#x3D; parameter.getParameterAnnotation(PathVariable.class);
+		Assert.state(ann !&#x3D; null, &quot;No PathVariable annotation&quot;);
+		return new PathVariableNamedValueInfo(ann);
+	&#125;
 
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
-	<span class="token annotation punctuation">@Nullable</span>
-	<span class="token keyword">protected</span> <span class="token class-name">Object</span> <span class="token function">resolveName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">,</span> <span class="token class-name">NativeWebRequest</span> request<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> uriTemplateVars <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span><span class="token punctuation">)</span> request<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span>
-				<span class="token class-name">HandlerMapping</span><span class="token punctuation">.</span>URI_TEMPLATE_VARIABLES_ATTRIBUTE<span class="token punctuation">,</span> <span class="token class-name">RequestAttributes</span><span class="token punctuation">.</span>SCOPE_REQUEST<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token keyword">return</span> <span class="token punctuation">(</span>uriTemplateVars <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">?</span> uriTemplateVars<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
+	@Override
+	@SuppressWarnings(&quot;unchecked&quot;)
+	@Nullable
+	protected Object resolveName(String name, MethodParameter parameter, NativeWebRequest request) throws Exception &#123;
+		Map&lt;String, String&gt; uriTemplateVars &#x3D; (Map&lt;String, String&gt;) request.getAttribute(
+				HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+		return (uriTemplateVars !&#x3D; null ? uriTemplateVars.get(name) : null);
+	&#125;
 
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">handleMissingValue</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletRequestBindingException</span> <span class="token punctuation">&#123;</span>
-		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">MissingPathVariableException</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> parameter<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
+	@Override
+	protected void handleMissingValue(String name, MethodParameter parameter) throws ServletRequestBindingException &#123;
+		throw new MissingPathVariableException(name, parameter);
+	&#125;
 
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
-	<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">handleResolvedValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> <span class="token class-name">Object</span> arg<span class="token punctuation">,</span> <span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">,</span>
-			<span class="token annotation punctuation">@Nullable</span> <span class="token class-name">ModelAndViewContainer</span> mavContainer<span class="token punctuation">,</span> <span class="token class-name">NativeWebRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	@Override
+	@SuppressWarnings(&quot;unchecked&quot;)
+	protected void handleResolvedValue(@Nullable Object arg, String name, MethodParameter parameter,
+			@Nullable ModelAndViewContainer mavContainer, NativeWebRequest request) &#123;
 
-		<span class="token class-name">String</span> key <span class="token operator">=</span> <span class="token class-name">View</span><span class="token punctuation">.</span>PATH_VARIABLES<span class="token punctuation">;</span>
-		<span class="token keyword">int</span> scope <span class="token operator">=</span> <span class="token class-name">RequestAttributes</span><span class="token punctuation">.</span>SCOPE_REQUEST<span class="token punctuation">;</span>
-		<span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> pathVars <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span><span class="token punctuation">)</span> request<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> scope<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span>pathVars <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			pathVars <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			request<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> pathVars<span class="token punctuation">,</span> scope<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
-		pathVars<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
+		String key &#x3D; View.PATH_VARIABLES;
+		int scope &#x3D; RequestAttributes.SCOPE_REQUEST;
+		Map&lt;String, Object&gt; pathVars &#x3D; (Map&lt;String, Object&gt;) request.getAttribute(key, scope);
+		if (pathVars &#x3D;&#x3D; null) &#123;
+			pathVars &#x3D; new HashMap&lt;&gt;();
+			request.setAttribute(key, pathVars, scope);
+		&#125;
+		pathVars.put(name, arg);
+	&#125;
 
-	<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">contributeMethodArgument</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">,</span> <span class="token class-name">Object</span> value<span class="token punctuation">,</span>
-			<span class="token class-name">UriComponentsBuilder</span> builder<span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> uriVariables<span class="token punctuation">,</span> <span class="token class-name">ConversionService</span> conversionService<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	@Override
+	public void contributeMethodArgument(MethodParameter parameter, Object value,
+			UriComponentsBuilder builder, Map&lt;String, Object&gt; uriVariables, ConversionService conversionService) &#123;
 
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">isAssignableFrom</span><span class="token punctuation">(</span>parameter<span class="token punctuation">.</span><span class="token function">nestedIfOptional</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getNestedParameterType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			<span class="token keyword">return</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
+		if (Map.class.isAssignableFrom(parameter.nestedIfOptional().getNestedParameterType())) &#123;
+			return;
+		&#125;
 
-		<span class="token class-name">PathVariable</span> ann <span class="token operator">=</span> parameter<span class="token punctuation">.</span><span class="token function">getParameterAnnotation</span><span class="token punctuation">(</span><span class="token class-name">PathVariable</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token class-name">String</span> name <span class="token operator">=</span> <span class="token punctuation">(</span>ann <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> <span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">hasLength</span><span class="token punctuation">(</span>ann<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">?</span> ann<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> parameter<span class="token punctuation">.</span><span class="token function">getParameterName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token class-name">String</span> formatted <span class="token operator">=</span> <span class="token function">formatUriValue</span><span class="token punctuation">(</span>conversionService<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">TypeDescriptor</span><span class="token punctuation">(</span>parameter<span class="token punctuation">.</span><span class="token function">nestedIfOptional</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		uriVariables<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> formatted<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span> 
-	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+		PathVariable ann &#x3D; parameter.getParameterAnnotation(PathVariable.class);
+		String name &#x3D; (ann !&#x3D; null &amp;&amp; StringUtils.hasLength(ann.value()) ? ann.value() : parameter.getParameterName());
+		String formatted &#x3D; formatUriValue(conversionService, new TypeDescriptor(parameter.nestedIfOptional()), value);
+		uriVariables.put(name, formatted);
+	&#125; 
+	...
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>可以看到这个类的注释上说明了这是实现<code>@PathVariable</code>注解的类，它的父类是<code>AbstractNamedValueMethodArgumentResolver</code>，<code>AbstractNamedValueMethodArgumentResolver</code>实现了<code>HandlerMethodArgumentResolver</code>，正是<code>HandlerMethodArgumentResolver</code>这个类，用来实现了自定义的注解。</p>
 </blockquote>
 <ul>
 <li>那么<code>PathVariableMethodArgumentResolver</code>这个类在什么时候用的呢？可以参考<code>RequestMappingHandlerAdapter</code>:</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RequestMappingHandlerAdapter</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractHandlerMethodAdapter</span>
-		<span class="token keyword">implements</span> <span class="token class-name">BeanFactoryAware</span><span class="token punctuation">,</span> <span class="token class-name">InitializingBean</span> <span class="token punctuation">&#123;</span>
-		<span class="token annotation punctuation">@Override</span>
-	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterPropertiesSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token comment">// Do this first, it may add ResponseBody advice beans</span>
-		<span class="token function">initControllerAdviceCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
+		implements BeanFactoryAware, InitializingBean &#123;
+		@Override
+	public void afterPropertiesSet() &#123;
+		&#x2F;&#x2F; Do this first, it may add ResponseBody advice beans
+		initControllerAdviceCache();
 
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>argumentResolvers <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">HandlerMethodArgumentResolver</span><span class="token punctuation">></span></span> resolvers <span class="token operator">=</span> <span class="token function">getDefaultArgumentResolvers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token keyword">this</span><span class="token punctuation">.</span>argumentResolvers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HandlerMethodArgumentResolverComposite</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addResolvers</span><span class="token punctuation">(</span>resolvers<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>initBinderArgumentResolvers <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">HandlerMethodArgumentResolver</span><span class="token punctuation">></span></span> resolvers <span class="token operator">=</span> <span class="token function">getDefaultInitBinderArgumentResolvers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token keyword">this</span><span class="token punctuation">.</span>initBinderArgumentResolvers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HandlerMethodArgumentResolverComposite</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addResolvers</span><span class="token punctuation">(</span>resolvers<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>returnValueHandlers <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">HandlerMethodReturnValueHandler</span><span class="token punctuation">></span></span> handlers <span class="token operator">=</span> <span class="token function">getDefaultReturnValueHandlers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token keyword">this</span><span class="token punctuation">.</span>returnValueHandlers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HandlerMethodReturnValueHandlerComposite</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addHandlers</span><span class="token punctuation">(</span>handlers<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
-	<span class="token punctuation">&#125;</span>
+		if (this.argumentResolvers &#x3D;&#x3D; null) &#123;
+			List&lt;HandlerMethodArgumentResolver&gt; resolvers &#x3D; getDefaultArgumentResolvers();
+			this.argumentResolvers &#x3D; new HandlerMethodArgumentResolverComposite().addResolvers(resolvers);
+		&#125;
+		if (this.initBinderArgumentResolvers &#x3D;&#x3D; null) &#123;
+			List&lt;HandlerMethodArgumentResolver&gt; resolvers &#x3D; getDefaultInitBinderArgumentResolvers();
+			this.initBinderArgumentResolvers &#x3D; new HandlerMethodArgumentResolverComposite().addResolvers(resolvers);
+		&#125;
+		if (this.returnValueHandlers &#x3D;&#x3D; null) &#123;
+			List&lt;HandlerMethodReturnValueHandler&gt; handlers &#x3D; getDefaultReturnValueHandlers();
+			this.returnValueHandlers &#x3D; new HandlerMethodReturnValueHandlerComposite().addHandlers(handlers);
+		&#125;
+	&#125;
 	
-	<span class="token keyword">private</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">HandlerMethodArgumentResolver</span><span class="token punctuation">></span></span> <span class="token function">getDefaultArgumentResolvers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">HandlerMethodArgumentResolver</span><span class="token punctuation">></span></span> resolvers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	private List&lt;HandlerMethodArgumentResolver&gt; getDefaultArgumentResolvers() &#123;
+		List&lt;HandlerMethodArgumentResolver&gt; resolvers &#x3D; new ArrayList&lt;&gt;();
 
-		<span class="token comment">// Annotation-based argument resolution</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestParamMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestParamMapMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PathVariableMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PathVariableMapMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MatrixVariableMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MatrixVariableMapMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ServletModelAttributeMethodProcessor</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestResponseBodyMethodProcessor</span><span class="token punctuation">(</span><span class="token function">getMessageConverters</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>requestResponseBodyAdvice<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestPartMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token function">getMessageConverters</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>requestResponseBodyAdvice<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestHeaderMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestHeaderMapMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ServletCookieValueMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ExpressionValueMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SessionAttributeMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestAttributeMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		&#x2F;&#x2F; Annotation-based argument resolution
+		resolvers.add(new RequestParamMethodArgumentResolver(getBeanFactory(), false));
+		resolvers.add(new RequestParamMapMethodArgumentResolver());
+		resolvers.add(new PathVariableMethodArgumentResolver());
+		resolvers.add(new PathVariableMapMethodArgumentResolver());
+		resolvers.add(new MatrixVariableMethodArgumentResolver());
+		resolvers.add(new MatrixVariableMapMethodArgumentResolver());
+		resolvers.add(new ServletModelAttributeMethodProcessor(false));
+		resolvers.add(new RequestResponseBodyMethodProcessor(getMessageConverters(), this.requestResponseBodyAdvice));
+		resolvers.add(new RequestPartMethodArgumentResolver(getMessageConverters(), this.requestResponseBodyAdvice));
+		resolvers.add(new RequestHeaderMethodArgumentResolver(getBeanFactory()));
+		resolvers.add(new RequestHeaderMapMethodArgumentResolver());
+		resolvers.add(new ServletCookieValueMethodArgumentResolver(getBeanFactory()));
+		resolvers.add(new ExpressionValueMethodArgumentResolver(getBeanFactory()));
+		resolvers.add(new SessionAttributeMethodArgumentResolver());
+		resolvers.add(new RequestAttributeMethodArgumentResolver());
 
-		<span class="token comment">// Type-based argument resolution</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ServletRequestMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ServletResponseMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HttpEntityMethodProcessor</span><span class="token punctuation">(</span><span class="token function">getMessageConverters</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>requestResponseBodyAdvice<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RedirectAttributesMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ModelMethodProcessor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MapMethodProcessor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ErrorsMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SessionStatusMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">UriComponentsBuilderMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		&#x2F;&#x2F; Type-based argument resolution
+		resolvers.add(new ServletRequestMethodArgumentResolver());
+		resolvers.add(new ServletResponseMethodArgumentResolver());
+		resolvers.add(new HttpEntityMethodProcessor(getMessageConverters(), this.requestResponseBodyAdvice));
+		resolvers.add(new RedirectAttributesMethodArgumentResolver());
+		resolvers.add(new ModelMethodProcessor());
+		resolvers.add(new MapMethodProcessor());
+		resolvers.add(new ErrorsMethodArgumentResolver());
+		resolvers.add(new SessionStatusMethodArgumentResolver());
+		resolvers.add(new UriComponentsBuilderMethodArgumentResolver());
 
-		<span class="token comment">// Custom arguments</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">getCustomArgumentResolvers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			resolvers<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span><span class="token function">getCustomArgumentResolvers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">&#125;</span>
+		&#x2F;&#x2F; Custom arguments
+		if (getCustomArgumentResolvers() !&#x3D; null) &#123;
+			resolvers.addAll(getCustomArgumentResolvers());
+		&#125;
 
-		<span class="token comment">// Catch-all</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RequestParamMethodArgumentResolver</span><span class="token punctuation">(</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		resolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ServletModelAttributeMethodProcessor</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		&#x2F;&#x2F; Catch-all
+		resolvers.add(new RequestParamMethodArgumentResolver(getBeanFactory(), true));
+		resolvers.add(new ServletModelAttributeMethodProcessor(true));
 
-		<span class="token keyword">return</span> resolvers<span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+		return resolvers;
+	&#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>可以看到<code>RequestMappingHandlerAdapter</code>实现了Spring生命周期中的<code>InitializingBean</code>接口，并且重写了<code>afterPropertiesSet()</code>方法，这里面调用了<code>getDefaultArgumentResolvers()</code>，这个方法把默认的解析器都添加了进去，<code>@PathVariable</code>注解的解析器就是这里加进去的，<code>RequestMappingHandlerAdapter</code>是SpringMVC中一个很重要的类，SpringMVC中的大多数组件都是在这里进行配置的，比如Converter，ViewResolver。</p>
 </blockquote>
 <ul>
 <li>看了默认的实现，现在我们来看看<code>HandlerMethodArgumentResolver</code>这个类，这个方法中只有方法：</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">HandlerMethodArgumentResolver</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public interface HandlerMethodArgumentResolver &#123;
 
-	<span class="token comment">/**
+	&#x2F;**
 	 * 用于判断是否支持对某种参数的解析
-	 */</span>
-	<span class="token keyword">boolean</span> <span class="token function">supportsParameter</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	 *&#x2F;
+	boolean supportsParameter(MethodParameter parameter);
 
-	<span class="token comment">/**
+	&#x2F;**
 	 * 将请求中的参数值解析为某种对象
-	 */</span>
-	<span class="token annotation punctuation">@Nullable</span>
-	<span class="token class-name">Object</span> <span class="token function">resolveArgument</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> <span class="token class-name">ModelAndViewContainer</span> mavContainer<span class="token punctuation">,</span>
-			<span class="token class-name">NativeWebRequest</span> webRequest<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> <span class="token class-name">WebDataBinderFactory</span> binderFactory<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span><span class="token punctuation">;</span>
+	 *&#x2F;
+	@Nullable
+	Object resolveArgument(MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer,
+			NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) throws Exception;
 
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>编写自定义的HandlerMethodArgumentResolver</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span>PARAMETER<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
-<span class="token annotation punctuation">@Documented</span>
-<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">Token</span> <span class="token punctuation">&#123;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserArgumentResolver</span> <span class="token keyword">implements</span> <span class="token class-name">HandlerMethodArgumentResolver</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">private</span> <span class="token class-name">RedisService</span> redisService<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Token &#123;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Component
+public class UserArgumentResolver implements HandlerMethodArgumentResolver &#123;
+    @Autowired
+    private RedisService redisService;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">supportsParameter</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> methodParameter<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 判断是否有Token这个注解</span>
-        <span class="token keyword">return</span> methodParameter<span class="token punctuation">.</span><span class="token function">hasParameterAnnotation</span><span class="token punctuation">(</span><span class="token class-name">Token</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    @Override
+    public boolean supportsParameter(MethodParameter methodParameter) &#123;
+        &#x2F;&#x2F; 判断是否有Token这个注解
+        return methodParameter.hasParameterAnnotation(Token.class);
+    &#125;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">resolveArgument</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> methodParameter<span class="token punctuation">,</span> <span class="token class-name">ModelAndViewContainer</span> modelAndViewContainer<span class="token punctuation">,</span>
-                                  <span class="token class-name">NativeWebRequest</span> nativeWebRequest<span class="token punctuation">,</span> <span class="token class-name">WebDataBinderFactory</span> webDataBinderFactory<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">String</span> token<span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>methodParameter<span class="token punctuation">.</span><span class="token function">getParameterType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token class-name">Objects</span><span class="token punctuation">.</span><span class="token function">nonNull</span><span class="token punctuation">(</span>token <span class="token operator">=</span>
-                nativeWebRequest<span class="token punctuation">.</span><span class="token function">getNativeRequest</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getHeader</span><span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> redisService<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    @Override
+    public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
+                                  NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception &#123;
+        String token;
+        if (methodParameter.getParameterType().equals(User.class) &amp;&amp; Objects.nonNull(token &#x3D;
+                nativeWebRequest.getNativeRequest(HttpServletRequest.class).getHeader(&quot;token&quot;))) &#123;
+            return redisService.get(token);
+        &#125;
+        return null;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>这个自定义解析器会判断是否是<code>@Token</code>这个注解，然后从header中取出token，并且转换为User对象。</p>
 </blockquote>
 <ul>
 <li>编写一个业务类模拟redis操作</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;**
  * @author luoliang
- * @date 2019/10/8
+ * @date 2019&#x2F;10&#x2F;8
  * 模拟redis操作业务类
- */</span>
-<span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RedisService</span> <span class="token punctuation">&#123;</span>
+ *&#x2F;
+@Service
+public class RedisService &#123;
 
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">id</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token string">"二哈"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public Object get(String key) &#123;
+        if (StringUtils.isEmpty(key)) &#123;
+            return null;
+        &#125;
+        return User.builder().id(key).name(&quot;二哈&quot;).build();
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token punctuation">,</span> <span class="token class-name">Object</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// todo</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    public void set(String key, Object value) &#123;
+        &#x2F;&#x2F; todo
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>做完这些工作之后需要把自定义解析器加入到配置里</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootConfiguration</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebMvcconfig</span> <span class="token keyword">extends</span> <span class="token class-name">WebMvcConfigurationSupport</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">UserArgumentResolver</span> userArgumentResolver<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@SpringBootConfiguration
+public class WebMvcconfig extends WebMvcConfigurationSupport &#123;
+    private final UserArgumentResolver userArgumentResolver;
 
-    <span class="token keyword">public</span> <span class="token class-name">WebMvcconfig</span><span class="token punctuation">(</span><span class="token class-name">UserArgumentResolver</span> userArgumentResolver<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>userArgumentResolver <span class="token operator">=</span> userArgumentResolver<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public WebMvcconfig(UserArgumentResolver userArgumentResolver) &#123;
+        this.userArgumentResolver &#x3D; userArgumentResolver;
+    &#125;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">addArgumentResolvers</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">HandlerMethodArgumentResolver</span><span class="token punctuation">></span></span> argumentResolvers<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        argumentResolvers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>userArgumentResolver<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    @Override
+    protected void addArgumentResolvers(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers) &#123;
+        argumentResolvers.add(userArgumentResolver);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>编写Controller，参数就可以使用自定义的注解了</li>
 </ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/user"</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token class-name">ResponseEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span></span> <span class="token function">getUser</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Token</span> <span class="token class-name">User</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token class-name">ResponseEntity</span><span class="token punctuation">.</span><span class="token function">ok</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@GetMapping(&quot;&#x2F;user&quot;)
+public ResponseEntity&lt;User&gt; getUser(@Token User user) &#123;
+    return ResponseEntity.ok(user);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本篇文章主要记录了SpringMVC中自定义解析器的使用，同时举了一个真实场景的例子，旨在于知道怎么使用SpringMVC给我们带来的便利的同时，知道其原理。</p>
 
             </div>
@@ -765,7 +766,7 @@ SpringMVC中给我们提供了很多方便的注解用于绑定数据，比如@R
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

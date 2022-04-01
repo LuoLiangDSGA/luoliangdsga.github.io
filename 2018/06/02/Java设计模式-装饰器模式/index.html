@@ -31,7 +31,8 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -352,14 +353,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        841
+                        911
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        4 分
                     </div>
                     
                 
@@ -380,189 +381,189 @@
 </blockquote>
 <hr>
 <p>来看一个例子，我们在外面吃饭，有很多食物，其中有烧烤和火锅。比如我们点了烧烤，但是觉得味道不够爽，所以我们选择让老板加盐，或者加辣椒，这里的加盐和加辣椒其实就是对事物起装饰作用。用代码实现如下：</p>
-<h4 id="创建Food接口"><a href="#创建Food接口" class="headerlink" title="创建Food接口"></a>创建Food接口</h4><p>提供两个抽象方法<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Food</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/**
+<h4 id="创建Food接口"><a href="#创建Food接口" class="headerlink" title="创建Food接口"></a>创建Food接口</h4><p>提供两个抽象方法<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">public interface Food &#123;
+    &#x2F;**
      * 返回描述
      * @return
-     */</span>
-    <span class="token class-name">String</span> <span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     *&#x2F;
+    String getDesc();
 
-    <span class="token comment">/**
+    &#x2F;**
      * 返回价格
      * @return
-     */</span>
-    <span class="token class-name">String</span> <span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><span id="more"></span></p>
-<h4 id="创建实现接口的实现类"><a href="#创建实现接口的实现类" class="headerlink" title="创建实现接口的实现类"></a>创建实现接口的实现类</h4><p>Barbecue实现类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BarbecueFood</span> <span class="token keyword">implements</span> <span class="token class-name">Food</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/**
-     * 返回描述
-     *
-     * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token string">"烧烤"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token comment">/**
-     * 返回价格
-     *
-     * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Double</span> cost <span class="token operator">=</span> <span class="token number">3.0</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"最后价格：%s块"</span><span class="token punctuation">,</span> cost<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<p>Hotpot实现类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HotpotFood</span> <span class="token keyword">implements</span> <span class="token class-name">Food</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/**
+     *&#x2F;
+    String getCost();
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><span id="more"></span></p>
+<h4 id="创建实现接口的实现类"><a href="#创建实现接口的实现类" class="headerlink" title="创建实现接口的实现类"></a>创建实现接口的实现类</h4><p>Barbecue实现类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class BarbecueFood implements Food &#123;
+    &#x2F;**
      * 返回描述
      *
      * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token string">"火锅"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+     *&#x2F;
+    @Override
+    public String getDesc() &#123;
+        return &quot;烧烤&quot;;
+    &#125;
 
-    <span class="token comment">/**
+    &#x2F;**
      * 返回价格
      *
      * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Double</span> cost <span class="token operator">=</span> <span class="token number">100.0</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"最后价格：%s块"</span><span class="token punctuation">,</span> cost<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h4 id="创建装饰器基类"><a href="#创建装饰器基类" class="headerlink" title="创建装饰器基类"></a>创建装饰器基类</h4><p>FoodDecorator是一个抽象类，其中组合Food类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">FoodDecorator</span> <span class="token keyword">implements</span> <span class="token class-name">Food</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">protected</span> <span class="token class-name">Food</span> food<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token class-name">FoodDecorator</span><span class="token punctuation">(</span><span class="token class-name">Food</span> food<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>food <span class="token operator">=</span> food<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token comment">/**
+     *&#x2F;
+    @Override
+    public String getCost() &#123;
+        Double cost &#x3D; 3.0;
+        return String.format(&quot;最后价格：%s块&quot;, cost);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>Hotpot实现类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class HotpotFood implements Food &#123;
+    &#x2F;**
      * 返回描述
      *
      * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> food<span class="token punctuation">.</span><span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+     *&#x2F;
+    @Override
+    public String getDesc() &#123;
+        return &quot;火锅&quot;;
+    &#125;
 
-    <span class="token comment">/**
+    &#x2F;**
      * 返回价格
      *
      * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> food<span class="token punctuation">.</span><span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+     *&#x2F;
+    @Override
+    public String getCost() &#123;
+        Double cost &#x3D; 100.0;
+        return String.format(&quot;最后价格：%s块&quot;, cost);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h4 id="创建装饰器基类"><a href="#创建装饰器基类" class="headerlink" title="创建装饰器基类"></a>创建装饰器基类</h4><p>FoodDecorator是一个抽象类，其中组合Food类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">public abstract class FoodDecorator implements Food &#123;
+    protected Food food;
+
+    public FoodDecorator(Food food) &#123;
+        this.food &#x3D; food;
+    &#125;
+
+    &#x2F;**
+     * 返回描述
+     *
+     * @return
+     *&#x2F;
+    @Override
+    public String getDesc() &#123;
+        return food.getDesc();
+    &#125;
+
+    &#x2F;**
+     * 返回价格
+     *
+     * @return
+     *&#x2F;
+    @Override
+    public String getCost() &#123;
+        return food.getCost();
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <p>创建SaltFoodDecorator装饰器类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SaltFoodDecorator</span> <span class="token keyword">extends</span> <span class="token class-name">FoodDecorator</span> <span class="token punctuation">&#123;</span>
+public class SaltFoodDecorator extends FoodDecorator &#123;
 
-    <span class="token keyword">public</span> <span class="token class-name">SaltFoodDecorator</span><span class="token punctuation">(</span><span class="token class-name">Food</span> food<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span>food<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public SaltFoodDecorator(Food food) &#123;
+        super(food);
+    &#125;
 
-    <span class="token comment">/**
+    &#x2F;**
      * 返回描述
      *
      * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">String</span> result <span class="token operator">=</span> <span class="token string">"加盐的"</span> <span class="token operator">+</span> food<span class="token punctuation">.</span><span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     *&#x2F;
+    @Override
+    public String getDesc() &#123;
+        String result &#x3D; &quot;加盐的&quot; + food.getDesc();
 
-        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+        return result;
+    &#125;
 
-    <span class="token comment">/**
+    &#x2F;**
      * 返回价格
      *
      * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Double</span> salt <span class="token operator">=</span> <span class="token number">2.0</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"加盐多收%s块"</span><span class="token punctuation">,</span> salt<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">String</span> result <span class="token operator">=</span> food<span class="token punctuation">.</span><span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" + "</span> <span class="token operator">+</span> salt <span class="token operator">+</span> <span class="token string">"块"</span><span class="token punctuation">;</span>
+     *&#x2F;
+    @Override
+    public String getCost() &#123;
+        Double salt &#x3D; 2.0;
+        System.out.println(String.format(&quot;加盐多收%s块&quot;, salt));
+        String result &#x3D; food.getCost() + &quot; + &quot; + salt + &quot;块&quot;;
 
-        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>创建PepperFoodDecorator装饰器类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PepperFoodDecorator</span> <span class="token keyword">extends</span> <span class="token class-name">FoodDecorator</span> <span class="token punctuation">&#123;</span>
+        return result;
+    &#125;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>创建PepperFoodDecorator装饰器类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class PepperFoodDecorator extends FoodDecorator &#123;
 
-    <span class="token keyword">public</span> <span class="token class-name">PepperFoodDecorator</span><span class="token punctuation">(</span><span class="token class-name">Food</span> food<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span>food<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public PepperFoodDecorator(Food food) &#123;
+        super(food);
+    &#125;
 
-    <span class="token comment">/**
+    &#x2F;**
      * 返回描述
      *
      * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">String</span> result <span class="token operator">=</span> <span class="token string">"加盐的"</span> <span class="token operator">+</span> food<span class="token punctuation">.</span><span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     *&#x2F;
+    @Override
+    public String getDesc() &#123;
+        String result &#x3D; &quot;加盐的&quot; + food.getDesc();
 
-        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+        return result;
+    &#125;
 
-    <span class="token comment">/**
+    &#x2F;**
      * 返回价格
      *
      * @return
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Double</span> pepper <span class="token operator">=</span> <span class="token number">10.0</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"加辣椒多收%s块"</span><span class="token punctuation">,</span> pepper<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">String</span> result <span class="token operator">=</span> food<span class="token punctuation">.</span><span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" + "</span> <span class="token operator">+</span> pepper <span class="token operator">+</span> <span class="token string">"块"</span><span class="token punctuation">;</span>
+     *&#x2F;
+    @Override
+    public String getCost() &#123;
+        Double pepper &#x3D; 10.0;
+        System.out.println(String.format(&quot;加辣椒多收%s块&quot;, pepper));
+        String result &#x3D; food.getCost() + &quot; + &quot; + pepper + &quot;块&quot;;
 
-        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+        return result;
+    &#125;
+&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h4 id="最后来测试一下"><a href="#最后来测试一下" class="headerlink" title="最后来测试一下"></a>最后来测试一下</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//创建不用装饰器修饰的Food</span>
-        <span class="token class-name">Food</span> food <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BarbecueFood</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">display</span><span class="token punctuation">(</span>food<span class="token punctuation">.</span><span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">display</span><span class="token punctuation">(</span>food<span class="token punctuation">.</span><span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"-------------分割线---------------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//创建用SaltFoodDecorator装饰的Food</span>
-        <span class="token class-name">Food</span> barbecue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SaltFoodDecorator</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">BarbecueFood</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">display</span><span class="token punctuation">(</span>barbecue<span class="token punctuation">.</span><span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">display</span><span class="token punctuation">(</span>barbecue<span class="token punctuation">.</span><span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"-------------分割线---------------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//创建用PepperFoodDecorator装饰的Food</span>
-        <span class="token class-name">Food</span> hotSpot <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PepperFoodDecorator</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HotpotFood</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">display</span><span class="token punctuation">(</span>hotSpot<span class="token punctuation">.</span><span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">display</span><span class="token punctuation">(</span>hotSpot<span class="token punctuation">.</span><span class="token function">getCost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+<h4 id="最后来测试一下"><a href="#最后来测试一下" class="headerlink" title="最后来测试一下"></a>最后来测试一下</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Main &#123;
+    public static void main(String[] args) &#123;
+        &#x2F;&#x2F;创建不用装饰器修饰的Food
+        Food food &#x3D; new BarbecueFood();
+        display(food.getDesc());
+        display(food.getCost());
+        System.out.println(&quot;-------------分割线---------------&quot;);
+        &#x2F;&#x2F;创建用SaltFoodDecorator装饰的Food
+        Food barbecue &#x3D; new SaltFoodDecorator(new BarbecueFood());
+        display(barbecue.getDesc());
+        display(barbecue.getCost());
+        System.out.println(&quot;-------------分割线---------------&quot;);
+        &#x2F;&#x2F;创建用PepperFoodDecorator装饰的Food
+        Food hotSpot &#x3D; new PepperFoodDecorator(new HotpotFood());
+        display(hotSpot.getDesc());
+        display(hotSpot.getCost());
+    &#125;
 
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token class-name">Object</span> obj<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    private static void display(Object obj) &#123;
+        System.out.println(obj);
+    &#125;
 
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>结果如下：<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">烧烤
-最后价格：<span class="token number">3.0</span>块
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>分割线<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+最后价格：3.0块
+-------------分割线---------------
 加盐的烧烤
-加盐多收<span class="token number">2.0</span>块
-最后价格：<span class="token number">3.0</span>块 <span class="token operator">+</span> <span class="token number">2.0</span>块
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>分割线<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+加盐多收2.0块
+最后价格：3.0块 + 2.0块
+-------------分割线---------------
 加盐的火锅
-加辣椒多收<span class="token number">10.0</span>块
-最后价格：<span class="token number">100.0</span>块 <span class="token operator">+</span> <span class="token number">10.0</span>块<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+加辣椒多收10.0块
+最后价格：100.0块 + 10.0块<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h4 id="来看一下类图会更加地清晰"><a href="#来看一下类图会更加地清晰" class="headerlink" title="来看一下类图会更加地清晰"></a>来看一下类图会更加地清晰</h4><p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1frwo1b68n8j31f80gewfz.jpg" alt=""></p>
 <h3 id="END"><a href="#END" class="headerlink" title="END"></a>END</h3><p>装饰器模式在日常开发中也有很多应用，典型的就是JDK里面的IO。<br><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1frwojeu1qwj31kw0i4tau.jpg" alt=""><br>InputStream代表输入流，输入来源可以是文件（FileInputStream）、管道（PipedInputStream）、数组（ByteArrayInputStream）等。就像上面的烧烤，火锅。FilterInputStream就是装饰器的基类，他的实现类是一系列的装饰器，比如BufferedInputStream可以用缓冲区来修饰InputStream，把InputSteam包装成有缓冲区的输入流。</p>
 
@@ -869,7 +870,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

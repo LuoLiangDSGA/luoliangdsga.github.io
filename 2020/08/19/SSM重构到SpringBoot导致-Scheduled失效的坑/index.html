@@ -31,7 +31,8 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -267,7 +268,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        887
+                        917
                     </div>
                     
 
@@ -297,13 +298,13 @@
 <blockquote>
 <p>定义一个任务的bean</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TaskScheduler</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Scheduled</span><span class="token punctuation">(</span>cron <span class="token operator">=</span> <span class="token string">"0/5 * * * * ?"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendShareWechatMessageTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 任务代码</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Component
+public class TaskScheduler &#123;
+    @Scheduled(cron &#x3D; &quot;0&#x2F;5 * * * * ?&quot;)
+    public void sendShareWechatMessageTask() &#123;
+        &#x2F;&#x2F; 任务代码
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里要说明两点:</p>
 <ol>
 <li>任务类必须加上<code>@Component</code>或者使用其他注解, 让它能被spring识别为bean.</li>
@@ -312,52 +313,52 @@
 <blockquote>
 <p>只用在启动类加上<code>@EnableCaching</code>注解, 定时任务即可使用</p>
 </blockquote>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@EnableCaching</span>
-<span class="token annotation punctuation">@SpringBootApplication</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@EnableCaching
+@SpringBootApplication
+public class Application &#123;
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">Application</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public static void main(String[] args) &#123;
+        SpringApplication.run(Application.class, args);
+    &#125;
 
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在我做完上述步骤, 我的定时任务并没有生效, 我反复确认我的配置没有问题. 同时, 也采用了面向谷歌编程的方法, 看到很多解决方法本质都是配置问题, 但是我的配置并没有问题.于是, 我通过debug发现了问题所在:</p>
 <blockquote>
-<p>ScheduledAnnotationBeanPostProcessor.java<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
-<span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">postProcessAfterInitialization</span><span class="token punctuation">(</span><span class="token class-name">Object</span> bean<span class="token punctuation">,</span> <span class="token class-name">String</span> beanName<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span>bean <span class="token keyword">instanceof</span> <span class="token class-name">AopInfrastructureBean</span> <span class="token operator">||</span> bean <span class="token keyword">instanceof</span> <span class="token class-name">TaskScheduler</span> <span class="token operator">||</span>
-			bean <span class="token keyword">instanceof</span> <span class="token class-name">ScheduledExecutorService</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token comment">// Ignore AOP infrastructure such as scoped proxies.</span>
-		<span class="token keyword">return</span> bean<span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
+<p>ScheduledAnnotationBeanPostProcessor.java<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">@Override
+public Object postProcessAfterInitialization(Object bean, String beanName) &#123;
+	if (bean instanceof AopInfrastructureBean || bean instanceof TaskScheduler ||
+			bean instanceof ScheduledExecutorService) &#123;
+		&#x2F;&#x2F; Ignore AOP infrastructure such as scoped proxies.
+		return bean;
+	&#125;
 
-	<span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> targetClass <span class="token operator">=</span> <span class="token class-name">AopProxyUtils</span><span class="token punctuation">.</span><span class="token function">ultimateTargetClass</span><span class="token punctuation">(</span>bean<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>nonAnnotatedClasses<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>targetClass<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
-			<span class="token class-name">AnnotationUtils</span><span class="token punctuation">.</span><span class="token function">isCandidateClass</span><span class="token punctuation">(</span>targetClass<span class="token punctuation">,</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token class-name">Scheduled</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">Schedules</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-		<span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Method</span><span class="token punctuation">,</span> <span class="token class-name">Set</span><span class="token punctuation">&lt;</span><span class="token class-name">Scheduled</span><span class="token punctuation">></span><span class="token punctuation">></span></span> annotatedMethods <span class="token operator">=</span> <span class="token class-name">MethodIntrospector</span><span class="token punctuation">.</span><span class="token function">selectMethods</span><span class="token punctuation">(</span>targetClass<span class="token punctuation">,</span>
-				<span class="token punctuation">(</span><span class="token class-name">MethodIntrospector<span class="token punctuation">.</span>MetadataLookup</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Set</span><span class="token punctuation">&lt;</span><span class="token class-name">Scheduled</span><span class="token punctuation">></span><span class="token punctuation">></span></span><span class="token punctuation">)</span> method <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
-					<span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Scheduled</span><span class="token punctuation">></span></span> scheduledMethods <span class="token operator">=</span> <span class="token class-name">AnnotatedElementUtils</span><span class="token punctuation">.</span><span class="token function">getMergedRepeatableAnnotations</span><span class="token punctuation">(</span>
-							method<span class="token punctuation">,</span> <span class="token class-name">Scheduled</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">Schedules</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-					<span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">!</span>scheduledMethods<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> scheduledMethods <span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-				<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span>annotatedMethods<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-			<span class="token keyword">this</span><span class="token punctuation">.</span>nonAnnotatedClasses<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>targetClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token keyword">if</span> <span class="token punctuation">(</span>logger<span class="token punctuation">.</span><span class="token function">isTraceEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-				logger<span class="token punctuation">.</span><span class="token function">trace</span><span class="token punctuation">(</span><span class="token string">"No @Scheduled annotations found on bean class: "</span> <span class="token operator">+</span> targetClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">&#125;</span>
-		<span class="token punctuation">&#125;</span>
-		<span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-			<span class="token comment">// Non-empty set of methods</span>
-			annotatedMethods<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> scheduledMethods<span class="token punctuation">)</span> <span class="token operator">-></span>
-					scheduledMethods<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>scheduled <span class="token operator">-></span> <span class="token function">processScheduled</span><span class="token punctuation">(</span>scheduled<span class="token punctuation">,</span> method<span class="token punctuation">,</span> bean<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token keyword">if</span> <span class="token punctuation">(</span>logger<span class="token punctuation">.</span><span class="token function">isTraceEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-				logger<span class="token punctuation">.</span><span class="token function">trace</span><span class="token punctuation">(</span>annotatedMethods<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" @Scheduled methods processed on bean '"</span> <span class="token operator">+</span> beanName <span class="token operator">+</span>
-						<span class="token string">"': "</span> <span class="token operator">+</span> annotatedMethods<span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token punctuation">&#125;</span>
-		<span class="token punctuation">&#125;</span>
-	<span class="token punctuation">&#125;</span>
-	<span class="token keyword">return</span> bean<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+	Class&lt;?&gt; targetClass &#x3D; AopProxyUtils.ultimateTargetClass(bean);
+	if (!this.nonAnnotatedClasses.contains(targetClass) &amp;&amp;
+			AnnotationUtils.isCandidateClass(targetClass, Arrays.asList(Scheduled.class, Schedules.class))) &#123;
+		Map&lt;Method, Set&lt;Scheduled&gt;&gt; annotatedMethods &#x3D; MethodIntrospector.selectMethods(targetClass,
+				(MethodIntrospector.MetadataLookup&lt;Set&lt;Scheduled&gt;&gt;) method -&gt; &#123;
+					Set&lt;Scheduled&gt; scheduledMethods &#x3D; AnnotatedElementUtils.getMergedRepeatableAnnotations(
+							method, Scheduled.class, Schedules.class);
+					return (!scheduledMethods.isEmpty() ? scheduledMethods : null);
+				&#125;);
+		if (annotatedMethods.isEmpty()) &#123;
+			this.nonAnnotatedClasses.add(targetClass);
+			if (logger.isTraceEnabled()) &#123;
+				logger.trace(&quot;No @Scheduled annotations found on bean class: &quot; + targetClass);
+			&#125;
+		&#125;
+		else &#123;
+			&#x2F;&#x2F; Non-empty set of methods
+			annotatedMethods.forEach((method, scheduledMethods) -&gt;
+					scheduledMethods.forEach(scheduled -&gt; processScheduled(scheduled, method, bean)));
+			if (logger.isTraceEnabled()) &#123;
+				logger.trace(annotatedMethods.size() + &quot; @Scheduled methods processed on bean &#39;&quot; + beanName +
+						&quot;&#39;: &quot; + annotatedMethods);
+			&#125;
+		&#125;
+	&#125;
+	return bean;
+&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 </blockquote>
 <p><code>ScheduledAnnotationBeanPostProcessor</code>是<code>spring-task</code>中处理<code>@Scheduled</code>注解任务的核心类,<code>ScheduledAnnotationBeanPostProcessor</code>实现了spring的<code>BeanPostProcessor</code>接口, 上面这个方法便是<code>BeanPostProcessor</code>中的重写方法, 简单来说, 这个方法在spring容器初始化完成之后会进行回调, 这个方法主要就是在回调时扫描回调的bean中,是否有<code>@Scheduled</code>注解的方法, 如果有就会加到定时任务中.但是可以看到最开始有一个判断, 有几个bean不会进行扫描, 其中一个便是<code>TaskScheduler</code>, 看到这里, 就知道为啥我定义的定时任务没生效了, 因为我定义定时任务的类也叫<code>TaskScheduler</code>, 但为啥在老的应用里就是正常的呢, 再看看老项目里相同的代码:</p>
@@ -615,7 +616,7 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

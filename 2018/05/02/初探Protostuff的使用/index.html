@@ -31,7 +31,8 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -352,7 +353,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        895
+                        969
                     </div>
                     
 
@@ -390,110 +391,110 @@
      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>io.protostuff<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>protostuff-runtime<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>$&#123;protostuff.version&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>先编写两个POJO，再把它们嵌套起来，这里使用了lombok的@Data注解和@Builder注解，@Data可以自动生成getter setter，@Builder注解可以让我们通过更加优雅的构建者模式来创建对象。<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
-<span class="token annotation punctuation">@Builder</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> id<span class="token punctuation">;</span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>先编写两个POJO，再把它们嵌套起来，这里使用了lombok的@Data注解和@Builder注解，@Data可以自动生成getter setter，@Builder注解可以让我们通过更加优雅的构建者模式来创建对象。<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">@Data
+@Builder
+public class User &#123;
+    private String id;
 
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    private String name;
 
-    <span class="token keyword">private</span> <span class="token class-name">Integer</span> age<span class="token punctuation">;</span>
+    private Integer age;
 
-    <span class="token keyword">private</span> <span class="token class-name">String</span> desc<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
-<span class="token annotation punctuation">@Builder</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Group</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> id<span class="token punctuation">;</span>
+    private String desc;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Data
+@Builder
+public class Group &#123;
+    private String id;
 
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    private String name;
 
-    <span class="token keyword">private</span> <span class="token class-name">User</span> user<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>接下来编写Protostuff序列化工具类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProtostuffUtils</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/**
+    private User user;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>接下来编写Protostuff序列化工具类<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class ProtostuffUtils &#123;
+    &#x2F;**
      * 避免每次序列化都重新申请Buffer空间
-     */</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">LinkedBuffer</span> buffer <span class="token operator">=</span> <span class="token class-name">LinkedBuffer</span><span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token class-name">LinkedBuffer</span><span class="token punctuation">.</span>DEFAULT_BUFFER_SIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">/**
+     *&#x2F;
+    private static LinkedBuffer buffer &#x3D; LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
+    &#x2F;**
      * 缓存Schema
-     */</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Class</span><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span><span class="token punctuation">,</span> <span class="token class-name">Schema</span><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span><span class="token punctuation">></span></span> schemaCache <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     *&#x2F;
+    private static Map&lt;Class&lt;?&gt;, Schema&lt;?&gt;&gt; schemaCache &#x3D; new ConcurrentHashMap&lt;&gt;();
 
-    <span class="token comment">/**
+    &#x2F;**
      * 序列化方法，把指定对象序列化成字节数组
      *
      * @param obj
-     * @param &lt;T>
+     * @param &lt;T&gt;
      * @return
-     */</span>
-    <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">serialize</span><span class="token punctuation">(</span><span class="token class-name">T</span> obj<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> clazz <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">)</span> obj<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">Schema</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> schema <span class="token operator">=</span> <span class="token function">getSchema</span><span class="token punctuation">(</span>clazz<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> data<span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-            data <span class="token operator">=</span> <span class="token class-name">ProtostuffIOUtil</span><span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> schema<span class="token punctuation">,</span> buffer<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
-            buffer<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
+     *&#x2F;
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T&gt; byte[] serialize(T obj) &#123;
+        Class&lt;T&gt; clazz &#x3D; (Class&lt;T&gt;) obj.getClass();
+        Schema&lt;T&gt; schema &#x3D; getSchema(clazz);
+        byte[] data;
+        try &#123;
+            data &#x3D; ProtostuffIOUtil.toByteArray(obj, schema, buffer);
+        &#125; finally &#123;
+            buffer.clear();
+        &#125;
 
-        <span class="token keyword">return</span> data<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+        return data;
+    &#125;
 
-    <span class="token comment">/**
+    &#x2F;**
      * 反序列化方法，将字节数组反序列化成指定Class类型
      *
      * @param data
      * @param clazz
-     * @param &lt;T>
+     * @param &lt;T&gt;
      * @return
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token class-name">T</span> <span class="token function">deserialize</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> data<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> clazz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Schema</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> schema <span class="token operator">=</span> <span class="token function">getSchema</span><span class="token punctuation">(</span>clazz<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">T</span> obj <span class="token operator">=</span> schema<span class="token punctuation">.</span><span class="token function">newMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">ProtostuffIOUtil</span><span class="token punctuation">.</span><span class="token function">mergeFrom</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> obj<span class="token punctuation">,</span> schema<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> obj<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+     *&#x2F;
+    public static &lt;T&gt; T deserialize(byte[] data, Class&lt;T&gt; clazz) &#123;
+        Schema&lt;T&gt; schema &#x3D; getSchema(clazz);
+        T obj &#x3D; schema.newMessage();
+        ProtostuffIOUtil.mergeFrom(data, obj, schema);
+        return obj;
+    &#125;
 
-    <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token class-name">Schema</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token function">getSchema</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> clazz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">Schema</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> schema <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">Schema</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span><span class="token punctuation">)</span> schemaCache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>clazz<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Objects</span><span class="token punctuation">.</span><span class="token function">isNull</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">//这个schema通过RuntimeSchema进行懒创建并缓存</span>
-            <span class="token comment">//所以可以一直调用RuntimeSchema.getSchema(),这个方法是线程安全的</span>
-            schema <span class="token operator">=</span> <span class="token class-name">RuntimeSchema</span><span class="token punctuation">.</span><span class="token function">getSchema</span><span class="token punctuation">(</span>clazz<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Objects</span><span class="token punctuation">.</span><span class="token function">nonNull</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                schemaCache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>clazz<span class="token punctuation">,</span> schema<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
+    @SuppressWarnings(&quot;unchecked&quot;)
+    private static &lt;T&gt; Schema&lt;T&gt; getSchema(Class&lt;T&gt; clazz) &#123;
+        Schema&lt;T&gt; schema &#x3D; (Schema&lt;T&gt;) schemaCache.get(clazz);
+        if (Objects.isNull(schema)) &#123;
+            &#x2F;&#x2F;这个schema通过RuntimeSchema进行懒创建并缓存
+            &#x2F;&#x2F;所以可以一直调用RuntimeSchema.getSchema(),这个方法是线程安全的
+            schema &#x3D; RuntimeSchema.getSchema(clazz);
+            if (Objects.nonNull(schema)) &#123;
+                schemaCache.put(clazz, schema);
+            &#125;
+        &#125;
 
-        <span class="token keyword">return</span> schema<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>验证序列化功能<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token keyword">implements</span> <span class="token class-name">CommandLineRunner</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">Application</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+        return schema;
+    &#125;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>验证序列化功能<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">@SpringBootApplication
+public class Application implements CommandLineRunner &#123;
+    public static void main(String[] args) &#123;
+        SpringApplication.run(Application.class, args);
+    &#125;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> strings<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//创建一个user对象</span>
-        <span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">id</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">age</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token string">"张三"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">desc</span><span class="token punctuation">(</span><span class="token string">"programmer"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//创建一个Group对象</span>
-        <span class="token class-name">Group</span> group <span class="token operator">=</span> <span class="token class-name">Group</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">id</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token string">"分组1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">user</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//使用ProtostuffUtils序列化</span>
-        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> data <span class="token operator">=</span> <span class="token class-name">ProtostuffUtils</span><span class="token punctuation">.</span><span class="token function">serialize</span><span class="token punctuation">(</span>group<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"序列化后："</span> <span class="token operator">+</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">Group</span> result <span class="token operator">=</span> <span class="token class-name">ProtostuffUtils</span><span class="token punctuation">.</span><span class="token function">deserialize</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token class-name">Group</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"反序列化后："</span> <span class="token operator">+</span> result<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+    @Override
+    public void run(String... strings) throws Exception &#123;
+        &#x2F;&#x2F;创建一个user对象
+        User user &#x3D; User.builder().id(&quot;1&quot;).age(20).name(&quot;张三&quot;).desc(&quot;programmer&quot;).build();
+        &#x2F;&#x2F;创建一个Group对象
+        Group group &#x3D; Group.builder().id(&quot;1&quot;).name(&quot;分组1&quot;).user(user).build();
+        &#x2F;&#x2F;使用ProtostuffUtils序列化
+        byte[] data &#x3D; ProtostuffUtils.serialize(group);
+        System.out.println(&quot;序列化后：&quot; + Arrays.toString(data));
+        Group result &#x3D; ProtostuffUtils.deserialize(data, Group.class);
+        System.out.println(&quot;反序列化后：&quot; + result.toString());
+    &#125;
+&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <p>可以看到控制台打印出如下数据，说明序列化和反序列化成功<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">
-序列化后：<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">49</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">27</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">120</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">122</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">25</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">69</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">124</span><span class="token punctuation">,</span> <span class="token number">49</span><span class="token punctuation">,</span> <span class="token number">27</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">49</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">27</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">68</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">96</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">28</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">72</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">119</span><span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">34</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">112</span><span class="token punctuation">,</span> <span class="token number">114</span><span class="token punctuation">,</span> <span class="token number">111</span><span class="token punctuation">,</span> <span class="token number">103</span><span class="token punctuation">,</span> <span class="token number">114</span><span class="token punctuation">,</span> <span class="token number">97</span><span class="token punctuation">,</span> <span class="token number">109</span><span class="token punctuation">,</span> <span class="token number">109</span><span class="token punctuation">,</span> <span class="token number">101</span><span class="token punctuation">,</span> <span class="token number">114</span><span class="token punctuation">,</span> <span class="token number">28</span><span class="token punctuation">]</span>
-反序列化后：<span class="token class-name">Group</span><span class="token punctuation">(</span>id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> name<span class="token operator">=</span>分组<span class="token number">1</span><span class="token punctuation">,</span> user<span class="token operator">=</span><span class="token class-name">User</span><span class="token punctuation">(</span>id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> name<span class="token operator">=</span>张三<span class="token punctuation">,</span> age<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">,</span> desc<span class="token operator">=</span>programmer<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+序列化后：[10, 1, 49, 18, 7, -27, -120, -122, -25, -69, -124, 49, 27, 10, 1, 49, 18, 6, -27, -68, -96, -28, -72, -119, 24, 20, 34, 10, 112, 114, 111, 103, 114, 97, 109, 109, 101, 114, 28]
+反序列化后：Group(id&#x3D;1, name&#x3D;分组1, user&#x3D;User(id&#x3D;1, name&#x3D;张三, age&#x3D;20, desc&#x3D;programmer))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <p>最后，代码在这里<a target="_blank" rel="noopener" href="https://github.com/LuoLiangDSGA/SpringBoot-Learning/tree/master/boot-protostuff">地址</a>，欢迎star。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/protostuff/protostuff">https://github.com/protostuff/protostuff</a></li>
@@ -653,7 +654,7 @@ Re
                     <div class="summary block-with-text">
                         
                             使用Docker部署Redis拉取镜像这里以Redis3.2版本为例docker pull redis:3.2
-运行容器docker run -d -p 6379:6379 -v $PWD/data:/data --name redis r
+运行容器docker run -d -p 6379:6379 -v $PWD&#x2F;data:&#x2F;data --na
                         
                     </div>
                     <div class="publish-info">
@@ -805,7 +806,7 @@ Re
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             

@@ -31,7 +31,8 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -356,14 +357,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.1k
+                        2.2k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        8 分
+                        9 分
                     </div>
                     
                 
@@ -385,189 +386,189 @@
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>从JDK1.2开始，Java就提供了ThreadLocal类。<br><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fp11zq3w0ej30eq04caaf.jpg" alt="image"></p>
 <p>所谓ThreadLocal，是Thread Local Variable（线程局部变量）的意思，ThreadLocal是java.lang包下提供的一个工具类，主要的作用是隔离线程资源，保证线程安全，通过ThreadLocal类，我们可以为每个线程创建一个独立的变量副本，从而避免并发访问时的线程安全问题。</p>
 <h3 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h3><p>ThreadLocal类似于HashMap，保存的是k:v型数据结构，但是他只能保存一个，各个线程的数据互不影响。</p>
-<p>ThreadLocal只提供了一个空的构造函数。<br><span id="more"></span><br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+<p>ThreadLocal只提供了一个空的构造函数。<br><span id="more"></span><br><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;**
    * Creates a thread local variable.
    * @see #withInitial(java.util.function.Supplier)
-   */</span>
-  <span class="token keyword">public</span> <span class="token class-name">ThreadLocal</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>ThreadLocal中的get()方法，不用传入任何参数</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">T</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+   *&#x2F;
+  public ThreadLocal() &#123;
+  &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>ThreadLocal中的get()方法，不用传入任何参数</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public T get();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>ThreadLocal的set()方法，放入的是一个泛型参数</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">T</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public void set(T value);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>ThreadLocal的remove()方法</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public void remove();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>针对ThreadLocal的主要使用就是这三个方法，所以说ThreadLocal的使用其实并没有任何难度，不需要写任何同步代码就可以实现线程安全。</p>
-<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadLocalExample</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">//定义一个String类型的ThreadLocal</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> localVariable <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">//定义一个Integer类型的ThreadLocal</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> localVariable1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class ThreadLocalExample &#123;
+    &#x2F;&#x2F;定义一个String类型的ThreadLocal
+    private static ThreadLocal&lt;String&gt; localVariable &#x3D; new ThreadLocal&lt;&gt;();
+    &#x2F;&#x2F;定义一个Integer类型的ThreadLocal
+    private static ThreadLocal&lt;Integer&gt; localVariable1 &#x3D; new ThreadLocal&lt;&gt;();
 
-    <span class="token comment">/**
+    &#x2F;**
      * 打印函数
      *
      * @param
-     */</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//打印当前线程本地内存中localVariable变量的值</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" String类型的ThreadLocal: "</span> <span class="token operator">+</span> localVariable<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" Integer类型的ThreadLocal: "</span> <span class="token operator">+</span> localVariable1<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        localVariable<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+     *&#x2F;
+    private static void print() &#123;
+        &#x2F;&#x2F;打印当前线程本地内存中localVariable变量的值
+        System.out.println(Thread.currentThread().getName() + &quot; String类型的ThreadLocal: &quot; + localVariable.get());
+        System.out.println(Thread.currentThread().getName() + &quot; Integer类型的ThreadLocal: &quot; + localVariable1.get());
+        localVariable.remove();
+    &#125;
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThreadLocalThread</span><span class="token punctuation">(</span><span class="token string">"线程1 data"</span><span class="token punctuation">,</span> <span class="token number">9090900</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"线程1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThreadLocalThread</span><span class="token punctuation">(</span><span class="token string">"线程2 data"</span><span class="token punctuation">,</span> <span class="token number">9999999</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"线程2"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    public static void main(String[] args) &#123;
+        new Thread(new ThreadLocalThread(&quot;线程1 data&quot;, 9090900), &quot;线程1&quot;).start();
+        new Thread(new ThreadLocalThread(&quot;线程2 data&quot;, 9999999), &quot;线程2&quot;).start();
+    &#125;
 
-    <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">ThreadLocalThread</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">private</span> <span class="token class-name">String</span> stringThreadLocal<span class="token punctuation">;</span>
-        <span class="token keyword">private</span> <span class="token class-name">Integer</span> integerThreadLocal<span class="token punctuation">;</span>
+    static class ThreadLocalThread implements Runnable &#123;
+        private String stringThreadLocal;
+        private Integer integerThreadLocal;
 
-        <span class="token keyword">public</span> <span class="token class-name">ThreadLocalThread</span><span class="token punctuation">(</span><span class="token class-name">String</span> stringThreadLocal<span class="token punctuation">,</span> <span class="token class-name">Integer</span> integerThreadLocal<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>stringThreadLocal <span class="token operator">=</span> stringThreadLocal<span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>integerThreadLocal <span class="token operator">=</span> integerThreadLocal<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
+        public ThreadLocalThread(String stringThreadLocal, Integer integerThreadLocal) &#123;
+            this.stringThreadLocal &#x3D; stringThreadLocal;
+            this.integerThreadLocal &#x3D; integerThreadLocal;
+        &#125;
 
-        <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前线程:"</span> <span class="token operator">+</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            localVariable<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>stringThreadLocal<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            localVariable1<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>integerThreadLocal<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment">//调用打印函数</span>
-            <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment">//打印本地变量</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" remove after: "</span> <span class="token operator">+</span> localVariable<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        @Override
+        public void run() &#123;
+            out.println(&quot;当前线程:&quot; + Thread.currentThread().getName());
+            localVariable.set(stringThreadLocal);
+            localVariable1.set(integerThreadLocal);
+            &#x2F;&#x2F;调用打印函数
+            print();
+            &#x2F;&#x2F;打印本地变量
+            System.out.println(Thread.currentThread().getName() + &quot; remove after: &quot; + localVariable.get());
+        &#125;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>输出结果</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">当前线程<span class="token operator">:</span>线程<span class="token number">1</span>
-线程<span class="token number">1</span> <span class="token class-name">String</span>类型的<span class="token class-name">ThreadLocal</span><span class="token operator">:</span> 线程<span class="token number">1</span> data
-线程<span class="token number">1</span> <span class="token class-name">Integer</span>类型的<span class="token class-name">ThreadLocal</span><span class="token operator">:</span> <span class="token number">9090900</span>
-线程<span class="token number">1</span> remove after<span class="token operator">:</span> <span class="token keyword">null</span>
-当前线程<span class="token operator">:</span>线程<span class="token number">2</span>
-线程<span class="token number">2</span> <span class="token class-name">String</span>类型的<span class="token class-name">ThreadLocal</span><span class="token operator">:</span> 线程<span class="token number">2</span> data
-线程<span class="token number">2</span> <span class="token class-name">Integer</span>类型的<span class="token class-name">ThreadLocal</span><span class="token operator">:</span> <span class="token number">9999999</span>
-线程<span class="token number">2</span> remove after<span class="token operator">:</span> <span class="token keyword">null</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">当前线程:线程1
+线程1 String类型的ThreadLocal: 线程1 data
+线程1 Integer类型的ThreadLocal: 9090900
+线程1 remove after: null
+当前线程:线程2
+线程2 String类型的ThreadLocal: 线程2 data
+线程2 Integer类型的ThreadLocal: 9999999
+线程2 remove after: null<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看出线程1和线程2的变量完全隔离开了。</p>
 <h3 id="从源码看原理"><a href="#从源码看原理" class="headerlink" title="从源码看原理"></a>从源码看原理</h3><p>那ThreadLocal是如何做到这些的呢，先来看看set方法的源码。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">T</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">//获取当前线程对象</span>
-    <span class="token class-name">Thread</span> t <span class="token operator">=</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">//获取ThreadLocalMap对象</span>
-    <span class="token class-name">ThreadLocalMap</span> map <span class="token operator">=</span> <span class="token function">getMap</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>map <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-        map<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">else</span>
-        <span class="token function">createMap</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public void set(T value) &#123;
+    &#x2F;&#x2F;获取当前线程对象
+    Thread t &#x3D; Thread.currentThread();
+    &#x2F;&#x2F;获取ThreadLocalMap对象
+    ThreadLocalMap map &#x3D; getMap(t);
+    if (map !&#x3D; null)
+        map.set(this, value);
+    else
+        createMap(t, value);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>重点就在于这个ThreadLocalMap，ThreadLocal就是通过这玩意来实现线程隔离的。下面是getMap方法：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ThreadLocalMap</span> <span class="token function">getMap</span><span class="token punctuation">(</span><span class="token class-name">Thread</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-       <span class="token keyword">return</span> t<span class="token punctuation">.</span>threadLocals<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>这里返回的是t对象也就是当前线程对象里面的threadLocals这个变量。我们再看看Thread源码：<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/* ThreadLocal values pertaining to this thread. This map is maintained
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">ThreadLocalMap getMap(Thread t) &#123;
+       return t.threadLocals;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这里返回的是t对象也就是当前线程对象里面的threadLocals这个变量。我们再看看Thread源码：<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;* ThreadLocal values pertaining to this thread. This map is maintained
  * by the ThreadLocal class.
- */</span>
-<span class="token class-name">ThreadLocal<span class="token punctuation">.</span>ThreadLocalMap</span> threadLocals <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>看注释的意思是：threadLocals是用于修饰当前线程的ThreadLocal值，这个ThreadLocalMap变量由ThreadLocal来维护。</p>
+ *&#x2F;
+ThreadLocal.ThreadLocalMap threadLocals &#x3D; null;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>看注释的意思是：threadLocals是用于修饰当前线程的ThreadLocal值，这个ThreadLocalMap变量由ThreadLocal来维护。</p>
 <p><strong>看到这里明白了，ThreadLocal之所以能够隔离线程资源，是因为每个线程的ThreadLocalMap都在当前线程对象里，其他线程根本无法访问到。</strong></p>
 <p>继续看set方法的源码，获取到ThreadLocalMap对象后，开始设置值。其中有两个操作：map.set(this, value)和createMap(t, value)，第一个是调用ThreadLocalMap的set方法，<strong>此处注意：传入的key是当前ThreadLocal对象，createMap方法是调用了ThreadLocalMap的构造方法，同样传入的key也是当前ThreadLocal对象，此处不贴代码了。</strong></p>
-<p>get()方法的源码<br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">T</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">//获取当前线程</span>
-    <span class="token class-name">Thread</span> t <span class="token operator">=</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">//获取ThreadLocalMap对象</span>
-    <span class="token class-name">ThreadLocalMap</span> map <span class="token operator">=</span> <span class="token function">getMap</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>map <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//拿到ThreadLocalMap中的Entry</span>
-        <span class="token class-name">ThreadLocalMap<span class="token punctuation">.</span>Entry</span> e <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">getEntry</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>e <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token annotation punctuation">@SuppressWarnings</span><span class="token punctuation">(</span><span class="token string">"unchecked"</span><span class="token punctuation">)</span>
-            <span class="token class-name">T</span> result <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span>e<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
-            <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token function">setInitialValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>从代码可以看出get方法要返回的值是ThreadLocalMap中的Entry对象的value值。</p>
+<p>get()方法的源码<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">public T get() &#123;
+    &#x2F;&#x2F;获取当前线程
+    Thread t &#x3D; Thread.currentThread();
+    &#x2F;&#x2F;获取ThreadLocalMap对象
+    ThreadLocalMap map &#x3D; getMap(t);
+    if (map !&#x3D; null) &#123;
+        &#x2F;&#x2F;拿到ThreadLocalMap中的Entry
+        ThreadLocalMap.Entry e &#x3D; map.getEntry(this);
+        if (e !&#x3D; null) &#123;
+            @SuppressWarnings(&quot;unchecked&quot;)
+            T result &#x3D; (T)e.value;
+            return result;
+        &#125;
+    &#125;
+    return setInitialValue();
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>从代码可以看出get方法要返回的值是ThreadLocalMap中的Entry对象的value值。</p>
 <h4 id="ThreadLocalMap"><a href="#ThreadLocalMap" class="headerlink" title="ThreadLocalMap"></a>ThreadLocalMap</h4><p>从上面的分析中，已经认识到了ThreadLocalMap这个类的重要性，ThreadLocalMap是ThreadLocal的一个静态内部类，从命名来看，这也是一个map结构，没错，其实ThreadLocal中很多东西都和HashMap中的很像，接下来继续看ThreadLocalMap的源码。</p>
 <p>调用ThreadLocalMap的构造方法，会初始化一个长度为16的Entry数组，每一个<br>Entry对象保存的都是k-v键值对，key是ThreadLocal，调用ThreadLocal的set方法，相当于是把他自己当成key放进ThreadLocalMap中。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;**
  * The table, resized as necessary.
  * table.length MUST always be a power of two.
- */</span>
-<span class="token keyword">private</span> <span class="token class-name">Entry</span><span class="token punctuation">[</span><span class="token punctuation">]</span> table<span class="token punctuation">;</span>
- <span class="token comment">/**
+ *&#x2F;
+private Entry[] table;
+ &#x2F;**
  * The initial capacity -- MUST be a power of two.
- */</span>
-<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> INITIAL_CAPACITY <span class="token operator">=</span> <span class="token number">16</span><span class="token punctuation">;</span>
+ *&#x2F;
+private static final int INITIAL_CAPACITY &#x3D; 16;
 
-<span class="token class-name">ThreadLocalMap</span><span class="token punctuation">(</span><span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> firstKey<span class="token punctuation">,</span> <span class="token class-name">Object</span> firstValue<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">//初始值16</span>
-    table <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Entry</span><span class="token punctuation">[</span>INITIAL_CAPACITY<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token comment">//计算下标，类似于HashMap计算bucket的位置，使用的是key的hashcode和length-1取模</span>
-    <span class="token keyword">int</span> i <span class="token operator">=</span> firstKey<span class="token punctuation">.</span>threadLocalHashCode <span class="token operator">&amp;</span> <span class="token punctuation">(</span>INITIAL_CAPACITY <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    table<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Entry</span><span class="token punctuation">(</span>firstKey<span class="token punctuation">,</span> firstValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    size <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token comment">//阈值默认为length的三分之二，从setThreshold()方法中可以得到</span>
-    <span class="token function">setThreshold</span><span class="token punctuation">(</span>INITIAL_CAPACITY<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+ThreadLocalMap(ThreadLocal&lt;?&gt; firstKey, Object firstValue) &#123;
+    &#x2F;&#x2F;初始值16
+    table &#x3D; new Entry[INITIAL_CAPACITY];
+    &#x2F;&#x2F;计算下标，类似于HashMap计算bucket的位置，使用的是key的hashcode和length-1取模
+    int i &#x3D; firstKey.threadLocalHashCode &amp; (INITIAL_CAPACITY - 1);
+    table[i] &#x3D; new Entry(firstKey, firstValue);
+    size &#x3D; 1;
+    &#x2F;&#x2F;阈值默认为length的三分之二，从setThreshold()方法中可以得到
+    setThreshold(INITIAL_CAPACITY);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>再看看Entry：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Entry</span> <span class="token keyword">extends</span> <span class="token class-name">WeakReference</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ThreadLocal</span><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">/** The value associated with this ThreadLocal. */</span>
-    <span class="token class-name">Object</span> value<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; &#123;
+    &#x2F;** The value associated with this ThreadLocal. *&#x2F;
+    Object value;
 
-    <span class="token class-name">Entry</span><span class="token punctuation">(</span><span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> k<span class="token punctuation">,</span> <span class="token class-name">Object</span> v<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        value <span class="token operator">=</span> v<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;
+        super(k);
+        value &#x3D; v;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>Entry继承了WeakReference这个类，并把key保存在了WeakReference中，这代表了Entry的key是一个弱引用，这会导致k也就是ThreadLocal对象在没有外部强引用指向它的时候，他会被gc强制回收。</p>
 <p>ThreadLocalMap的set方法，ThreadLocal的set方法也是调用的这个方法。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;**
       * Set the value associated with key.
       *
       * @param key the thread local object
       * @param value the value to be set
-      */</span>
-     <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> key<span class="token punctuation">,</span> <span class="token class-name">Object</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      *&#x2F;
+     private void set(ThreadLocal&lt;?&gt; key, Object value) &#123;
 
-         <span class="token comment">// We don't use a fast path as with get() because it is at</span>
-         <span class="token comment">// least as common to use set() to create new entries as</span>
-         <span class="token comment">// it is to replace existing ones, in which case, a fast</span>
-         <span class="token comment">// path would fail more often than not.</span>
+         &#x2F;&#x2F; We don&#39;t use a fast path as with get() because it is at
+         &#x2F;&#x2F; least as common to use set() to create new entries as
+         &#x2F;&#x2F; it is to replace existing ones, in which case, a fast
+         &#x2F;&#x2F; path would fail more often than not.
 
-         <span class="token class-name">Entry</span><span class="token punctuation">[</span><span class="token punctuation">]</span> tab <span class="token operator">=</span> table<span class="token punctuation">;</span>
-         <span class="token keyword">int</span> len <span class="token operator">=</span> tab<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
-         <span class="token comment">//同HashMap，计算元素位置</span>
-         <span class="token keyword">int</span> i <span class="token operator">=</span> key<span class="token punctuation">.</span>threadLocalHashCode <span class="token operator">&amp;</span> <span class="token punctuation">(</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         Entry[] tab &#x3D; table;
+         int len &#x3D; tab.length;
+         &#x2F;&#x2F;同HashMap，计算元素位置
+         int i &#x3D; key.threadLocalHashCode &amp; (len-1);
 
-         <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Entry</span> e <span class="token operator">=</span> tab<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-              e <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-              e <span class="token operator">=</span> tab<span class="token punctuation">[</span>i <span class="token operator">=</span> <span class="token function">nextIndex</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-             <span class="token class-name">ThreadLocal</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> k <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-             <span class="token comment">//key相等，设置值</span>
-             <span class="token keyword">if</span> <span class="token punctuation">(</span>k <span class="token operator">==</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                 e<span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
-                 <span class="token keyword">return</span><span class="token punctuation">;</span>
-             <span class="token punctuation">&#125;</span>
-             <span class="token comment">//遇到空槽，设置并替换过期的Entry</span>
-             <span class="token keyword">if</span> <span class="token punctuation">(</span>k <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                 <span class="token function">replaceStaleEntry</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                 <span class="token keyword">return</span><span class="token punctuation">;</span>
-             <span class="token punctuation">&#125;</span>
-         <span class="token punctuation">&#125;</span>
+         for (Entry e &#x3D; tab[i];
+              e !&#x3D; null;
+              e &#x3D; tab[i &#x3D; nextIndex(i, len)]) &#123;
+             ThreadLocal&lt;?&gt; k &#x3D; e.get();
+             &#x2F;&#x2F;key相等，设置值
+             if (k &#x3D;&#x3D; key) &#123;
+                 e.value &#x3D; value;
+                 return;
+             &#125;
+             &#x2F;&#x2F;遇到空槽，设置并替换过期的Entry
+             if (k &#x3D;&#x3D; null) &#123;
+                 replaceStaleEntry(key, value, i);
+                 return;
+             &#125;
+         &#125;
 
-         tab<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Entry</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-         <span class="token keyword">int</span> sz <span class="token operator">=</span> <span class="token operator">++</span>size<span class="token punctuation">;</span>
-         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">cleanSomeSlots</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> sz<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> sz <span class="token operator">>=</span> threshold<span class="token punctuation">)</span>
-             <span class="token function">rehash</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-     <span class="token punctuation">&#125;</span>
+         tab[i] &#x3D; new Entry(key, value);
+         int sz &#x3D; ++size;
+         if (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;&#x3D; threshold)
+             rehash();
+     &#125;
 
-     <span class="token comment">/**
+     &#x2F;**
       * Increment i modulo len.
-      */</span>
-     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">nextIndex</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-         <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&lt;</span> len<span class="token punctuation">)</span> <span class="token operator">?</span> i <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-     <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      *&#x2F;
+     private static int nextIndex(int i, int len) &#123;
+         return ((i + 1 &lt; len) ? i + 1 : 0);
+     &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>set的基本过程是：</p>
 <ol>
 <li>根据key（ThreadLocal）的hashcode计算出Entry的位置，每个ThreadLocal对象都有一个hash值threadLocalHashCode，每初始化一个ThreadLocal对象，hash值就增加一个固定的大小0x61c88647。</li>
@@ -883,7 +884,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52k</span>
+                <span class="white-color">54.6k</span>
             
 
             
