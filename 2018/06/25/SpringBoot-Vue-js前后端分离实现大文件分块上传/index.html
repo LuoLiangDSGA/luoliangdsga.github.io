@@ -32,8 +32,7 @@ SpringBoot+Vue.js前后端分离实现大文件分块上传
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -269,14 +268,14 @@ SpringBoot+Vue.js前后端分离实现大文件分块上传
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.2k
+                        2.1k
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        10 分
+                        9 分
                     </div>
                     
                 
@@ -315,47 +314,46 @@ SpringBoot+Vue.js前后端分离实现大文件分块上传
 <h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><blockquote>
 <p>新建一个SpringBoot项目，我这里使用的是SpringBoot2，引入mvc，jpa，mysql相关的依赖。</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token operator">&lt;</span>dependencies<span class="token operator">></span>
-        <span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-            <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-            <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependencies<span class="token punctuation">></span></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
 
-        <span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-            <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-            <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">-</span>web<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">-</span>web<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
 
-        <span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-            <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-            <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">-</span>data<span class="token operator">-</span>jpa<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">-</span>data<span class="token operator">-</span>jpa<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
 
-        <span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-            <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-            <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">-</span>test<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
-            <span class="token operator">&lt;</span>scope<span class="token operator">></span>test<span class="token operator">&lt;</span><span class="token operator">/</span>scope<span class="token operator">></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>boot<span class="token operator">-</span>starter<span class="token operator">-</span>test<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>scope<span class="token punctuation">></span></span>test<span class="token operator">&lt;</span><span class="token operator">/</span>scope<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
 
-        <span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-            <span class="token operator">&lt;</span>groupId<span class="token operator">></span>mysql<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-            <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>mysql<span class="token operator">-</span>connector<span class="token operator">-</span>java<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>mysql<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>mysql<span class="token operator">-</span>connector<span class="token operator">-</span>java<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
 
-        <span class="token operator">&lt;</span>dependency<span class="token operator">></span>
-            <span class="token operator">&lt;</span>groupId<span class="token operator">></span>org<span class="token punctuation">.</span>projectlombok<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-            <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>lombok<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
-            <span class="token operator">&lt;</span>version<span class="token operator">></span>$<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>lombok<span class="token punctuation">.</span>version<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>projectlombok<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>lombok<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span>$<span class="token punctuation">&#123;</span>lombok<span class="token punctuation">.</span>version<span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>dependencies<span class="token operator">></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>dependencies<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>在yml中配置mvc以及数据库连接等属性</p>
 </blockquote>
-<pre><code>server:
+<pre class="line-numbers language-none"><code class="language-none">server:
   port: 8081
   servlet:
-    path: /boot
+    path: &#x2F;boot
 
 spring:
   servlet:
@@ -363,7 +361,7 @@ spring:
       max-file-size: 20MB
       max-request-size: 20MB
   datasource:
-    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&amp;useSSL=false
+    url: jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;test?characterEncoding&#x3D;utf-8&amp;useSSL&#x3D;false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -379,122 +377,119 @@ logging:
     org.boot.uploader.*: debug
 
 prop:
-  upload-folder: files
-</code></pre><blockquote>
+  upload-folder: files<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p>定义文件上传相关的类，一个是FileInfo，代表文件的基础信息；一个是Chunk，代表文件块。</p>
 </blockquote>
 <blockquote>
 <p>FileInfo.java</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
 <span class="token annotation punctuation">@Entity</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FileInfo</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FileInfo</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Id</span>
     <span class="token annotation punctuation">@GeneratedValue</span>
-    <span class="token keyword">private</span> Long id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String filename<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> filename<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String identifier<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> identifier<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> Long totalSize<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> totalSize<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String type<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> type<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String location<span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> location<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>Chunk.java</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
 <span class="token annotation punctuation">@Entity</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Chunk</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Chunk</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Id</span>
     <span class="token annotation punctuation">@GeneratedValue</span>
-    <span class="token keyword">private</span> Long id<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 当前文件块，从1开始
      */</span>
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> Integer chunkNumber<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">Integer</span> chunkNumber<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 分块大小
      */</span>
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> Long chunkSize<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> chunkSize<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 当前分块大小
      */</span>
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> Long currentChunkSize<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> currentChunkSize<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 总大小
      */</span>
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> Long totalSize<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">Long</span> totalSize<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 文件标识
      */</span>
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String identifier<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">String</span> identifier<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 文件名
      */</span>
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String filename<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">String</span> filename<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 相对路径
      */</span>
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String relativePath<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">String</span> relativePath<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 总块数
      */</span>
     <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>nullable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> Integer totalChunks<span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+    <span class="token keyword">private</span> <span class="token class-name">Integer</span> totalChunks<span class="token punctuation">;</span>
+    <span class="token comment">/**
      * 文件类型
      */</span>
     <span class="token annotation punctuation">@Column</span>
-    <span class="token keyword">private</span> String type<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> type<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Transient</span>
-    <span class="token keyword">private</span> MultipartFile file<span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">private</span> <span class="token class-name">MultipartFile</span> file<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>编写文件块相关的业务操作</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ChunkServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">ChunkService</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ChunkServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">ChunkService</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Resource</span>
-    <span class="token keyword">private</span> ChunkRepository chunkRepository<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">ChunkRepository</span> chunkRepository<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveChunk</span><span class="token punctuation">(</span>Chunk chunk<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveChunk</span><span class="token punctuation">(</span><span class="token class-name">Chunk</span> chunk<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         chunkRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">checkChunk</span><span class="token punctuation">(</span>String identifier<span class="token punctuation">,</span> Integer chunkNumber<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        Specification<span class="token operator">&lt;</span>Chunk<span class="token operator">></span> specification <span class="token operator">=</span> <span class="token punctuation">(</span>Specification<span class="token operator">&lt;</span>Chunk<span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">(</span>root<span class="token punctuation">,</span> criteriaQuery<span class="token punctuation">,</span> criteriaBuilder<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            List<span class="token operator">&lt;</span>Predicate<span class="token operator">></span> predicates <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">checkChunk</span><span class="token punctuation">(</span><span class="token class-name">String</span> identifier<span class="token punctuation">,</span> <span class="token class-name">Integer</span> chunkNumber<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Specification</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Chunk</span><span class="token punctuation">></span></span> specification <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">Specification</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Chunk</span><span class="token punctuation">></span></span><span class="token punctuation">)</span> <span class="token punctuation">(</span>root<span class="token punctuation">,</span> criteriaQuery<span class="token punctuation">,</span> criteriaBuilder<span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Predicate</span><span class="token punctuation">></span></span> predicates <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             predicates<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>criteriaBuilder<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"identifier"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> identifier<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             predicates<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>criteriaBuilder<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span>root<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"chunkNumber"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> chunkNumber<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
             <span class="token keyword">return</span> criteriaQuery<span class="token punctuation">.</span><span class="token function">where</span><span class="token punctuation">(</span>predicates<span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Predicate</span><span class="token punctuation">[</span>predicates<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRestriction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-        <span class="token keyword">return</span> chunkRepository<span class="token punctuation">.</span><span class="token function">findOne</span><span class="token punctuation">(</span>specification<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">orElse</span><span class="token punctuation">(</span>null<span class="token punctuation">)</span> <span class="token operator">==</span> null<span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> chunkRepository<span class="token punctuation">.</span><span class="token function">findOne</span><span class="token punctuation">(</span>specification<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">orElse</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li>checkChunk()方法会根据文件唯一标识，和当前块数判断是否已经上传过这个块。</li>
 <li>这里只贴了ChunkService的代码，其他的代码只是jpa简单的存取。</li>
@@ -502,90 +497,88 @@ prop:
 <blockquote>
 <p>接下来就是编写最重要的controller了</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
 <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/uploader"</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Slf4j</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UploadController</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&amp;#123;prop.upload-folder&amp;#125;"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String uploadFolder<span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UploadController</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"$&#123;prop.upload-folder&#125;"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> uploadFolder<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
-    <span class="token keyword">private</span> FileInfoService fileInfoService<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">FileInfoService</span> fileInfoService<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Resource</span>
-    <span class="token keyword">private</span> ChunkService chunkService<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">ChunkService</span> chunkService<span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/chunk"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> String <span class="token function">uploadChunk</span><span class="token punctuation">(</span>Chunk chunk<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        MultipartFile file <span class="token operator">=</span> chunk<span class="token punctuation">.</span><span class="token function">getFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        log<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"file originName: &amp;#123;&amp;#125;, chunkNumber: &amp;#123;&amp;#125;"</span><span class="token punctuation">,</span> file<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> chunk<span class="token punctuation">.</span><span class="token function">getChunkNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">uploadChunk</span><span class="token punctuation">(</span><span class="token class-name">Chunk</span> chunk<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">MultipartFile</span> file <span class="token operator">=</span> chunk<span class="token punctuation">.</span><span class="token function">getFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        log<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"file originName: &#123;&#125;, chunkNumber: &#123;&#125;"</span><span class="token punctuation">,</span> file<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> chunk<span class="token punctuation">.</span><span class="token function">getChunkNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
             <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> file<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            Path path <span class="token operator">=</span> Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token function">generatePath</span><span class="token punctuation">(</span>uploadFolder<span class="token punctuation">,</span> chunk<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">//文件写入指定路径</span>
-            Files<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            log<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"文件 &amp;#123;&amp;#125; 写入成功, uuid:&amp;#123;&amp;#125;"</span><span class="token punctuation">,</span> chunk<span class="token punctuation">.</span><span class="token function">getFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> chunk<span class="token punctuation">.</span><span class="token function">getIdentifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Path</span> path <span class="token operator">=</span> <span class="token class-name">Paths</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token function">generatePath</span><span class="token punctuation">(</span>uploadFolder<span class="token punctuation">,</span> chunk<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">//文件写入指定路径</span>
+            <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            log<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"文件 &#123;&#125; 写入成功, uuid:&#123;&#125;"</span><span class="token punctuation">,</span> chunk<span class="token punctuation">.</span><span class="token function">getFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> chunk<span class="token punctuation">.</span><span class="token function">getIdentifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             chunkService<span class="token punctuation">.</span><span class="token function">saveChunk</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
             <span class="token keyword">return</span> <span class="token string">"文件上传成功"</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">return</span> <span class="token string">"后端异常..."</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
 
     <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/chunk"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> Object <span class="token function">checkChunk</span><span class="token punctuation">(</span>Chunk chunk<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>chunkService<span class="token punctuation">.</span><span class="token function">checkChunk</span><span class="token punctuation">(</span>chunk<span class="token punctuation">.</span><span class="token function">getIdentifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> chunk<span class="token punctuation">.</span><span class="token function">getChunkNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            response<span class="token punctuation">.</span><span class="token function">setStatus</span><span class="token punctuation">(</span>HttpServletResponse<span class="token punctuation">.</span>SC_NOT_MODIFIED<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">checkChunk</span><span class="token punctuation">(</span><span class="token class-name">Chunk</span> chunk<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>chunkService<span class="token punctuation">.</span><span class="token function">checkChunk</span><span class="token punctuation">(</span>chunk<span class="token punctuation">.</span><span class="token function">getIdentifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> chunk<span class="token punctuation">.</span><span class="token function">getChunkNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            response<span class="token punctuation">.</span><span class="token function">setStatus</span><span class="token punctuation">(</span><span class="token class-name">HttpServletResponse</span><span class="token punctuation">.</span>SC_NOT_MODIFIED<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
 
         <span class="token keyword">return</span> chunk<span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
     <span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/mergeFile"</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> String <span class="token function">mergeFile</span><span class="token punctuation">(</span>FileInfo fileInfo<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        String path <span class="token operator">=</span> uploadFolder <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> fileInfo<span class="token punctuation">.</span><span class="token function">getIdentifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> fileInfo<span class="token punctuation">.</span><span class="token function">getFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        String folder <span class="token operator">=</span> uploadFolder <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> fileInfo<span class="token punctuation">.</span><span class="token function">getIdentifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">mergeFile</span><span class="token punctuation">(</span><span class="token class-name">FileInfo</span> fileInfo<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">String</span> path <span class="token operator">=</span> uploadFolder <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> fileInfo<span class="token punctuation">.</span><span class="token function">getIdentifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> fileInfo<span class="token punctuation">.</span><span class="token function">getFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> folder <span class="token operator">=</span> uploadFolder <span class="token operator">+</span> <span class="token string">"/"</span> <span class="token operator">+</span> fileInfo<span class="token punctuation">.</span><span class="token function">getIdentifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token function">merge</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> folder<span class="token punctuation">)</span><span class="token punctuation">;</span>
         fileInfo<span class="token punctuation">.</span><span class="token function">setLocation</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
         fileInfoService<span class="token punctuation">.</span><span class="token function">addFileInfo</span><span class="token punctuation">(</span>fileInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
         <span class="token keyword">return</span> <span class="token string">"合并成功"</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li>文章开头就提到了前后端分离，既然是前后端分离，肯定会涉及到跨域问题，在上一篇文章中是通过springMVC的@CrossOrigin注解来解决跨域问题，这里并没有使用这个注解，在下面的前端项目中会使用一个node的中间件来做代理，解决跨域的问题。</li>
 <li>可以看到有两个/chunk路由，第一个是post方法，用于上传并存储文件块，需要对文件块名进行编号，再存储在指定路径下；第二个是get方法，前端上传之前会先进行检测，如果此文件块已经上传过，就可以实现断点和快传。</li>
 <li>/mergeFile用于合并文件，在所有块上传完毕后，前端会调用此接口进行制定文件的合并。其中的merge方法是会遍历指定路径下的文件块，并且按照文件名中的数字进行排序后，再合并成一个文件，否则合并后的文件会无法使用，代码如下：</li>
 </ol>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span>String targetFile<span class="token punctuation">,</span> String folder<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            Files<span class="token punctuation">.</span><span class="token function">createFile</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>targetFile<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            Files<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>folder<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>path <span class="token operator">-</span><span class="token operator">></span> path<span class="token punctuation">.</span><span class="token function">getFileName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-                        String p1 <span class="token operator">=</span> o1<span class="token punctuation">.</span><span class="token function">getFileName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        String p2 <span class="token operator">=</span> o2<span class="token punctuation">.</span><span class="token function">getFileName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token class-name">String</span> targetFile<span class="token punctuation">,</span> <span class="token class-name">String</span> folder<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">createFile</span><span class="token punctuation">(</span><span class="token class-name">Paths</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>targetFile<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token class-name">Paths</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>folder<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>path <span class="token operator">-></span> path<span class="token punctuation">.</span><span class="token function">getFileName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">(</span>o1<span class="token punctuation">,</span> o2<span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+                        <span class="token class-name">String</span> p1 <span class="token operator">=</span> o1<span class="token punctuation">.</span><span class="token function">getFileName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token class-name">String</span> p2 <span class="token operator">=</span> o2<span class="token punctuation">.</span><span class="token function">getFileName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                         <span class="token keyword">int</span> i1 <span class="token operator">=</span> p1<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                         <span class="token keyword">int</span> i2 <span class="token operator">=</span> p2<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">"-"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        <span class="token keyword">return</span> Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>p2<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>i2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>i1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>path <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-                        <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-                            <span class="token comment" spellcheck="true">//以追加的形式写入文件</span>
-                            Files<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>Paths<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>targetFile<span class="token punctuation">)</span><span class="token punctuation">,</span> Files<span class="token punctuation">.</span><span class="token function">readAllBytes</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">,</span> StandardOpenOption<span class="token punctuation">.</span>APPEND<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                            <span class="token comment" spellcheck="true">//合并后删除该块</span>
-                            Files<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                        <span class="token keyword">return</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>p2<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>i2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>i1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>path <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                            <span class="token comment">//以追加的形式写入文件</span>
+                            <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token class-name">Paths</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>targetFile<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">readAllBytes</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">StandardOpenOption</span><span class="token punctuation">.</span>APPEND<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token comment">//合并后删除该块</span>
+                            <span class="token class-name">Files</span><span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
                             e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-                    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>到这里，后端主要的逻辑已经写完了，下面开始编写前端的部分。</p>
 </blockquote>
@@ -593,8 +586,8 @@ prop:
 <blockquote>
 <p>App.vue</p>
 </blockquote>
-<pre class="line-numbers language-javascript"><code class="language-javascript"><span class="token operator">&lt;</span>template<span class="token operator">></span>
-  <span class="token operator">&lt;</span>uploader <span class="token punctuation">:</span>options<span class="token operator">=</span><span class="token string">"options"</span> <span class="token punctuation">:</span>file<span class="token operator">-</span>status<span class="token operator">-</span>text<span class="token operator">=</span><span class="token string">"statusText"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"uploader-example"</span> ref<span class="token operator">=</span><span class="token string">"uploader"</span>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>uploader <span class="token operator">:</span>options<span class="token operator">=</span><span class="token string">"options"</span> <span class="token operator">:</span>file<span class="token operator">-</span>status<span class="token operator">-</span>text<span class="token operator">=</span><span class="token string">"statusText"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"uploader-example"</span> ref<span class="token operator">=</span><span class="token string">"uploader"</span>
             @file<span class="token operator">-</span>complete<span class="token operator">=</span><span class="token string">"fileComplete"</span> @complete<span class="token operator">=</span><span class="token string">"complete"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>uploader<span class="token operator">></span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
 
@@ -602,56 +595,55 @@ prop:
   <span class="token keyword">import</span> axios <span class="token keyword">from</span> <span class="token string">'axios'</span>
   <span class="token keyword">import</span> qs <span class="token keyword">from</span> <span class="token string">'qs'</span>
 
-  <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-      <span class="token keyword">return</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        options<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-          target<span class="token punctuation">:</span> <span class="token string">'/boot/uploader/chunk'</span><span class="token punctuation">,</span>
-          testChunks<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-          simultaneousUploads<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-          chunkSize<span class="token punctuation">:</span> <span class="token number">10</span> <span class="token operator">*</span> <span class="token number">1024</span> <span class="token operator">*</span> <span class="token number">1024</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-        attrs<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-          accept<span class="token punctuation">:</span> <span class="token string">'image/*'</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-        statusText<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-          success<span class="token punctuation">:</span> <span class="token string">'成功了'</span><span class="token punctuation">,</span>
-          error<span class="token punctuation">:</span> <span class="token string">'出错了'</span><span class="token punctuation">,</span>
-          uploading<span class="token punctuation">:</span> <span class="token string">'上传中'</span><span class="token punctuation">,</span>
-          paused<span class="token punctuation">:</span> <span class="token string">'暂停中'</span><span class="token punctuation">,</span>
-          waiting<span class="token punctuation">:</span> <span class="token string">'等待中'</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-      <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    methods<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-      <span class="token comment" spellcheck="true">// 上传完成</span>
-      <span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+        options<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          target<span class="token operator">:</span> <span class="token string">'/boot/uploader/chunk'</span><span class="token punctuation">,</span>
+          testChunks<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          simultaneousUploads<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+          chunkSize<span class="token operator">:</span> <span class="token number">10</span> <span class="token operator">*</span> <span class="token number">1024</span> <span class="token operator">*</span> <span class="token number">1024</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        attrs<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          accept<span class="token operator">:</span> <span class="token string">'image/*'</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        statusText<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          success<span class="token operator">:</span> <span class="token string">'成功了'</span><span class="token punctuation">,</span>
+          error<span class="token operator">:</span> <span class="token string">'出错了'</span><span class="token punctuation">,</span>
+          uploading<span class="token operator">:</span> <span class="token string">'上传中'</span><span class="token punctuation">,</span>
+          paused<span class="token operator">:</span> <span class="token string">'暂停中'</span><span class="token punctuation">,</span>
+          waiting<span class="token operator">:</span> <span class="token string">'等待中'</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    methods<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// 上传完成</span>
+      <span class="token function">complete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'complete'</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span>
-      <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-      <span class="token comment" spellcheck="true">// 一个根文件（文件夹）成功上传完成。</span>
-      <span class="token function">fileComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token comment">// 一个根文件（文件夹）成功上传完成。</span>
+      <span class="token function">fileComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'file complete'</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span>
         <span class="token keyword">const</span> file <span class="token operator">=</span> arguments<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>file<span class="token punctuation">;</span>
-        axios<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/boot/uploader/mergeFile'</span><span class="token punctuation">,</span> qs<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-          filename<span class="token punctuation">:</span> file<span class="token punctuation">.</span>name<span class="token punctuation">,</span>
-          identifier<span class="token punctuation">:</span> arguments<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>uniqueIdentifier<span class="token punctuation">,</span>
-          totalSize<span class="token punctuation">:</span> file<span class="token punctuation">.</span>size<span class="token punctuation">,</span>
-          type<span class="token punctuation">:</span> file<span class="token punctuation">.</span>type
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        axios<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/boot/uploader/mergeFile'</span><span class="token punctuation">,</span> qs<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+          filename<span class="token operator">:</span> file<span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+          identifier<span class="token operator">:</span> arguments<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>uniqueIdentifier<span class="token punctuation">,</span>
+          totalSize<span class="token operator">:</span> file<span class="token punctuation">.</span>size<span class="token punctuation">,</span>
+          type<span class="token operator">:</span> file<span class="token punctuation">.</span>type
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">response</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
           console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
           console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    <span class="token function">mounted</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$nextTick</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">mounted</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$nextTick</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
         window<span class="token punctuation">.</span>uploader <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$refs<span class="token punctuation">.</span>uploader<span class="token punctuation">.</span>uploader
-      <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>配置说明：</p>
 <ol>
 <li>target 目标上传 URL，可以是字符串也可以是函数，如果是函数的话，则会传入 Uploader.File 实例、当前块 Uploader.Chunk 以及是否是测试模式，默认值为 ‘/‘。</li>
@@ -664,26 +656,25 @@ prop:
 <p>解决跨域问题</p>
 </blockquote>
 <p>这里使用了http-proxy-middleware这个node中间件，可以对前端的请求进行转发，转发到指定的路由。</p>
-<h4 id="在index-js中进行配置，如下："><a href="#在index-js中进行配置，如下：" class="headerlink" title="在index.js中进行配置，如下："></a>在index.js中进行配置，如下：</h4><pre class="line-numbers language-javascript"><code class="language-javascript">dev<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    env<span class="token punctuation">:</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./dev.env'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    port<span class="token punctuation">:</span> <span class="token number">8080</span><span class="token punctuation">,</span>
-    autoOpenBrowser<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-    assetsSubDirectory<span class="token punctuation">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
-    assetsPublicPath<span class="token punctuation">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
-    proxyTable<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-      <span class="token string">'/boot'</span><span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        target<span class="token punctuation">:</span> <span class="token string">'http://localhost:8081'</span><span class="token punctuation">,</span>
-        changeOrigin<span class="token punctuation">:</span> <span class="token boolean">true</span>  <span class="token comment" spellcheck="true">//如果跨域，则需要配置此项</span>
-      <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    <span class="token comment" spellcheck="true">// CSS Sourcemaps off by default because relative paths are "buggy"</span>
-    <span class="token comment" spellcheck="true">// with this option, according to the CSS-Loader README</span>
-    <span class="token comment" spellcheck="true">// (https://github.com/webpack/css-loader#sourcemaps)</span>
-    <span class="token comment" spellcheck="true">// In our experience, they generally work as expected,</span>
-    <span class="token comment" spellcheck="true">// just be aware of this issue when enabling this option.</span>
-    cssSourceMap<span class="token punctuation">:</span> <span class="token boolean">false</span>
-  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="在index-js中进行配置，如下："><a href="#在index-js中进行配置，如下：" class="headerlink" title="在index.js中进行配置，如下："></a>在index.js中进行配置，如下：</h4><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">dev<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    env<span class="token operator">:</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./dev.env'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    port<span class="token operator">:</span> <span class="token number">8080</span><span class="token punctuation">,</span>
+    autoOpenBrowser<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    assetsSubDirectory<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+    assetsPublicPath<span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+    proxyTable<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token string">'/boot'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        target<span class="token operator">:</span> <span class="token string">'http://localhost:8081'</span><span class="token punctuation">,</span>
+        changeOrigin<span class="token operator">:</span> <span class="token boolean">true</span>  <span class="token comment">//如果跨域，则需要配置此项</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token comment">// CSS Sourcemaps off by default because relative paths are "buggy"</span>
+    <span class="token comment">// with this option, according to the CSS-Loader README</span>
+    <span class="token comment">// (https://github.com/webpack/css-loader#sourcemaps)</span>
+    <span class="token comment">// In our experience, they generally work as expected,</span>
+    <span class="token comment">// just be aware of this issue when enabling this option.</span>
+    cssSourceMap<span class="token operator">:</span> <span class="token boolean">false</span>
+  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>proxyTable表示代理配置表，将特定的请求代理到指定的API接口，这里是将’localhost:8080/boot/xxx’代理到’<a target="_blank" rel="noopener" href="http://localhost:8081/boot/xxx&#39;。">http://localhost:8081/boot/xxx&#39;。</a></p>
 <blockquote>
 <p>现在可以开始验证了，分别启动前后端的项目</p>
@@ -691,9 +682,9 @@ prop:
 <ul>
 <li>前端</li>
 </ul>
-<pre><code>npm install
-npm run dev
-</code></pre><ul>
+<pre class="line-numbers language-none"><code class="language-none">npm install
+npm run dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<ul>
 <li>后端<br>可以通过command line，也可以直接运行BootUploaderApplication的main()方法</li>
 </ul>
 <p>运行效果就像最开始的那张图，可以同时上传多个文件，上传暂停之后更换浏览器，选择同一个文件可以实现继续上传的效果，大家可以自行进行尝试，代码会在我的<a target="_blank" rel="noopener" href="https://github.com/LuoLiangDSGA/spring-learning/tree/master/boot-uploader">GitHub</a>上进行更新。</p>
@@ -909,7 +900,7 @@ Guava是谷歌出品的Java工具类库，提供了字符串处理[string proces
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             

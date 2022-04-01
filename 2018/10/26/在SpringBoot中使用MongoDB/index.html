@@ -29,8 +29,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -262,7 +261,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        827
+                        807
                     </div>
                     
 
@@ -288,35 +287,32 @@
                 <h2 id="在SpringBoot中使用MongoDB"><a href="#在SpringBoot中使用MongoDB" class="headerlink" title="在SpringBoot中使用MongoDB"></a>在SpringBoot中使用MongoDB</h2><blockquote>
 <p>最近项目中使用了MongoDB，在SpringBoot中集成了MongoDB，MongoDB是当前非常火的一个非关系型数据库，同时也是最接近关系型数据库的，本篇文章用于记录SpringBoot中集成MongoDB。</p>
 </blockquote>
-<h3 id="使用Docker运行MongoDB"><a href="#使用Docker运行MongoDB" class="headerlink" title="使用Docker运行MongoDB"></a>使用Docker运行MongoDB</h3><pre class="line-numbers language-jshelllanguage"><code class="language-jshelllanguage">docker run -d -p 27017:27017 --name mongo mongo --auth
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="使用Docker运行MongoDB"><a href="#使用Docker运行MongoDB" class="headerlink" title="使用Docker运行MongoDB"></a>使用Docker运行MongoDB</h3><pre class="line-numbers language-jshelllanguage" data-language="jshelllanguage"><code class="language-jshelllanguage">docker run -d -p 27017:27017 --name mongo mongo --auth<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="创建一个SpringBoot项目"><a href="#创建一个SpringBoot项目" class="headerlink" title="创建一个SpringBoot项目"></a>创建一个SpringBoot项目</h3><blockquote>
 <p>引入所需依赖</p>
 </blockquote>
-<pre class="line-numbers language-xml"><code class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-data-mongodb<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-data-mongodb<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <span id="more"></span>
 <blockquote>
 <p>yaml配置</p>
 </blockquote>
-<p><code>pom.xml</code>中引入了<code>spring-boot-starter-data-mongodb</code>之后，只需要在yaml中进行简单的配置，就可以轻松地使用MongoTemplate操作MongoDB</p>
-<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">server</span><span class="token punctuation">:</span>
+<p><code>pom.xml</code>中引入了<code>spring-boot-starter-data-mongodb</code>之后，只需要在yaml中进行简单的配置，就可以轻松地使用MongoTemplate操作MongoDB<br><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">server</span><span class="token punctuation">:</span>
   <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8081</span>
 
-<span class="token comment" spellcheck="true">#mongodb</span>
-<span class="token comment" spellcheck="true"># 单机模式 mongodb://name:pass@ip:port/database</span>
-<span class="token comment" spellcheck="true"># 集群模式 mongodb://user:pwd@ip1:port1,ip2:port2/database</span>
+<span class="token comment">#mongodb</span>
+<span class="token comment"># 单机模式 mongodb://name:pass@ip:port/database</span>
+<span class="token comment"># 集群模式 mongodb://user:pwd@ip1:port1,ip2:port2/database</span>
 <span class="token key atrule">spring</span><span class="token punctuation">:</span>
   <span class="token key atrule">data</span><span class="token punctuation">:</span>
     <span class="token key atrule">mongodb</span><span class="token punctuation">:</span>
@@ -326,28 +322,25 @@
 
 <span class="token key atrule">logging</span><span class="token punctuation">:</span>
   <span class="token key atrule">level</span><span class="token punctuation">:</span>
-    <span class="token key atrule">org.boot</span><span class="token punctuation">:</span> debug
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>配置完成后就可以开始编写代码访问MongoDB了，在spring-data中访问MongoDB有多种方式，主要有三种，原生DB对象，MongoTemplate，MongoRepository，第一种方式过于繁琐，这里只写后两种。</strong></p>
+    <span class="token key atrule">org.boot</span><span class="token punctuation">:</span> debug<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><strong>配置完成后就可以开始编写代码访问MongoDB了，在spring-data中访问MongoDB有多种方式，主要有三种，原生DB对象，MongoTemplate，MongoRepository，第一种方式过于繁琐，这里只写后两种。</strong></p>
 <h3 id="MongoTemplate方式"><a href="#MongoTemplate方式" class="headerlink" title="MongoTemplate方式"></a>MongoTemplate方式</h3><blockquote>
 <p>编写<code>User.java</code>类，包含了用户的基本属性</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
-<span class="token annotation punctuation">@Document</span><span class="token punctuation">(</span>collection <span class="token operator">=</span> <span class="token string">"user"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 集合名称</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span>7520384490152472164L<span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@Document</span><span class="token punctuation">(</span>collection <span class="token operator">=</span> <span class="token string">"user"</span><span class="token punctuation">)</span> <span class="token comment">// 集合名称</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">7520384490152472164L</span><span class="token punctuation">;</span>
 
     <span class="token annotation punctuation">@Id</span>
-    <span class="token keyword">private</span> String id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> id<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Field</span>
     <span class="token annotation punctuation">@Indexed</span>
-    <span class="token keyword">private</span> String username<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> username<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@Field</span>
-    <span class="token keyword">private</span> String password<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> password<span class="token punctuation">;</span>
     <span class="token annotation punctuation">@CreatedDate</span>
-    <span class="token keyword">private</span> Date gmtCreate<span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">private</span> <span class="token class-name">Date</span> gmtCreate<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre><code>1. @Id表明这是每一条文档的id，MongoDB会自动生成
 2. @Field可指定存储的键值名称，默认就是类字段名
 3. @Indexed表示这是一个索引字段
@@ -355,92 +348,92 @@
 </code></pre><blockquote>
 <p>编写一个基础CRUD接口<code>UserService.java</code>，提供基础的用户CRUD方法</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserService</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">/**
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserService</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/**
      * 保存用户
      * @param user
      */</span>
-    <span class="token keyword">void</span> <span class="token function">saveUser</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">saveUser</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token comment" spellcheck="true">/**
+    <span class="token comment">/**
      * 根据名称查询用户
      * @param username
      * @return
      */</span>
-    User <span class="token function">findUserByUsername</span><span class="token punctuation">(</span>String username<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">User</span> <span class="token function">findUserByUsername</span><span class="token punctuation">(</span><span class="token class-name">String</span> username<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token comment" spellcheck="true">/**
+    <span class="token comment">/**
      * 更新用户信息
      * @param user
      */</span>
-    <span class="token keyword">void</span> <span class="token function">updateUser</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">updateUser</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token comment" spellcheck="true">/**
+    <span class="token comment">/**
      * 根据ID删除用户
      * @param id
      */</span>
-    <span class="token keyword">void</span> <span class="token function">deleteUserById</span><span class="token punctuation">(</span>Long id<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">void</span> <span class="token function">deleteUserById</span><span class="token punctuation">(</span><span class="token class-name">Long</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
-<p>用户操作接口实现类<code>UserServiceImpl.java</code><br><code>`</code>java<br>@Service<br>public class UserServiceImpl implements UserService {<br>    @Resource<br>    private MongoTemplate mongoTemplate;</p>
+<p>用户操作接口实现类<code>UserServiceImpl.java</code><br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserServiceImpl</span> <span class="token keyword">implements</span> <span class="token class-name">UserService</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Resource</span>
+    <span class="token keyword">private</span> <span class="token class-name">MongoTemplate</span> mongoTemplate<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveUser</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        mongoTemplate<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">User</span> <span class="token function">findUserByUsername</span><span class="token punctuation">(</span><span class="token class-name">String</span> username<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Criteria</span> criteria <span class="token operator">=</span> <span class="token class-name">Criteria</span><span class="token punctuation">.</span><span class="token function">where</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">is</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Query</span> query <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Query</span><span class="token punctuation">(</span>criteria<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> mongoTemplate<span class="token punctuation">.</span><span class="token function">findOne</span><span class="token punctuation">(</span>query<span class="token punctuation">,</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">updateUser</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Criteria</span> criteria <span class="token operator">=</span> <span class="token class-name">Criteria</span><span class="token punctuation">.</span><span class="token function">where</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">is</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Query</span> query <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Query</span><span class="token punctuation">(</span>criteria<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Update</span> update <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Update</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">,</span> user<span class="token punctuation">.</span><span class="token function">getUsername</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"password"</span><span class="token punctuation">,</span> user<span class="token punctuation">.</span><span class="token function">getPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//更新结果集的第一条</span>
+        mongoTemplate<span class="token punctuation">.</span><span class="token function">updateFirst</span><span class="token punctuation">(</span>query<span class="token punctuation">,</span> update<span class="token punctuation">,</span> <span class="token class-name">User</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//更新结果集的所有</span>
+<span class="token comment">//        mongoTemplate.updateMulti(query, update, User.class);</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteUserById</span><span class="token punctuation">(</span><span class="token class-name">Long</span> id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Criteria</span> criteria <span class="token operator">=</span> <span class="token class-name">Criteria</span><span class="token punctuation">.</span><span class="token function">where</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">is</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Query</span> query <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Query</span><span class="token punctuation">(</span>criteria<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mongoTemplate<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 </blockquote>
-<pre><code>@Override
-public void saveUser(User user) &#123;
-    mongoTemplate.save(user);
-&#125;
-
-@Override
-public User findUserByUsername(String username) &#123;
-    Criteria criteria = Criteria.where(&quot;username&quot;).is(username);
-    Query query = new Query(criteria);
-
-    return mongoTemplate.findOne(query, User.class);
-&#125;
-
-@Override
-public void updateUser(User user) &#123;
-    Criteria criteria = Criteria.where(&quot;id&quot;).is(user.getId());
-    Query query = new Query(criteria);
-    Update update = new Update().set(&quot;username&quot;, user.getUsername())
-            .set(&quot;password&quot;, user.getPassword());
-    //更新结果集的第一条
-    mongoTemplate.updateFirst(query, update, User.class);
-    //更新结果集的所有
-</code></pre><p>//        mongoTemplate.updateMulti(query, update, User.class);<br>    }</p>
-<pre><code>@Override
-public void deleteUserById(Long id) &#123;
-    Criteria criteria = Criteria.where(&quot;id&quot;).is(id);
-    Query query = new Query(criteria);
-    mongoTemplate.remove(query);
-&#125;
-</code></pre><p>}</p>
-<pre><code>
-### MongoRepository方式
-
-相比上面的方式，这种方式使用jpa来操作数据库，更加优雅、简单。只需要继承`MongoRepository`，里面已经提供了大多数基础的数据操作方法。
-
-```java
-public interface UserRepository extends MongoRepository&lt;User, String&gt; &#123;
-    /**
+<h3 id="MongoRepository方式"><a href="#MongoRepository方式" class="headerlink" title="MongoRepository方式"></a>MongoRepository方式</h3><p>相比上面的方式，这种方式使用jpa来操作数据库，更加优雅、简单。只需要继承<code>MongoRepository</code>，里面已经提供了大多数基础的数据操作方法。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserRepository</span> <span class="token keyword">extends</span> <span class="token class-name">MongoRepository</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/**
      * 按名称进行查询
      *
      * @param username
      * @return
-     */
-    User findUserByUsername(String username);
+     */</span>
+    <span class="token class-name">User</span> <span class="token function">findUserByUsername</span><span class="token punctuation">(</span><span class="token class-name">String</span> username<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    /**
+    <span class="token comment">/**
      * 自定义查询语句，根据日期查询
      *
      * @param create
      * @param pageable
      * @return
-     */
-    @Query(&quot;&#123;&#39;gmtCreate&#39;: ?0&#125;&quot;)
-    Page&lt;User&gt; queryBySql(String create, Pageable pageable);
-&#125;
-</code></pre><p>在其他类中注入此类即可。</p>
+     */</span>
+    <span class="token annotation punctuation">@Query</span><span class="token punctuation">(</span><span class="token string">"&#123;'gmtCreate': ?0&#125;"</span><span class="token punctuation">)</span>
+    <span class="token class-name">Page</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">></span></span> <span class="token function">queryBySql</span><span class="token punctuation">(</span><span class="token class-name">String</span> create<span class="token punctuation">,</span> <span class="token class-name">Pageable</span> pageable<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在其他类中注入此类即可。</p>
 <h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>本篇文章只记录了MongoDB基本的CRUD操作，并且记录了两种操作方式，很多更高级的操作没有涉及，以后涉及到之后会进行补充。</p>
 
             </div>
@@ -656,7 +649,7 @@ WebFlux是什么
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             

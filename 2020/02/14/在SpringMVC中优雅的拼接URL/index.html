@@ -29,8 +29,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -266,7 +265,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        774
+                        777
                     </div>
                     
 
@@ -293,47 +292,45 @@
 <p>在日常开发中常常会遇到拼接URL的情况，大多数时候可以手动拼接字符串来达到目的，但是这样的方式不够优雅，同时容易出错。其实SpringMVC中已经给我们提供好了工具，这个工具就是UriComponentsBuilder类。</p>
 </blockquote>
 <h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>UriComponentsBuilder给我们提供了多种方式来构建不可变的UriComponents实例，要使用这个工具，需要在maven中引入web的依赖：</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-web&lt;/artifactId&gt;
-    &lt;version&gt;5.1.0.RELEASE&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre><p>这里仅仅引入了web，如果是SpringBoot中，可以直接引入starter。</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;
+    &lt;artifactId&gt;spring-web&lt;&#x2F;artifactId&gt;
+    &lt;version&gt;5.1.0.RELEASE&lt;&#x2F;version&gt;
+&lt;&#x2F;dependency&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里仅仅引入了web，如果是SpringBoot中，可以直接引入starter。</p>
 <blockquote>
 <p>直接通过字符串拼接</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java">String url <span class="token operator">=</span> <span class="token string">"https://api.github.com"</span> <span class="token operator">+</span> <span class="token string">"?"</span> <span class="token operator">+</span> <span class="token string">"token=xxx"</span> <span class="token operator">+</span> <span class="token string">"&amp;name="</span> <span class="token operator">+</span> <span class="token string">"tomcat"</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">"https://api.github.com"</span> <span class="token operator">+</span> <span class="token string">"?"</span> <span class="token operator">+</span> <span class="token string">"token=xxx"</span> <span class="token operator">+</span> <span class="token string">"&amp;name="</span> <span class="token operator">+</span> <span class="token string">"tomcat"</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这种方式简单，写起来也不费劲，但问题就是容易出错。</p>
 <blockquote>
 <p>通过Guava</p>
 </blockquote>
 <p>Google的Guava中也提供了工具，方便我们拼接URL</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 优雅的拼接出id=1&amp;name=java这样的URL参数</span>
-Joiner<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"&amp;"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withKeyValueSeparator</span><span class="token punctuation">(</span><span class="token string">"="</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>ImmutableMap<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">,</span> <span class="token string">"java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">// 轻松把URL参数的值转为Map</span>
-Splitter<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"&amp;"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withKeyValueSeparator</span><span class="token punctuation">(</span><span class="token string">"="</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"id=1&amp;name=java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 优雅的拼接出id=1&amp;name=java这样的URL参数</span>
+<span class="token class-name">Joiner</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"&amp;"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withKeyValueSeparator</span><span class="token punctuation">(</span><span class="token string">"="</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token class-name">ImmutableMap</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"name"</span><span class="token punctuation">,</span> <span class="token string">"java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 轻松把URL参数的值转为Map</span>
+<span class="token class-name">Splitter</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">"&amp;"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withKeyValueSeparator</span><span class="token punctuation">(</span><span class="token string">"="</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"id=1&amp;name=java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>UriComponentsBuilder</p>
 </blockquote>
 <ul>
 <li>构造一个简单的URI</li>
 </ul>
-<pre><code>@Test
+<pre class="line-numbers language-none"><code class="language-none">@Test
 public void constructUri() &#123;
-    UriComponents uriComponents = UriComponentsBuilder.newInstance()
-            .scheme(&quot;http&quot;).host(&quot;www.github.com&quot;).path(&quot;/constructing-uri&quot;)
+    UriComponents uriComponents &#x3D; UriComponentsBuilder.newInstance()
+            .scheme(&quot;http&quot;).host(&quot;www.github.com&quot;).path(&quot;&#x2F;constructing-uri&quot;)
             .queryParam(&quot;name&quot;, &quot;tom&quot;)
-            .build();
+			.build();
 
-    assertEquals(&quot;/constructing-uri&quot;, uriComponents.getPath());
-    assertEquals(&quot;name=tom&quot;, uriComponents.getQuery());
-    assertEquals(&quot;/constructing-uri&quot;, uriComponents.toUriString());
-&#125;
-</code></pre><p><code>uriComponents</code>可以使用<code>toUriString()</code>方法去输出拼接好的URI地址，这里的结果是：</p>
-<pre><code>http://www.github.com/constructing-uri?name=tom
-</code></pre><p>可以看到<code>UriComponentsBuilder</code>是流式API的形式，代码也非常容易理解:</p>
+    assertEquals(&quot;&#x2F;constructing-uri&quot;, uriComponents.getPath());
+    assertEquals(&quot;name&#x3D;tom&quot;, uriComponents.getQuery());
+    assertEquals(&quot;&#x2F;constructing-uri&quot;, uriComponents.toUriString());
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>uriComponents</code>可以使用<code>toUriString()</code>方法去输出拼接好的URI地址，这里的结果是：</p>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;www.github.com&#x2F;constructing-uri?name&#x3D;tom<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>可以看到<code>UriComponentsBuilder</code>是流式API的形式，代码也非常容易理解:</p>
 <pre><code>1. scheme：协议，http或者https
 2. host：主机地址
 3. path：要访问的路径
@@ -343,41 +340,38 @@ public void constructUri() &#123;
 <li>构造一个编码的URI</li>
 </ul>
 <p>有些参数中携带了特殊符号，这时候需要进行编码，<code>UriComponentsBuilder</code>编码也很简单：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">constructUriEncoded</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    UriComponents uriComponents <span class="token operator">=</span> UriComponentsBuilder<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">scheme</span><span class="token punctuation">(</span><span class="token string">"http"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"www.github.com"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/constructing uri"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">constructUriEncoded</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token class-name">UriComponents</span> uriComponents <span class="token operator">=</span> <span class="token class-name">UriComponentsBuilder</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">scheme</span><span class="token punctuation">(</span><span class="token string">"http"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"www.github.com"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/constructing uri"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"/constructing%20uri"</span><span class="token punctuation">,</span> uriComponents<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"/constructing%20uri"</span><span class="token punctuation">,</span> uriComponents<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>通过模板构造URI</li>
 </ul>
 <p>我们可以通过占位符的方式来构造URI，这种方式是Spring中常常使用的方式，如果用过RestTemplate，那么一定不会陌生。</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">constructUriFromTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    UriComponents uriComponents <span class="token operator">=</span> UriComponentsBuilder<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">scheme</span><span class="token punctuation">(</span><span class="token string">"http"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"www.github.com"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/&amp;#123;path-name&amp;#125;"</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">"name=&amp;#123;keyword&amp;#125;"</span><span class="token punctuation">)</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">constructUriFromTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">UriComponents</span> uriComponents <span class="token operator">=</span> <span class="token class-name">UriComponentsBuilder</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">scheme</span><span class="token punctuation">(</span><span class="token string">"http"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"www.github.com"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/&#123;path-name&#125;"</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">"name=&#123;keyword&#125;"</span><span class="token punctuation">)</span>
             <span class="token punctuation">.</span><span class="token function">buildAndExpand</span><span class="token punctuation">(</span><span class="token string">"constructing-uri"</span><span class="token punctuation">,</span> <span class="token string">"tomcat"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"/constructing-uri"</span><span class="token punctuation">,</span> uriComponents<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>从已有的URI中获取信息</li>
 </ul>
 <p>既然存在自己构造URI，那么也有从已知的URI中获取信息的需求，<code>UriComponentsBuilder</code>也可以做到</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fromUriString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    UriComponents result <span class="token operator">=</span> UriComponentsBuilder
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fromUriString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">UriComponents</span> result <span class="token operator">=</span> <span class="token class-name">UriComponentsBuilder</span>
             <span class="token punctuation">.</span><span class="token function">fromUriString</span><span class="token punctuation">(</span><span class="token string">"https://www.github.com/constructing-uri?name=tomcat"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    MultiValueMap<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> expectedQueryParams <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedMultiValueMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">MultiValueMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> expectedQueryParams <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedMultiValueMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     expectedQueryParams<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">,</span> <span class="token string">"tomcat"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">assertEquals</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">getQueryParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> expectedQueryParams<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>使用<code>fromUriString()</code>方法，便可以把一个字符串URI转换为<code>UriComponents</code>对象，并且可以通过<code>getQueryParams()</code>方法取出参数。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>UriComponentsBuilder</code>的用法远远不止这些，这些例子只是我日常开发中常常用到的，更多的可以参考<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html">docs</a>，代码已经同步到<a target="_blank" rel="noopener" href="https://note.youdao.com/">男性交友网站</a>。</p>
 
@@ -592,7 +586,7 @@ Spring中为JTA，JPA，Hibernate等事务API提供了一致性的编程模型�
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             

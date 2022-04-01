@@ -11,7 +11,7 @@
 下载JDK13
 首先在Oracle官网下载JDK13
 
-https://www.oracle.com/technetwo">
+https:&amp;#x2F;&amp;#x2F;www.oracle.com">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -34,8 +34,7 @@ https://www.oracle.com/technetwo">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -263,7 +262,7 @@ https://www.oracle.com/technetwo">
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        336
+                        383
                     </div>
                     
 
@@ -292,53 +291,51 @@ https://www.oracle.com/technetwo">
 <h2 id="下载JDK13"><a href="#下载JDK13" class="headerlink" title="下载JDK13"></a>下载JDK13</h2><blockquote>
 <p>首先在Oracle官网下载JDK13</p>
 </blockquote>
-<pre><code>https://www.oracle.com/technetwork/java/javase/downloads/jdk13-downloads-5672538.html
-</code></pre><blockquote>
+<pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;www.oracle.com&#x2F;technetwork&#x2F;java&#x2F;javase&#x2F;downloads&#x2F;jdk13-downloads-5672538.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<blockquote>
 <p>下载之后安装，此时通过命令查看本地安装的JDK</p>
 </blockquote>
-<pre><code>$ /usr/libexec/java_home  -V
+<pre class="line-numbers language-none"><code class="language-none">$ &#x2F;usr&#x2F;libexec&#x2F;java_home  -V
 
 Matching Java Virtual Machines (2):
-    13.0.1, x86_64:    &quot;Java SE 13.0.1&quot;    /Library/Java/JavaVirtualMachines/jdk-13.0.1.jdk/Contents/Home
-    1.8.0_171, x86_64:    &quot;Java SE 8&quot;    /Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home
+    13.0.1, x86_64:	&quot;Java SE 13.0.1&quot;	&#x2F;Library&#x2F;Java&#x2F;JavaVirtualMachines&#x2F;jdk-13.0.1.jdk&#x2F;Contents&#x2F;Home
+    1.8.0_171, x86_64:	&quot;Java SE 8&quot;	&#x2F;Library&#x2F;Java&#x2F;JavaVirtualMachines&#x2F;jdk1.8.0_171.jdk&#x2F;Contents&#x2F;Home
 
-/Library/Java/JavaVirtualMachines/jdk-13.0.1.jdk/Contents/Home
-</code></pre><p>默认使用的是JDK13</p>
+&#x2F;Library&#x2F;Java&#x2F;JavaVirtualMachines&#x2F;jdk-13.0.1.jdk&#x2F;Contents&#x2F;Home<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>默认使用的是JDK13</p>
 <h2 id="Jenv"><a href="#Jenv" class="headerlink" title="Jenv"></a>Jenv</h2><p>要实现动态切换，有很多工具可以支持，比如Jenv，Jabba，这里使用Jenv</p>
 <blockquote>
 <p>安装Jenv</p>
 </blockquote>
-<p>在Mac下通过brew直接安装</p>
-<pre><code>brew cask install jenv
-</code></pre><p>在Linux下可以使用以下方式</p>
-<pre><code>git clone https://github.com/jenv/jenv.git ~/.jenv
+<p>在Mac下通过brew直接安装<br><pre class="line-numbers language-none"><code class="language-none">brew cask install jenv<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>在Linux下可以使用以下方式</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;jenv&#x2F;jenv.git ~&#x2F;.jenv
 # Shell: bash
-echo &#39;export PATH=&quot;$HOME/.jenv/bin:$PATH&quot;&#39; &gt;&gt; ~/.bash_profile
-echo &#39;eval &quot;$(jenv init -)&quot;&#39; &gt;&gt; ~/.bash_profile
+echo &#39;export PATH&#x3D;&quot;$HOME&#x2F;.jenv&#x2F;bin:$PATH&quot;&#39; &gt;&gt; ~&#x2F;.bash_profile
+echo &#39;eval &quot;$(jenv init -)&quot;&#39; &gt;&gt; ~&#x2F;.bash_profile
 # Shell: zsh
-echo &#39;export PATH=&quot;$HOME/.jenv/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc
-echo &#39;eval &quot;$(jenv init -)&quot;&#39; &gt;&gt; ~/.zshrc
-</code></pre><blockquote>
+echo &#39;export PATH&#x3D;&quot;$HOME&#x2F;.jenv&#x2F;bin:$PATH&quot;&#39; &gt;&gt; ~&#x2F;.zshrc
+echo &#39;eval &quot;$(jenv init -)&quot;&#39; &gt;&gt; ~&#x2F;.zshrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p>把java添加到Jenv中</p>
 </blockquote>
-<pre><code>jenv add $(/usr/libexec/java_home)
-</code></pre><blockquote>
+<pre class="line-numbers language-none"><code class="language-none">jenv add $(&#x2F;usr&#x2F;libexec&#x2F;java_home)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<blockquote>
 <p>查看当前的JDK版本</p>
 </blockquote>
-<pre><code>$ jenv versions
+<pre class="line-numbers language-none"><code class="language-none">$ jenv versions
   1.8
   1.8.0.171
-* 13.0 (set by /Users/luoliang/.java-version)
-
-</code></pre><blockquote>
+* 13.0 (set by &#x2F;Users&#x2F;luoliang&#x2F;.java-version)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p>切换版本</p>
 </blockquote>
-<pre><code>jenv local 1.8
-</code></pre><blockquote>
+<pre class="line-numbers language-none"><code class="language-none">jenv local 1.8<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<blockquote>
 <p>也可以设置全局版本</p>
 </blockquote>
-<pre><code>jenv global 11.0.2
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><a target="_blank" rel="noopener" href="https://github.com/jenv/jenv">更多的使用方式可以参考文档</a></p>
+<pre class="line-numbers language-none"><code class="language-none">jenv global 11.0.2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><a target="_blank" rel="noopener" href="https://github.com/jenv/jenv">更多的使用方式可以参考文档</a></p>
 
             </div>
             <hr/>
@@ -548,7 +545,7 @@ echo &#39;eval &quot;$(jenv init -)&quot;&#39; &gt;&gt; ~/.zshrc
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             

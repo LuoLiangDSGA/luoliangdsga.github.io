@@ -28,8 +28,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -265,7 +264,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        915
+                        919
                     </div>
                     
 
@@ -296,12 +295,11 @@
 <ul>
 <li>新建一个Dockerfile</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">vi Dockerfile
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">vi <span class="token class-name">Dockerfile</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
 <li>编写Dockerfile</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">FROM openjdk<span class="token operator">:</span><span class="token number">8</span><span class="token operator">-</span>jre<span class="token operator">-</span>alpine
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">FROM openjdk<span class="token operator">:</span><span class="token number">8</span><span class="token operator">-</span>jre<span class="token operator">-</span>alpine
 
 MAINTAINER luoliang
 
@@ -309,18 +307,15 @@ ADD target<span class="token operator">/</span>dubbo<span class="token operator"
 
 ENTRYPOINT <span class="token punctuation">[</span><span class="token string">"java"</span><span class="token punctuation">,</span> <span class="token string">"-Djava.security.egd=file:/dev/./urandom"</span><span class="token punctuation">,</span> <span class="token string">"-jar"</span><span class="token punctuation">,</span><span class="token string">"/app.jar"</span><span class="token punctuation">]</span>
 
-EXPOSE <span class="token number">12345</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+EXPOSE <span class="token number">12345</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>构建镜像</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">docker build <span class="token operator">-</span>t dubbo<span class="token operator">-</span>provider <span class="token punctuation">.</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">docker build <span class="token operator">-</span>t dubbo<span class="token operator">-</span>provider <span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
 <li>运行Provider容器</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">docker run <span class="token operator">-</span>d <span class="token operator">-</span>p <span class="token number">12345</span><span class="token operator">:</span><span class="token number">12345</span> <span class="token operator">--</span>name dubbo<span class="token operator">-</span>provider dubbo<span class="token operator">-</span>provider
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">docker run <span class="token operator">-</span>d <span class="token operator">-</span>p <span class="token number">12345</span><span class="token operator">:</span><span class="token number">12345</span> <span class="token operator">--</span>name dubbo<span class="token operator">-</span>provider dubbo<span class="token operator">-</span>provider<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
 <li>查看容器的启动日志<br><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fs6id7au4oj31kw0gm11n.jpg" alt=""></li>
 </ul>
@@ -334,26 +329,25 @@ EXPOSE <span class="token number">12345</span>
 <ul>
 <li>修改上面的Dockerfile，添加env<br>DUBBO_IP_TO_REGISTRY 填写在zookeeper中注册的IP</li>
 </ul>
-<pre><code>FROM openjdk:8-jre-alpine
+<pre class="line-numbers language-none"><code class="language-none">FROM openjdk:8-jre-alpine
 
 MAINTAINER luoliang
 
 ENV DUBBO_IP_TO_REGISTRY 192.168.1.7
 ENV DUBBO_PORT_TO_REGISTRY 12345
 
-ADD target/dubbo-provider.jar app.jar
+ADD target&#x2F;dubbo-provider.jar app.jar
 
-ENTRYPOINT [&quot;java&quot;, &quot;-Djava.security.egd=file:/dev/./urandom&quot;, &quot;-jar&quot;,&quot;/app.jar&quot;]
+ENTRYPOINT [&quot;java&quot;, &quot;-Djava.security.egd&#x3D;file:&#x2F;dev&#x2F;.&#x2F;urandom&quot;, &quot;-jar&quot;,&quot;&#x2F;app.jar&quot;]
 
-EXPOSE 12345
-</code></pre><blockquote>
+EXPOSE 12345<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p>重新build之后重新启动一个容器，可以看到服务注册地址已经变成了指定的IP，消费者可以成功的进行调用。</p>
 </blockquote>
 <ul>
 <li>也可以不修改Dockerfile，通过run命令传入参数</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">docker run <span class="token operator">-</span>d <span class="token operator">-</span>p <span class="token number">12345</span><span class="token operator">:</span><span class="token number">12345</span> <span class="token operator">-</span>e DUBBO_IP_TO_REGISTRY<span class="token operator">=</span><span class="token number">192.168</span><span class="token punctuation">.</span><span class="token number">1.7</span> <span class="token operator">-</span>e DUBBO_PORT_TO_REGISTRY<span class="token operator">=</span><span class="token number">12345</span> <span class="token operator">--</span>name dubbo<span class="token operator">-</span>provider dubbo<span class="token operator">-</span>provider
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">docker run <span class="token operator">-</span>d <span class="token operator">-</span>p <span class="token number">12345</span><span class="token operator">:</span><span class="token number">12345</span> <span class="token operator">-</span>e DUBBO_IP_TO_REGISTRY<span class="token operator">=</span><span class="token number">192.168</span><span class="token number">.1</span><span class="token number">.7</span> <span class="token operator">-</span>e DUBBO_PORT_TO_REGISTRY<span class="token operator">=</span><span class="token number">12345</span> <span class="token operator">--</span>name dubbo<span class="token operator">-</span>provider dubbo<span class="token operator">-</span>provider<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
 <li>此时服务提供者的log如下<br><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fs6ijw1fmlj31kw0gzaj0.jpg" alt=""></li>
 </ul>
@@ -364,39 +358,36 @@ EXPOSE 12345
 <ul>
 <li>在pom中加入插件的依赖</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token operator">&lt;</span>plugin<span class="token operator">></span>
-    <span class="token operator">&lt;</span>groupId<span class="token operator">></span>com<span class="token punctuation">.</span>spotify<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>artifactId<span class="token operator">></span>dockerfile<span class="token operator">-</span>maven<span class="token operator">-</span>plugin<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
-    <span class="token operator">&lt;</span>executions<span class="token operator">></span>
-        <span class="token operator">&lt;</span>execution<span class="token operator">></span>
-            <span class="token operator">&lt;</span>id<span class="token operator">></span><span class="token keyword">default</span><span class="token operator">&lt;</span><span class="token operator">/</span>id<span class="token operator">></span>
-            <span class="token operator">&lt;</span>goals<span class="token operator">></span>
-                <span class="token operator">&lt;</span>goal<span class="token operator">></span>build<span class="token operator">&lt;</span><span class="token operator">/</span>goal<span class="token operator">></span>
-                <span class="token operator">&lt;</span>goal<span class="token operator">></span>push<span class="token operator">&lt;</span><span class="token operator">/</span>goal<span class="token operator">></span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>plugin<span class="token punctuation">></span></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>spotify<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>dockerfile<span class="token operator">-</span>maven<span class="token operator">-</span>plugin<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>executions<span class="token punctuation">></span></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>execution<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>id<span class="token punctuation">></span></span><span class="token keyword">default</span><span class="token operator">&lt;</span><span class="token operator">/</span>id<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>goals<span class="token punctuation">></span></span>
+                <span class="token generics"><span class="token punctuation">&lt;</span>goal<span class="token punctuation">></span></span>build<span class="token operator">&lt;</span><span class="token operator">/</span>goal<span class="token operator">></span>
+                <span class="token generics"><span class="token punctuation">&lt;</span>goal<span class="token punctuation">></span></span>push<span class="token operator">&lt;</span><span class="token operator">/</span>goal<span class="token operator">></span>
             <span class="token operator">&lt;</span><span class="token operator">/</span>goals<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>execution<span class="token operator">></span>
     <span class="token operator">&lt;</span><span class="token operator">/</span>executions<span class="token operator">></span>
-    <span class="token operator">&lt;</span>configuration<span class="token operator">></span>
-        <span class="token operator">&lt;</span>repository<span class="token operator">></span>dubbo<span class="token operator">-</span>provider<span class="token operator">&lt;</span><span class="token operator">/</span>repository<span class="token operator">></span>
-        <span class="token operator">&lt;</span>tag<span class="token operator">></span>latest<span class="token operator">&lt;</span><span class="token operator">/</span>tag<span class="token operator">></span>
-        <span class="token operator">&lt;</span>buildArgs<span class="token operator">></span>
-            <span class="token operator">&lt;</span>JAR_FILE<span class="token operator">></span>$<span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>project<span class="token punctuation">.</span>build<span class="token punctuation">.</span>finalName<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">.</span>jar<span class="token operator">&lt;</span><span class="token operator">/</span>JAR_FILE<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>configuration<span class="token punctuation">></span></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>repository<span class="token punctuation">></span></span>dubbo<span class="token operator">-</span>provider<span class="token operator">&lt;</span><span class="token operator">/</span>repository<span class="token operator">></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>tag<span class="token punctuation">></span></span>latest<span class="token operator">&lt;</span><span class="token operator">/</span>tag<span class="token operator">></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>buildArgs<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>JAR_FILE<span class="token punctuation">></span></span>$<span class="token punctuation">&#123;</span>project<span class="token punctuation">.</span>build<span class="token punctuation">.</span>finalName<span class="token punctuation">&#125;</span><span class="token punctuation">.</span>jar<span class="token operator">&lt;</span><span class="token operator">/</span>JAR_FILE<span class="token operator">></span>
         <span class="token operator">&lt;</span><span class="token operator">/</span>buildArgs<span class="token operator">></span>
     <span class="token operator">&lt;</span><span class="token operator">/</span>configuration<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>plugin<span class="token operator">></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">&lt;</span><span class="token operator">/</span>plugin<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>把dockerfile放在和pom.xml同级的目录下</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">project<span class="token operator">/</span>
-  Dockerfile
-  pom<span class="token punctuation">.</span>xml
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">project<span class="token operator">/</span>
+  <span class="token class-name">Dockerfile</span>
+  pom<span class="token punctuation">.</span>xml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>使用maven命令进行打包</li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">mvn <span class="token keyword">package</span> 或者 mvn dockerfile<span class="token operator">:</span>build
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">mvn <span class="token keyword">package</span> 或者 mvn dockerfile<span class="token operator">:</span>build<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
 <li>命令执行完成，可以使用docker images查看镜像，剩余步骤同上。<br>经测试，容器运行正常</li>
 </ul>
@@ -621,7 +612,7 @@ SpringBoot+Vue.js前后端分离实现大文件分块上传
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             

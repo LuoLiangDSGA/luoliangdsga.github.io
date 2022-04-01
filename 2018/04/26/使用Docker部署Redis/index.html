@@ -5,10 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="使用Docker部署Redis, Fantasy">
-    <meta name="description" content="使用Docker部署Redis拉取镜像这里以Redis3.2版本为例
-docker pull redis:3.2
-
-运行容器docker run -d -p 6379:6379 -v $PWD/data:/data --name redis">
+    <meta name="description" content="使用Docker部署Redis拉取镜像这里以Redis3.2版本为例docker pull redis:3.2
+运行容器docker run -d -p 6379:6379 -v $PWD/data:/data --name redis r">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -31,8 +29,7 @@ docker pull redis:3.2
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -357,7 +354,7 @@ docker pull redis:3.2
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        403
+                        401
                     </div>
                     
 
@@ -380,11 +377,8 @@ docker pull redis:3.2
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="使用Docker部署Redis"><a href="#使用Docker部署Redis" class="headerlink" title="使用Docker部署Redis"></a>使用Docker部署Redis</h2><h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><p>这里以Redis3.2版本为例</p>
-<pre class="line-numbers language-java"><code class="language-java">docker pull redis<span class="token operator">:</span><span class="token number">3.2</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h3><pre class="line-numbers language-java"><code class="language-java">docker run <span class="token operator">-</span>d <span class="token operator">-</span>p <span class="token number">6379</span><span class="token operator">:</span><span class="token number">6379</span> <span class="token operator">-</span>v $PWD<span class="token operator">/</span>data<span class="token operator">:</span><span class="token operator">/</span>data <span class="token operator">--</span>name redis redis<span class="token operator">:</span><span class="token number">3.2</span> redis<span class="token operator">-</span>server <span class="token operator">--</span>appendonly yes
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h2 id="使用Docker部署Redis"><a href="#使用Docker部署Redis" class="headerlink" title="使用Docker部署Redis"></a>使用Docker部署Redis</h2><h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><p>这里以Redis3.2版本为例<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">docker pull redis<span class="token operator">:</span><span class="token number">3.2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p>
+<h3 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">docker run <span class="token operator">-</span>d <span class="token operator">-</span>p <span class="token number">6379</span><span class="token operator">:</span><span class="token number">6379</span> <span class="token operator">-</span>v $PWD<span class="token operator">/</span>data<span class="token operator">:</span><span class="token operator">/</span>data <span class="token operator">--</span>name redis redis<span class="token operator">:</span><span class="token number">3.2</span> redis<span class="token operator">-</span>server <span class="token operator">--</span>appendonly yes<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <span id="more"></span>
 <p>这里对部分命令做一下说明：</p>
 <ul>
@@ -394,26 +388,18 @@ docker pull redis:3.2
 </ul>
 <p>这里就会有一个问题，可以使用使用自定义的redis.conf配置吗？答案当然是可以的。可以通过两种方式来实现，一种是自定义的Dockerfile，另一种是直接通过docker run命令来进行指定，首先需要在本机准备好一个redis.conf。  </p>
 <ul>
-<li>Dockerfile<pre class="line-numbers language-java"><code class="language-java">FROM redis
+<li>Dockerfile<pre class="line-numbers language-java" data-language="java"><code class="language-java">FROM redis
 COPY redis<span class="token punctuation">.</span>conf <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>etc<span class="token operator">/</span>redis<span class="token operator">/</span>redis<span class="token punctuation">.</span>conf
-CMD <span class="token punctuation">[</span> <span class="token string">"redis-server"</span><span class="token punctuation">,</span> <span class="token string">"/usr/local/etc/redis/redis.conf"</span> <span class="token punctuation">]</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li>docker run<pre class="line-numbers language-java"><code class="language-java">docker run <span class="token operator">-</span>v $PWD<span class="token operator">/</span>redis<span class="token punctuation">.</span>conf<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>etc<span class="token operator">/</span>redis<span class="token operator">/</span>redis<span class="token punctuation">.</span>conf <span class="token operator">--</span>name redis redis redis<span class="token operator">-</span>server <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>etc<span class="token operator">/</span>redis<span class="token operator">/</span>redis<span class="token punctuation">.</span>conf
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-这时候查看Redis容器启动状况：<pre class="line-numbers language-java"><code class="language-java">docker ps
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+CMD <span class="token punctuation">[</span> <span class="token string">"redis-server"</span><span class="token punctuation">,</span> <span class="token string">"/usr/local/etc/redis/redis.conf"</span> <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li>docker run<pre class="line-numbers language-java" data-language="java"><code class="language-java">docker run <span class="token operator">-</span>v $PWD<span class="token operator">/</span>redis<span class="token punctuation">.</span>conf<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>etc<span class="token operator">/</span>redis<span class="token operator">/</span>redis<span class="token punctuation">.</span>conf <span class="token operator">--</span>name redis redis redis<span class="token operator">-</span>server <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>etc<span class="token operator">/</span>redis<span class="token operator">/</span>redis<span class="token punctuation">.</span>conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+这时候查看Redis容器启动状况：<pre class="line-numbers language-java" data-language="java"><code class="language-java">docker ps<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 </li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">$ docker ps
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">$ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED                  STATUS              PORTS                    NAMES
-21d1f921e382        redis<span class="token operator">:</span><span class="token number">3.2</span>           <span class="token string">"docker-entrypoint.s…"</span>   Less than a second ago   Up <span class="token number">2</span> seconds        <span class="token number">0.0</span><span class="token punctuation">.</span><span class="token number">0.0</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">-</span><span class="token operator">></span><span class="token number">6379</span><span class="token operator">/</span>tcp   admiring_bose
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="容器交互"><a href="#容器交互" class="headerlink" title="容器交互"></a>容器交互</h3><p>在Redis容器启动成功后，可以通过redis-cli命令连接到容器<br>使用命令进入容器</p>
-<pre class="line-numbers language-java"><code class="language-java">$ docker exec <span class="token operator">-</span>it redis redis<span class="token operator">-</span>cli
-<span class="token number">127.0</span><span class="token punctuation">.</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">></span> info
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>此时可以看到terminal输出了Redis容器的基础信息，说明Redis容器已经可以使用了，也可以使用Redis客户端连接Redis容器，地址是: $ip:6379</p>
+<span class="token number">21d</span><span class="token number">1f</span><span class="token number">921e382</span>        redis<span class="token operator">:</span><span class="token number">3.2</span>           <span class="token string">"docker-entrypoint.s…"</span>   <span class="token class-name">Less</span> than a second ago   <span class="token class-name">Up</span> <span class="token number">2</span> seconds        <span class="token number">0.0</span><span class="token number">.0</span><span class="token number">.0</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">-></span><span class="token number">6379</span><span class="token operator">/</span>tcp   admiring_bose<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="容器交互"><a href="#容器交互" class="headerlink" title="容器交互"></a>容器交互</h3><p>在Redis容器启动成功后，可以通过redis-cli命令连接到容器<br>使用命令进入容器<br><pre class="line-numbers language-java" data-language="java"><code class="language-java">$ docker exec <span class="token operator">-</span>it redis redis<span class="token operator">-</span>cli
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">></span> info<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>此时可以看到terminal输出了Redis容器的基础信息，说明Redis容器已经可以使用了，也可以使用Redis客户端连接Redis容器，地址是: $ip:6379</p>
 
             </div>
             <hr/>
@@ -716,7 +702,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             

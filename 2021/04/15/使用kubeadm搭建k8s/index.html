@@ -31,8 +31,7 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -271,7 +270,7 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        6 分
                     </div>
                     
                 
@@ -303,92 +302,92 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
 <li>安装<code>kubectl</code>、<code>kubelet</code>、<code>kubeadm</code><span id="more"></span>
 这一步很关键，需要先添加k8s的源，如果按照官方文档来安装，添加的是谷歌自己的源，如果服务器没翻墙后面的操作都没法进行，所以我们这里添加阿里云的源。</li>
 </ol>
-<pre><code>root@n227-090-158:~# cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# cat &lt;&lt;EOF &gt; &#x2F;etc&#x2F;yum.repos.d&#x2F;kubernetes.repo
 [kubernetes]
-name=Kubernetes
-baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-EOF
-</code></pre><p>添加之后就可以安装基础组件了</p>
-<pre><code>root@n227-090-158:~# apt-get install kubectl kubelet kubeadm
-</code></pre><ol start="3">
+name&#x3D;Kubernetes
+baseurl&#x3D;https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;kubernetes&#x2F;yum&#x2F;repos&#x2F;kubernetes-el7-x86_64&#x2F;
+enabled&#x3D;1
+gpgcheck&#x3D;1
+repo_gpgcheck&#x3D;1
+gpgkey&#x3D;https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;kubernetes&#x2F;yum&#x2F;doc&#x2F;yum-key.gpg https:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;kubernetes&#x2F;yum&#x2F;doc&#x2F;rpm-package-key.gpg
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>添加之后就可以安装基础组件了</p>
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# apt-get install kubectl kubelet kubeadm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ol start="3">
 <li>初始化集群</li>
 </ol>
-<pre><code>root@n227-090-158:~# kubeadm init --pod-network-cidr=10.227.90.158/16 --image-repository registry.aliyuncs.com/google_containers --apiserver-advertise-address=192.168.122.21
-</code></pre><ul>
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# kubeadm init --pod-network-cidr&#x3D;10.227.90.158&#x2F;16 --image-repository registry.aliyuncs.com&#x2F;google_containers --apiserver-advertise-address&#x3D;192.168.122.21<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
 <li>这里使用的是<code>kubeadm init</code>这个命令，并且通过<code>--image-repository</code>指定了阿里云镜像仓库地址，因为<code>k8s.grc.io</code>也是无法访问的。</li>
 <li>pod网段为10.227.90.158/16</li>
 <li>apiserver地址就是本地IP</li>
 </ul>
 <p>初始化成功后看到的是如下输出：</p>
-<pre><code>Your Kubernetes control-plane has initialized successfully!
+<pre class="line-numbers language-none"><code class="language-none">Your Kubernetes control-plane has initialized successfully!
 
 To start using your cluster, you need to run the following as a regular user:
 
-  mkdir -p $HOME/.kube
-  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  mkdir -p $HOME&#x2F;.kube
+  sudo cp -i &#x2F;etc&#x2F;kubernetes&#x2F;admin.conf $HOME&#x2F;.kube&#x2F;config
+  sudo chown $(id -u):$(id -g) $HOME&#x2F;.kube&#x2F;config
 
 You should now deploy a pod network to the cluster.
 Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:
-  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+  https:&#x2F;&#x2F;kubernetes.io&#x2F;docs&#x2F;concepts&#x2F;cluster-administration&#x2F;addons&#x2F;
 
 Then you can join any number of worker nodes by running the following on each as root:
 
 kubeadm join 10.227.90.158:6443 --token 9l1kct.s6x9p28h1bv8slkl \
-    --discovery-token-ca-cert-hash sha256:156a2d99de3c1113aee940c4a478bc5d4da9fb6a0f845a2a517a68e12158a3b8
-</code></pre><p>然后按照提示执行如下命令，这是在master节点上拷贝kubeconfig 文件到kubectl默认的kubeconfig路径下</p>
-<pre><code>root@n227-090-158:~# mkdir -p $HOME/.kube
-root@n227-090-158:~# sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-root@n227-090-158:~# sudo chown $(id -u):$(id -g) $HOME/.kube/config
-</code></pre><ol start="4">
+    --discovery-token-ca-cert-hash sha256:156a2d99de3c1113aee940c4a478bc5d4da9fb6a0f845a2a517a68e12158a3b8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后按照提示执行如下命令，这是在master节点上拷贝kubeconfig 文件到kubectl默认的kubeconfig路径下</p>
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# mkdir -p $HOME&#x2F;.kube
+root@n227-090-158:~# sudo cp -i &#x2F;etc&#x2F;kubernetes&#x2F;admin.conf $HOME&#x2F;.kube&#x2F;config
+root@n227-090-158:~# sudo chown $(id -u):$(id -g) $HOME&#x2F;.kube&#x2F;config<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ol start="4">
 <li>加入集群</li>
 </ol>
 <p>上面的输出中也给出了加入集群的命令，我们可以在另一个机器上输入上面的命令即可加入这个集群，但是要保证两台机器网络是互通的。</p>
-<pre><code>root@n227-090-158:~# kubeadm join 10.227.90.158:6443 --token 9l1kct.s6x9p28h1bv8slkl \
-    --discovery-token-ca-cert-hash sha256:156a2d99de3c1113aee940c4a478bc5d4da9fb6a0f845a2a517a68e12158a3b8
-</code></pre><ol start="5">
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# kubeadm join 10.227.90.158:6443 --token 9l1kct.s6x9p28h1bv8slkl \
+    --discovery-token-ca-cert-hash sha256:156a2d99de3c1113aee940c4a478bc5d4da9fb6a0f845a2a517a68e12158a3b8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<ol start="5">
 <li>安装calico网络</li>
 </ol>
 <p>查看node和pod发现是notReady状态</p>
-<pre><code>root@n227-090-158:~# kubectl get node
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# kubectl get node
 NAME           STATUS     ROLES    AGE   VERSION
 n227-090-158   NotReady   master   59m   v1.18.0
 root@n227-090-158:~# kubectl get pod --all-namespaces
 NAMESPACE     NAME                                        READY   STATUS    RESTARTS   AGE
-kube-system   coredns-7ff77c879f-fsj9l                    0/1     Pending   0          2m12s
-kube-system   coredns-7ff77c879f-q5ll2                    0/1     Pending   0          2m12s
-kube-system   etcd-master01.paas.com                      1/1     Running   0          2m22s
-kube-system   kube-apiserver-master01.paas.com            1/1     Running   0          2m22s
-kube-system   kube-controller-manager-master01.paas.com   1/1     Running   0          2m22s
-kube-system   kube-proxy-th472                            1/1     Running   0          2m12s
-kube-system   kube-scheduler-master01.paas.com            1/1     Running   0          2m22s
-</code></pre><p>这是因为corednspod没有启动，缺少网络pod，所以我们需要安装calico网络</p>
-<pre><code>root@n227-090-158:~# kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-</code></pre><p>安装完成后再查看集群状态，发现已经正常了</p>
-<pre><code>root@n227-090-158:~# kubectl get pod --all-namespaces
+kube-system   coredns-7ff77c879f-fsj9l                    0&#x2F;1     Pending   0          2m12s
+kube-system   coredns-7ff77c879f-q5ll2                    0&#x2F;1     Pending   0          2m12s
+kube-system   etcd-master01.paas.com                      1&#x2F;1     Running   0          2m22s
+kube-system   kube-apiserver-master01.paas.com            1&#x2F;1     Running   0          2m22s
+kube-system   kube-controller-manager-master01.paas.com   1&#x2F;1     Running   0          2m22s
+kube-system   kube-proxy-th472                            1&#x2F;1     Running   0          2m12s
+kube-system   kube-scheduler-master01.paas.com            1&#x2F;1     Running   0          2m22s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这是因为corednspod没有启动，缺少网络pod，所以我们需要安装calico网络</p>
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# kubectl apply -f https:&#x2F;&#x2F;docs.projectcalico.org&#x2F;manifests&#x2F;calico.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>安装完成后再查看集群状态，发现已经正常了</p>
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# kubectl get pod --all-namespaces
 NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE
-kube-system   calico-kube-controllers-65d7476764-mjjtm   1/1     Running   0          67s
-kube-system   calico-node-fk5qw                          1/1     Running   0          67s
-kube-system   coredns-7ff77c879f-kw2z7                   1/1     Running   0          60m
-kube-system   coredns-7ff77c879f-pbh9z                   1/1     Running   0          60m
-kube-system   etcd-n227-090-158                          1/1     Running   0          60m
-kube-system   kube-apiserver-n227-090-158                1/1     Running   0          60m
-kube-system   kube-controller-manager-n227-090-158       1/1     Running   0          60m
-kube-system   kube-proxy-rh2vr                           1/1     Running   0          60m
-kube-system   kube-scheduler-n227-090-158                1/1     Running   0          60m
+kube-system   calico-kube-controllers-65d7476764-mjjtm   1&#x2F;1     Running   0          67s
+kube-system   calico-node-fk5qw                          1&#x2F;1     Running   0          67s
+kube-system   coredns-7ff77c879f-kw2z7                   1&#x2F;1     Running   0          60m
+kube-system   coredns-7ff77c879f-pbh9z                   1&#x2F;1     Running   0          60m
+kube-system   etcd-n227-090-158                          1&#x2F;1     Running   0          60m
+kube-system   kube-apiserver-n227-090-158                1&#x2F;1     Running   0          60m
+kube-system   kube-controller-manager-n227-090-158       1&#x2F;1     Running   0          60m
+kube-system   kube-proxy-rh2vr                           1&#x2F;1     Running   0          60m
+kube-system   kube-scheduler-n227-090-158                1&#x2F;1     Running   0          60m
 root@n227-090-158:~# kubectl get node
 NAME           STATUS   ROLES    AGE   VERSION
-n227-090-158   Ready    master   61m   v1.18.0
-</code></pre><ol start="6">
+n227-090-158   Ready    master   61m   v1.18.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="6">
 <li>生成token</li>
 </ol>
 <p>推荐使用Firefox浏览器，Chrome新版如果证书有问题已经不能继续访问了，Firefox可以，这个时候通过ip:30000访问dash-board会进入一个页面，提示你输入token，可以参考这个<a target="_blank" rel="noopener" href="https://jimmysong.io/kubernetes-handbook/guide/auth-with-kubeconfig-or-token.html">文章</a>生成token。生成之后填入输入框就可以进入dashboard主页面了。</p>
-<pre><code>root@n227-090-158:~# kubectl -n kube-system describe secret admin-token-fqxsw
-</code></pre><p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gpje7aabknj31c00u0nb1.jpg" alt="image"></p>
+<pre class="line-numbers language-none"><code class="language-none">root@n227-090-158:~# kubectl -n kube-system describe secret admin-token-fqxsw<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gpje7aabknj31c00u0nb1.jpg" alt="image"></p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>k8s现在安装已经比以前简单太多了，这篇文章作为个人学习记录，如果参考之后安装有什么问题可以在GitHub通过邮件联系我。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li>拉勾教育-Kubernetes 原理剖析与实战应用</li>
@@ -611,7 +610,7 @@ Kubeadm是社区官方持续维护的集群搭建工具，在Kubernertes v1.13 �
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             

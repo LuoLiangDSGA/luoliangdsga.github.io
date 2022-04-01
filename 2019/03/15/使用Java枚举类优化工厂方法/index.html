@@ -29,8 +29,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -355,7 +354,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        578
+                        552
                     </div>
                     
 
@@ -381,39 +380,36 @@
                 <h2 id="使用Java枚举类优化工厂方法"><a href="#使用Java枚举类优化工厂方法" class="headerlink" title="使用Java枚举类优化工厂方法"></a>使用Java枚举类优化工厂方法</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><blockquote>
 <p>最近在工作中遇到一个需求，需要把不同的统计报表导出成csv文件，经过一系列抽象过后，发现不同的导出类型，还是需要不同的service来进行处理，这样就会导致工厂方法存在大量的<code>if else</code>或者<code>switch case</code>语句，这样看起来代码非常臃肿，不便于后面维护，于是使用枚举类进行重构，在此记录一下。</p>
 </blockquote>
-<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>在没有进行改动的时候，代码是这样的：<br><span id="more"></span></p>
-<pre class="line-numbers language-java"><code class="language-java"> <span class="token keyword">private</span> Collection<span class="token operator">&lt;</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token function">initData</span><span class="token punctuation">(</span>ExportParam exportParam<span class="token punctuation">,</span> Exportkey v<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        Collection<span class="token operator">&lt;</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> data <span class="token operator">=</span> null<span class="token punctuation">;</span>
-        <span class="token keyword">switch</span> <span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> CONTENT_HISTORY_LIST<span class="token operator">:</span>
-                data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>HistoryContentCsvDataServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> CONTENT_CAPACITY_STATS<span class="token operator">:</span>
-                data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>ContentCapacityStatsServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> CONTENT_AMOUNT_STATS<span class="token operator">:</span>
-                data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>ContentAmountStatsServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> DEVICE_ONLINE_RATE_STATS<span class="token operator">:</span>
-                data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>DeviceOnlineRateServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> DEVICE_ONLINE_DETAIL_LIST<span class="token operator">:</span>
-                data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>DeviceOnlineDetailServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> PLAY_COUNT_CONTENT_STATS<span class="token operator">:</span>
-                data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>PlayCountContentStatsServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> PLAY_COUNT_DEVICE_STATS<span class="token operator">:</span>
-                data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>PlayCountDeviceStatsServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-           <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> 省略部分代码
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>在没有进行改动的时候，代码是这样的：<br><span id="more"></span><br><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Collection</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token function">initData</span><span class="token punctuation">(</span><span class="token class-name">ExportParam</span> exportParam<span class="token punctuation">,</span> <span class="token class-name">Exportkey</span> v<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+       <span class="token class-name">Collection</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> data <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+       <span class="token keyword">switch</span> <span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+           <span class="token keyword">case</span> CONTENT_HISTORY_LIST<span class="token operator">:</span>
+               data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">HistoryContentCsvDataServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">break</span><span class="token punctuation">;</span>
+           <span class="token keyword">case</span> CONTENT_CAPACITY_STATS<span class="token operator">:</span>
+               data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">ContentCapacityStatsServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">break</span><span class="token punctuation">;</span>
+           <span class="token keyword">case</span> CONTENT_AMOUNT_STATS<span class="token operator">:</span>
+               data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">ContentAmountStatsServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">break</span><span class="token punctuation">;</span>
+           <span class="token keyword">case</span> DEVICE_ONLINE_RATE_STATS<span class="token operator">:</span>
+               data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">DeviceOnlineRateServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">break</span><span class="token punctuation">;</span>
+           <span class="token keyword">case</span> DEVICE_ONLINE_DETAIL_LIST<span class="token operator">:</span>
+               data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">DeviceOnlineDetailServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">break</span><span class="token punctuation">;</span>
+           <span class="token keyword">case</span> PLAY_COUNT_CONTENT_STATS<span class="token operator">:</span>
+               data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">PlayCountContentStatsServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">break</span><span class="token punctuation">;</span>
+           <span class="token keyword">case</span> PLAY_COUNT_DEVICE_STATS<span class="token operator">:</span>
+               data <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">PlayCountDeviceStatsServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">break</span><span class="token punctuation">;</span>
+          <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> 省略部分代码
+       <span class="token punctuation">&#125;</span>
 
-        <span class="token keyword">return</span> data<span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>这里面使用了switch语句进行判断，不同的case拿到不同的bean，导致代码很长，于是对<code>Exportkey</code>这个枚举类进行改造。</strong></p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span> Exportkey <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+       <span class="token keyword">return</span> data<span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><strong>这里面使用了switch语句进行判断，不同的case拿到不同的bean，导致代码很长，于是对<code>Exportkey</code>这个枚举类进行改造。</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token class-name">Exportkey</span> <span class="token punctuation">&#123;</span>
     CONTENT_HISTORY_LIST<span class="token punctuation">,</span>
     CONTENT_CAPACITY_STATS<span class="token punctuation">,</span>
     CONTENT_AMOUNT_STATS<span class="token punctuation">,</span>
@@ -423,48 +419,45 @@
     PLAY_RECORD_CONTENT_DETAIL_STATS<span class="token punctuation">,</span>
     PLAY_COUNT_DEVICE_STATS<span class="token punctuation">,</span>
     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>需要知道，枚举类是可以定义抽象方法的，枚举类里定义抽象方法时不能使用abstract关键字将枚举类定义成抽象类（因为系统自动会为它添加abstract关键字），但因为枚举类需要显式创建枚举值，而不是作为父类，所以定义每个枚举值时必须为抽象方法提供实现，否则将出现编译错误。</p>
 </blockquote>
 <p>经过改造后的导出枚举类如下：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span> Exportkey <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    CONTENT_HISTORY_LIST <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token class-name">Exportkey</span> <span class="token punctuation">&#123;</span>
+    CONTENT_HISTORY_LIST <span class="token punctuation">&#123;</span>
         <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">public</span> CsvDataService <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> SpringUtils<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>HistoryContentCsvDataServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    CONTENT_CAPACITY_STATS <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token class-name">CsvDataService</span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token class-name">SpringUtils</span><span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">HistoryContentCsvDataServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    CONTENT_CAPACITY_STATS <span class="token punctuation">&#123;</span>
         <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">public</span> CsvDataService <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> SpringUtils<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>ContentCapacityStatsServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    CONTENT_AMOUNT_STATS <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token class-name">CsvDataService</span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token class-name">SpringUtils</span><span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">ContentCapacityStatsServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    CONTENT_AMOUNT_STATS <span class="token punctuation">&#123;</span>
         <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">public</span> CsvDataService <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> SpringUtils<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>ContentAmountStatsServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    PLAY_COUNT_CONTENT_STATS <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token class-name">CsvDataService</span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token class-name">SpringUtils</span><span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">ContentAmountStatsServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    PLAY_COUNT_CONTENT_STATS <span class="token punctuation">&#123;</span>
         <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">public</span> CsvDataService <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> SpringUtils<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>PlayCountContentStatsServiceImpl<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+        <span class="token keyword">public</span> <span class="token class-name">CsvDataService</span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token class-name">SpringUtils</span><span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">PlayCountContentStatsServiceImpl</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">abstract</span> CsvDataService <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token class-name">CsvDataService</span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>定义了一个抽象的create()方法，在每个枚举值中提供实现，这样我们原先的方法就不用switch了，变成了一行代码，如下:</strong></p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">private</span> Collection<span class="token operator">&lt;</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token function">initData</span><span class="token punctuation">(</span>ExportParam exportParam<span class="token punctuation">,</span> Exportkey key<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">Collection</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token function">initData</span><span class="token punctuation">(</span><span class="token class-name">ExportParam</span> exportParam<span class="token punctuation">,</span> <span class="token class-name">Exportkey</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">return</span> key<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">initData</span><span class="token punctuation">(</span>exportParam<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
             </div>
             <hr/>
@@ -772,7 +765,7 @@ LRU是Least Recently Used的缩写，即最近最少使用的淘汰，在内存�
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             

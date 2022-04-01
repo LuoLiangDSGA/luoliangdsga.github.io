@@ -31,8 +31,7 @@ Spring中为JTA，JPA，Hibernate等事务API提供了一致性的编程模型�
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -298,100 +297,98 @@ Spring中为JTA，JPA，Hibernate等事务API提供了一致性的编程模型�
 <h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><blockquote>
 <p>引入H2 Database</p>
 </blockquote>
-<pre><code>spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
-spring.datasource.driverClassName=org.h2.Driver
-spring.datasource.username=root
-spring.datasource.password=root
-spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-spring.jpa.properties.show_sql=true
-spring.jpa.properties.format_sql=true
-spring.jpa.properties.use_sql_comments=true
-spring.h2.console.enabled=true
-spring.h2.console.path=/console
-logging.level.org.springframework.orm.jpa=debug
-</code></pre><p>都是一些基础的配置，这里使用了jpa，并且把日志级别设置成debug，为了更方便的观察事务的执行情况。</p>
+<pre class="line-numbers language-none"><code class="language-none">spring.datasource.url&#x3D;jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT&#x3D;FALSE
+spring.datasource.driverClassName&#x3D;org.h2.Driver
+spring.datasource.username&#x3D;root
+spring.datasource.password&#x3D;root
+spring.jpa.database-platform&#x3D;org.hibernate.dialect.H2Dialect
+spring.jpa.properties.show_sql&#x3D;true
+spring.jpa.properties.format_sql&#x3D;true
+spring.jpa.properties.use_sql_comments&#x3D;true
+spring.h2.console.enabled&#x3D;true
+spring.h2.console.path&#x3D;&#x2F;console
+logging.level.org.springframework.orm.jpa&#x3D;debug<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>都是一些基础的配置，这里使用了jpa，并且把日志级别设置成debug，为了更方便的观察事务的执行情况。</p>
 <blockquote>
 <p>编写一个业务类</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataService</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataService</span> <span class="token punctuation">&#123;</span>
 
     <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">private</span> UserRepository userRepository<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">UserRepository</span> userRepository<span class="token punctuation">;</span>
+   
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> logger <span class="token operator">=</span> <span class="token class-name">LoggerFactory</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">DataService</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">private</span> <span class="token keyword">final</span> Logger logger <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>DataService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> RuntimeException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveA</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveA &amp;#123;&amp;#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        User u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveA</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveA &#123;&#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">User</span> u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
         userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveB</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveB &amp;#123;&amp;#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            User u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveB</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveB &#123;&#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">User</span> u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in saveB()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"print data:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        userRepository<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>user <span class="token operator">-</span><span class="token operator">></span> logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        userRepository<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>user <span class="token operator">-></span> logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> RuntimeException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveAndRollback</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveAndRollback &amp;#123;&amp;#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        User u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveAndRollback</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveAndRollback &#123;&#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">User</span> u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
         userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="验证栗子"><a href="#验证栗子" class="headerlink" title="验证栗子"></a>验证栗子</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="验证栗子"><a href="#验证栗子" class="headerlink" title="验证栗子"></a>验证栗子</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
 <span class="token annotation punctuation">@EnableTransactionManagement</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token keyword">implements</span> <span class="token class-name">ApplicationRunner</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token keyword">implements</span> <span class="token class-name">ApplicationRunner</span> <span class="token punctuation">&#123;</span>
 
     <span class="token annotation punctuation">@Autowired</span>
-    <span class="token keyword">private</span> DataService dataService<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">final</span> Logger logger <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>Application<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">DataService</span> dataService<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Logger</span> logger <span class="token operator">=</span> <span class="token class-name">LoggerFactory</span><span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token class-name">Application</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Application<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">Application</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span>ApplicationArguments args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ApplicationArguments</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
         <span class="token function">demo1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">demo1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        dataService<span class="token punctuation">.</span><span class="token function">saveA</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//1</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">demo1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        dataService<span class="token punctuation">.</span><span class="token function">saveA</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//1</span>
         dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-            dataService<span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//2</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            dataService<span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//2</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an save exception"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
         dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        dataService<span class="token punctuation">.</span><span class="token function">saveB</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//3</span>
+        dataService<span class="token punctuation">.</span><span class="token function">saveB</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//3</span>
         dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>代码1执行结果，上面是insert，下面是查询操作</p>
 </blockquote>
-<pre><code>2020-03-31 14:14:14.733 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.boot.transaction.service.DataService.saveA]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-java.lang.RuntimeException
+<pre class="line-numbers language-none"><code class="language-none">2020-03-31 14:14:14.733 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.boot.transaction.service.DataService.saveA]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-java.lang.RuntimeException
 2020-03-31 14:14:14.733 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1955991197&lt;open&gt;)] for JPA transaction
 2020-03-31 14:14:14.740 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4e4162bc]
 2020-03-31 14:14:14.754  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveA frank
@@ -399,20 +396,20 @@ logging.level.org.springframework.orm.jpa=debug
 2020-03-31 14:14:14.759 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
 2020-03-31 14:14:14.804 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
 2020-03-31 14:14:14.805 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1955991197&lt;open&gt;)]
-2020-03-31 14:14:14.822 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1955991197&lt;open&gt;)] after transaction
-</code></pre><pre><code>print data:
+2020-03-31 14:14:14.822 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1955991197&lt;open&gt;)] after transaction<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">print data:
 2020-03-31 14:14:14.823 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
 2020-03-31 14:14:14.824 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(2045560071&lt;open&gt;)] for JPA transaction
 2020-03-31 14:14:14.841 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7e5efcab]
 2020-03-31 14:14:15.059 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
 2020-03-31 14:14:15.060 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2045560071&lt;open&gt;)]
 2020-03-31 14:14:15.060 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(2045560071&lt;open&gt;)] after transaction
-2020-03-31 14:14:15.061  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User&#123;id=1, name=&#39;frank&#39;&#125;
-</code></pre><p>这里可以看到插入成功了</p>
+2020-03-31 14:14:15.061  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User&#123;id&#x3D;1, name&#x3D;&#39;frank&#39;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里可以看到插入成功了</p>
 <blockquote>
 <p>代码2执行结果</p>
 </blockquote>
-<pre><code>2020-03-31 14:14:15.062  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveAndRollback frank
+<pre class="line-numbers language-none"><code class="language-none">2020-03-31 14:14:15.062  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveAndRollback frank
 2020-03-31 14:14:15.062 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1796154990&lt;open&gt;)] for JPA transaction
 2020-03-31 14:14:15.062 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
 2020-03-31 14:14:15.063 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction rollback
@@ -426,12 +423,12 @@ logging.level.org.springframework.orm.jpa=debug
 2020-03-31 14:14:15.076 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
 2020-03-31 14:14:15.076 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1138190994&lt;open&gt;)]
 2020-03-31 14:14:15.076 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1138190994&lt;open&gt;)] after transaction
-2020-03-31 14:14:15.076  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User&#123;id=1, name=&#39;frank&#39;&#125;
-</code></pre><p>从这里的结果可以看出，这时候数据没有插入，还是我们第一次添加的数据，说明事务生效了。</p>
+2020-03-31 14:14:15.076  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User&#123;id&#x3D;1, name&#x3D;&#39;frank&#39;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>从这里的结果可以看出，这时候数据没有插入，还是我们第一次添加的数据，说明事务生效了。</p>
 <blockquote>
 <p>代码3执行结果</p>
 </blockquote>
-<pre><code>2020-03-31 14:14:15.076  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveB jack
+<pre class="line-numbers language-none"><code class="language-none">2020-03-31 14:14:15.076  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveB jack
 2020-03-31 14:14:15.076  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : invoke saveAndRollback jack
 2020-03-31 14:14:15.077 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
 2020-03-31 14:14:15.077 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1683617002&lt;open&gt;)] for JPA transaction
@@ -447,9 +444,9 @@ logging.level.org.springframework.orm.jpa=debug
 2020-03-31 14:14:15.080 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
 2020-03-31 14:14:15.080 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(589094312&lt;open&gt;)]
 2020-03-31 14:14:15.081 DEBUG 17477 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(589094312&lt;open&gt;)] after transaction
-2020-03-31 14:14:15.081  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User&#123;id=1, name=&#39;frank&#39;&#125;
-2020-03-31 14:14:15.081  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User&#123;id=3, name=&#39;jack&#39;&#125;
-</code></pre><p>这里看到最后的查询结果有两条数据，说明这里虽然产生了异常，但是数据没有回滚，说明事务没有生效。</p>
+2020-03-31 14:14:15.081  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User&#123;id&#x3D;1, name&#x3D;&#39;frank&#39;&#125;
+2020-03-31 14:14:15.081  INFO 17477 --- [           main] o.boot.transaction.service.DataService   : User&#123;id&#x3D;3, name&#x3D;&#39;jack&#39;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里看到最后的查询结果有两条数据，说明这里虽然产生了异常，但是数据没有回滚，说明事务没有生效。</p>
 <h3 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h3><p>从代码层面上看，代码2和代码3的区别是：代码2是直接调用的带@Transactional注解的方法（saveAndRollback），而代码3调用的方法（saveB）没有@Transactional注解，在saveB中调用了saveAndRollback方法，这属于内部调用，也就是通过this去调用对象的方法。而Spring的事务是通过AOP实现的，AOP会在加了事务注解的方法上进行增强，而Spring实现AOP主要是通过动态代理的方式，所以Spring做事务增强是在代理类上面做的增强，而我们用this去调用原来的方法，是没有做增强的，所以事务也就不会生效。</p>
 <blockquote>
 <p>解决方法也很简单，只有被AOP增强过的类事务才会生效，有三种：</p>
@@ -460,58 +457,56 @@ logging.level.org.springframework.orm.jpa=debug
 <li>使用AopContext获取到代理类调用</li>
 </ol>
 <p>所以我们在DataService中增加如下方法：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> RuntimeException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveAndRollback</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveAndRollback &amp;#123;&amp;#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    User u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">saveAndRollback</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"invoke saveAndRollback &#123;&#125;"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">User</span> u <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
     userRepository<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeSelf</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeSelf</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
         dataService<span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeSelf()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeWithApplicationContext</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token punctuation">(</span><span class="token punctuation">(</span>DataService<span class="token punctuation">)</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"dataService"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeWithApplicationContext</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">DataService</span><span class="token punctuation">)</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"dataService"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeWithApplicationContext()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
 
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeWithAop</span><span class="token punctuation">(</span>String user<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 需要把@EnableAspectJAutoProxy注解中的(exposeProxy = true)</span>
-        <span class="token punctuation">(</span><span class="token punctuation">(</span>DataService<span class="token punctuation">)</span> AopContext<span class="token punctuation">.</span><span class="token function">currentProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeWithAop</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 需要把@EnableAspectJAutoProxy注解中的(exposeProxy = true)</span>
+        <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">DataService</span><span class="token punctuation">)</span> <span class="token class-name">AopContext</span><span class="token punctuation">.</span><span class="token function">currentProxy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">saveAndRollback</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">RuntimeException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         logger<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">"catch an exception in invokeWithAop()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>再来运行看看结果</p>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java">dataService<span class="token punctuation">.</span><span class="token function">saveA</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">dataService<span class="token punctuation">.</span><span class="token function">saveA</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 dataService<span class="token punctuation">.</span><span class="token function">invokeSelf</span><span class="token punctuation">(</span><span class="token string">"frank"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 dataService<span class="token punctuation">.</span><span class="token function">invokeWithApplicationContext</span><span class="token punctuation">(</span><span class="token string">"tom"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 dataService<span class="token punctuation">.</span><span class="token function">invokeWithAop</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+dataService<span class="token punctuation">.</span><span class="token function">findAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到日志中，出现异常的地方出现了rollback字样，说明事务都生效了</p>
-<pre><code>2020-03-31 18:02:09.622 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1779787990&lt;open&gt;)] for JPA transaction
+<pre class="line-numbers language-none"><code class="language-none">2020-03-31 18:02:09.622 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1779787990&lt;open&gt;)] for JPA transaction
 2020-03-31 18:02:09.645 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@411fa0ce]
 2020-03-31 18:02:10.011 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
 2020-03-31 18:02:10.012 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1779787990&lt;open&gt;)]
 2020-03-31 18:02:10.012 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1779787990&lt;open&gt;)] after transaction
-2020-03-31 18:02:10.013  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User&#123;id=1, name=&#39;frank&#39;&#125;
+2020-03-31 18:02:10.013  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User&#123;id&#x3D;1, name&#x3D;&#39;frank&#39;&#125;
 2020-03-31 18:02:10.013 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.boot.transaction.service.DataService.saveAndRollback]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-java.lang.RuntimeException
 2020-03-31 18:02:10.013 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1478269879&lt;open&gt;)] for JPA transaction
 2020-03-31 18:02:10.013 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@138f0661]
@@ -529,7 +524,7 @@ dataService<span class="token punctuation">.</span><span class="token function">
 2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
 2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(321795476&lt;open&gt;)]
 2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(321795476&lt;open&gt;)] after transaction
-2020-03-31 18:02:10.020  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User&#123;id=1, name=&#39;frank&#39;&#125;
+2020-03-31 18:02:10.020  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User&#123;id&#x3D;1, name&#x3D;&#39;frank&#39;&#125;
 2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.boot.transaction.service.DataService.saveAndRollback]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,-java.lang.RuntimeException
 2020-03-31 18:02:10.020 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(977952572&lt;open&gt;)] for JPA transaction
 2020-03-31 18:02:10.021 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4f3356c0]
@@ -547,8 +542,8 @@ dataService<span class="token punctuation">.</span><span class="token function">
 2020-03-31 18:02:10.024 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
 2020-03-31 18:02:10.024 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1367900185&lt;open&gt;)]
 2020-03-31 18:02:10.025 DEBUG 20635 --- [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1367900185&lt;open&gt;)] after transaction
-2020-03-31 18:02:10.025  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User&#123;id=1, name=&#39;frank&#39;&#125;
-</code></pre><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在 Spring 的 AOP 代理下，只有目标方法由外部调用，目标方法才由 Spring 生成的代理对象来管理，这会造成自调用问题。若同一类中的其他没有@Transactional 注解的方法内部调用有@Transactional 注解的方法，有@Transactional 注解的方法的事务被忽略，不会发生回滚。解决方法上面已经列出，并且放在了<a target="_blank" rel="noopener" href="https://github.com/LuoLiangDSGA/spring-learning/tree/master/boot-transaction">github</a>上。所以平时在内部调用带有事务的方法时，要小心一点。</p>
+2020-03-31 18:02:10.025  INFO 20635 --- [           main] o.boot.transaction.service.DataService   : User&#123;id&#x3D;1, name&#x3D;&#39;frank&#39;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在 Spring 的 AOP 代理下，只有目标方法由外部调用，目标方法才由 Spring 生成的代理对象来管理，这会造成自调用问题。若同一类中的其他没有@Transactional 注解的方法内部调用有@Transactional 注解的方法，有@Transactional 注解的方法的事务被忽略，不会发生回滚。解决方法上面已经列出，并且放在了<a target="_blank" rel="noopener" href="https://github.com/LuoLiangDSGA/spring-learning/tree/master/boot-transaction">github</a>上。所以平时在内部调用带有事务的方法时，要小心一点。</p>
 <blockquote>
 <p>还有以下常见场景事务也会失效</p>
 </blockquote>
@@ -774,7 +769,7 @@ dataService<span class="token punctuation">.</span><span class="token function">
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">52.8k</span>
+                <span class="white-color">52k</span>
             
 
             
